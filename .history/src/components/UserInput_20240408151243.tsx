@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
+
 const UserInput = () => {
   const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
   const [showFundraising, setShowFundraising] = useState(false);

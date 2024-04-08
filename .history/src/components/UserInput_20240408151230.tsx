@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
+
 const UserInput = () => {
+  const [showHiddenContent, setShowHiddenContent] = useState(false);
   const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
@@ -166,7 +168,7 @@ const UserInput = () => {
               </div>
               {/* Conditionally render the hidden content based on showHiddenContent state */}
 
-              {showCostOfGoodsSold && (
+              {showExpenseReduction && (
                 <div className="p-5 bg-slate-100 m-2">
                   <form className="grid gap-2">
                     <Label className="">COGS percentage</Label>

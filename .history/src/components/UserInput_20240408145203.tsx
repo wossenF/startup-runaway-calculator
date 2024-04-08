@@ -3,11 +3,10 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
+
 const UserInput = () => {
-  const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
-  const [showFundraising, setShowFundraising] = useState(false);
-  const [showHiring, setShowHiring] = useState(false);
-  const [showExpenseReduction, setShowExpenseReduction] = useState(false);
+  const [showHiddenContent, setShowHiddenContent] = useState(false);
+
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
@@ -75,45 +74,18 @@ const UserInput = () => {
             {/* Main container div */}
             <div
               className="p-3 gap-20 border rounded-md cursor-pointer"
-              onClick={() => setShowCostOfGoodsSold(!showCostOfGoodsSold)}
+              onClick={() => setShowHiddenContent(!showHiddenContent)}
             >
               <div className="flex justify-between">
                 <p>Cost of Goods Sold</p>
                 {/* Toggle chevron icon based on showHiddenContent state */}
                 <ChevronDown
                   size={20}
-                  className={showCostOfGoodsSold ? "transform rotate-180" : ""}
+                  className={showHiddenContent ? "transform rotate-180" : ""}
                 />
               </div>
               {/* Conditionally render the hidden content based on showHiddenContent state */}
-              {showCostOfGoodsSold && (
-                <div className="p-5 bg-slate-100 m-2">
-                  <form className="grid gap-2">
-                    <Label className="">COGS Percentage</Label>
-                    <p className="text-gray-500 text-sm">
-                    Percentage of revenue spent on COGS (number).
-                    </p>
-                    <Input name="name" placeholder="$" />
-                  </form>
-                </div>
-              )}
-            </div>
-
-
-            <div
-              className="p-3 gap-20 border rounded-md cursor-pointer"
-              onClick={() => setShowFundraising(!showFundraising)}
-            >
-              <div className="flex justify-between">
-                <p>Fundraising</p>
-                {/* Toggle chevron icon based on showHiddenContent state */}
-                <ChevronDown
-                  size={20}
-                  className={showFundraising ? "transform rotate-180" : ""}
-                />
-              </div>
-              {/* Conditionally render the hidden content based on showHiddenContent state */}
-              {showFundraising && (
+              {showHiddenContent && (
                 <div className="p-5 bg-slate-100 m-2">
                   <form className="grid gap-2">
                     <Label className="">Payroll</Label>
@@ -128,18 +100,43 @@ const UserInput = () => {
 
             <div
               className="p-3 gap-20 border rounded-md cursor-pointer"
-              onClick={() => setShowHiring(!showHiring)}
+              onClick={() => setShowHiddenContent(!showHiddenContent)}
             >
               <div className="flex justify-between">
-                <p>Hiring</p>
+                <p>Cost of Goods Sold</p>
                 {/* Toggle chevron icon based on showHiddenContent state */}
                 <ChevronDown
                   size={20}
-                  className={showHiring ? "transform rotate-180" : ""}
+                  className={showHiddenContent ? "transform rotate-180" : ""}
                 />
               </div>
               {/* Conditionally render the hidden content based on showHiddenContent state */}
-              {showHiring && (
+              {showHiddenContent && (
+                <div className="p-5 bg-slate-100 m-2">
+                  <form className="grid gap-2">
+                    <Label className="">Payroll</Label>
+                    <p className="text-gray-500 text-sm">
+                      monthly payroll salaries and contractor payments
+                    </p>
+                    <Input name="name" placeholder="Your Name" />
+                  </form>
+                </div>
+              )}
+            </div>
+            <div
+              className="p-3 gap-20 border rounded-md cursor-pointer"
+              onClick={() => setShowHiddenContent(!showHiddenContent)}
+            >
+              <div className="flex justify-between">
+                <p></p>
+                {/* Toggle chevron icon based on showHiddenContent state */}
+                <ChevronDown
+                  size={20}
+                  className={showHiddenContent ? "transform rotate-180" : ""}
+                />
+              </div>
+              {/* Conditionally render the hidden content based on showHiddenContent state */}
+              {showHiddenContent && (
                 <div className="p-5 bg-slate-100 m-2">
                   <form className="grid gap-2">
                     <Label className="">Payroll</Label>
@@ -154,34 +151,28 @@ const UserInput = () => {
 
             <div
               className="p-3 gap-20 border rounded-md cursor-pointer"
-              onClick={() => setShowExpenseReduction(!showExpenseReduction)}
+              onClick={() => setShowHiddenContent(!showHiddenContent)}
             >
               <div className="flex justify-between">
-                <p>Expense Reduction</p>
+                <p>Cost of Goods Sold</p>
                 {/* Toggle chevron icon based on showHiddenContent state */}
                 <ChevronDown
                   size={20}
-                  className={showExpenseReduction ? "transform rotate-180" : ""}
+                  className={showHiddenContent ? "transform rotate-180" : ""}
                 />
               </div>
               {/* Conditionally render the hidden content based on showHiddenContent state */}
-
-              {showCostOfGoodsSold && (
+              {showHiddenContent && (
                 <div className="p-5 bg-slate-100 m-2">
                   <form className="grid gap-2">
-                    <Label className="">COGS percentage</Label>
+                    <Label className="">Payroll</Label>
                     <p className="text-gray-500 text-sm">
-                    Percentage of revenue spent on COGS (number).
+                      monthly payroll salaries and contractor payments
                     </p>
                     <Input name="name" placeholder="Your Name" />
                   </form>
                 </div>
               )}
-
-
-
-
-
             </div>
           </form>
         </div>
