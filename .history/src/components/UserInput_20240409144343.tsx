@@ -8,24 +8,10 @@ const UserInput = () => {
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
   const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  const [cashBalance, setCashBalance] = useState(0);
-  const [payRoll,setPayRoll]=useState(0);
-  const [nonPayRoll,setNonPayRoll]=useState(0);
-  const [monthlyIncome,setMonthlyIncome]=useState(0);
-  const [monthlyGrowthRate,setMonthlyGrowthRate]=useState(0);
-  const [cogsPercentage,setCogsPercentage]=useState(0);
-  const [fundraisingTimeline,setFundraisingTimeline]=useState(0);
-  const [fundraisingAmount,setFundraisingAmount]=useState(0);
-  const [monthlyCompensation,setMonthlyCompensation]=useState(0);
-  const [newHiresTimeline,setNewHiresTimeline]=useState(0);
-  const [nonPayrollReduction,setNonPayrollReduction]=useState(0);
-  const [nonPayrollReductionTimeline,setNonPayrollReductionTimeline]=useState(0);
-  
 
   const handleInputClick = (event: MouseEvent) => {
     event.stopPropagation();
   };
-
 
   return (
     <>
@@ -36,8 +22,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input  type="number" name="name" placeholder="$0.00" onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
-            <span></span>
+            <Input name="name" placeholder="$0.00" />
           </form>
         </div>
 
@@ -50,11 +35,7 @@ const UserInput = () => {
                 <p className="text-gray-500 text-sm">
                   monthly payroll salaries and contractor payments
                 </p>
-                <Input
-                  type="number"
-                  name="name"
-                  placeholder="negative number"
-                />
+                <Input name="name" placeholder="negative number" />
               </form>
             </div>
             <div>
@@ -63,11 +44,7 @@ const UserInput = () => {
                 <p className="text-gray-500 text-sm">
                   expenses like marketing, travel, and equipment
                 </p>
-                <Input
-                  type="number"
-                  name="name"
-                  placeholder="negative number"
-                />
+                <Input name="name" placeholder="negative number" />
               </form>
             </div>
           </div>
@@ -81,7 +58,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input type="number" name="name" placeholder="$0.00" />
+            <Input name="name" placeholder="$0.00" />
           </form>
 
           <form className="growth-rate grid gap-2 pt-5">
@@ -89,7 +66,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               percentage increase in monthly revenue
             </p>
-            <Input type="number" name="name" placeholder="%" />
+            <Input name="name" placeholder="%" />
           </form>
         </div>
 
@@ -122,7 +99,6 @@ const UserInput = () => {
                       Percentage of revenue spent on COGS (number).
                     </p>
                     <Input
-                      type="number"
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
@@ -150,10 +126,9 @@ const UserInput = () => {
                   <form className="pl-0 p-5 grid gap-2">
                     <Label className="">Fundraising Timeline</Label>
                     <p className="text-gray-500 text-sm">
-                      Number of months until fundraising is expected
+                    Number of months until fundraising is expected
                     </p>
                     <Input
-                      type="number"
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
@@ -165,7 +140,6 @@ const UserInput = () => {
                       monthly payroll salaries and contractor payments
                     </p>
                     <Input
-                      type="number"
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
@@ -190,30 +164,15 @@ const UserInput = () => {
               {/* Conditionally render the hidden content based on showHiddenContent state */}
               {showHiring && (
                 <div className="p-5 bg-slate-100 m-2">
-                  <form className="pt-5grid gap-2">
+                  <form className="grid gap-2">
                     <Label className="">Monthly Compensation</Label>
                     <p className="text-gray-500 text-sm">
-                      Additional monthly payroll expense expected from new
-                      hires 
+                      monthly payroll salaries and contractor payments
                     </p>
                     <Input
-                      type="number"
                       onClick={handleInputClick}
                       name="name"
-                      placeholder="$"
-                    />
-                  </form>
-
-                  <form className="pt-5 grid gap-2">
-                    <Label className="">New Hires Timeline</Label>
-                    <p className="text-gray-500 text-sm">
-                      Number of months until new hires come on board
-                    </p>
-                    <Input
-                      type="number"
-                      onClick={handleInputClick}
-                      name="name"
-                      placeholder="$"
+                      placeholder="Your Name"
                     />
                   </form>
                 </div>
@@ -237,28 +196,14 @@ const UserInput = () => {
               {showExpenseReduction && (
                 <div className="p-5 bg-slate-100 m-2">
                   <form className="grid gap-2">
-                    <Label className="">Non-Payroll Reduction</Label>
+                    <Label className="">COGS percentage</Label>
                     <p className="text-gray-500 text-sm">
-                      Amount of planned reduction in non-payroll expenses
+                      Percentage of revenue spent on COGS (number).
                     </p>
                     <Input
-                      type="number"
                       onClick={handleInputClick}
                       name="name"
-                      placeholder="$"
-                    />
-                  </form>
-
-                  <form className="grid gap-2">
-                    <Label className="">Non-Payroll Reduction</Label>
-                    <p className="text-gray-500 text-sm">
-                      Month when non-payroll expense reduction takes effect
-                    </p>
-                    <Input
-                      type="number"
-                      onClick={handleInputClick}
-                      name="name"
-                      placeholder="$"
+                      placeholder="Your Name"
                     />
                   </form>
                 </div>

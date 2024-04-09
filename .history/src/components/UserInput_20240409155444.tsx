@@ -8,7 +8,7 @@ const UserInput = () => {
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
   const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  const [cashBalance, setCashBalance] = useState(0);
+  const [cashbalance, setCashBalance] = useState(0);
   const [payRoll,setPayRoll]=useState(0);
   const [nonPayRoll,setNonPayRoll]=useState(0);
   const [monthlyIncome,setMonthlyIncome]=useState(0);
@@ -36,7 +36,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input  type="number" name="name" placeholder="$0.00" onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
+            <Input  type="number" name="name" placeholder="$0.00" onc />
             <span></span>
           </form>
         </div>

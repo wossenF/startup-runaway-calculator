@@ -8,7 +8,7 @@ const UserInput = () => {
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
   const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  const [cashBalance, setCashBalance] = useState(0);
+  const [cashbalance, setCashBalance] = useState(0);
   const [payRoll,setPayRoll]=useState(0);
   const [nonPayRoll,setNonPayRoll]=useState(0);
   const [monthlyIncome,setMonthlyIncome]=useState(0);
@@ -20,7 +20,9 @@ const UserInput = () => {
   const [newHiresTimeline,setNewHiresTimeline]=useState(0);
   const [nonPayrollReduction,setNonPayrollReduction]=useState(0);
   const [nonPayrollReductionTimeline,setNonPayrollReductionTimeline]=useState(0);
-  
+  const handleInputClick = (event: MouseEvent) => {
+    event.stopPropagation();
+  };
 
   const handleInputClick = (event: MouseEvent) => {
     event.stopPropagation();
@@ -36,7 +38,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input  type="number" name="name" placeholder="$0.00" onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
+            <Input type="number" name="name" placeholder="$0.00" />
             <span></span>
           </form>
         </div>

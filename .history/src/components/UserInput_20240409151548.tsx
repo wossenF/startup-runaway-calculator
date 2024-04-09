@@ -8,24 +8,10 @@ const UserInput = () => {
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
   const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  const [cashBalance, setCashBalance] = useState(0);
-  const [payRoll,setPayRoll]=useState(0);
-  const [nonPayRoll,setNonPayRoll]=useState(0);
-  const [monthlyIncome,setMonthlyIncome]=useState(0);
-  const [monthlyGrowthRate,setMonthlyGrowthRate]=useState(0);
-  const [cogsPercentage,setCogsPercentage]=useState(0);
-  const [fundraisingTimeline,setFundraisingTimeline]=useState(0);
-  const [fundraisingAmount,setFundraisingAmount]=useState(0);
-  const [monthlyCompensation,setMonthlyCompensation]=useState(0);
-  const [newHiresTimeline,setNewHiresTimeline]=useState(0);
-  const [nonPayrollReduction,setNonPayrollReduction]=useState(0);
-  const [nonPayrollReductionTimeline,setNonPayrollReductionTimeline]=useState(0);
-  
 
   const handleInputClick = (event: MouseEvent) => {
     event.stopPropagation();
   };
-
 
   return (
     <>
@@ -36,8 +22,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input  type="number" name="name" placeholder="$0.00" onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
-            <span></span>
+            <Input type="number" name="name" placeholder="$0.00" /><span></span>
           </form>
         </div>
 
@@ -50,11 +35,7 @@ const UserInput = () => {
                 <p className="text-gray-500 text-sm">
                   monthly payroll salaries and contractor payments
                 </p>
-                <Input
-                  type="number"
-                  name="name"
-                  placeholder="negative number"
-                />
+                <Input type="number" name="name" placeholder="negative number" />
               </form>
             </div>
             <div>
@@ -63,11 +44,7 @@ const UserInput = () => {
                 <p className="text-gray-500 text-sm">
                   expenses like marketing, travel, and equipment
                 </p>
-                <Input
-                  type="number"
-                  name="name"
-                  placeholder="negative number"
-                />
+                <Input type="number" max={0} name="name" placeholder="negative number" />
               </form>
             </div>
           </div>
@@ -150,10 +127,11 @@ const UserInput = () => {
                   <form className="pl-0 p-5 grid gap-2">
                     <Label className="">Fundraising Timeline</Label>
                     <p className="text-gray-500 text-sm">
-                      Number of months until fundraising is expected
+                    Number of months until fundraising is expected
                     </p>
                     <Input
                       type="number"
+                      
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
@@ -193,11 +171,10 @@ const UserInput = () => {
                   <form className="pt-5grid gap-2">
                     <Label className="">Monthly Compensation</Label>
                     <p className="text-gray-500 text-sm">
-                      Additional monthly payroll expense expected from new
-                      hires 
+                    Additional monthly payroll expense expected from new hires 
                     </p>
                     <Input
-                      type="number"
+                    type="number"
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
@@ -207,7 +184,7 @@ const UserInput = () => {
                   <form className="pt-5 grid gap-2">
                     <Label className="">New Hires Timeline</Label>
                     <p className="text-gray-500 text-sm">
-                      Number of months until new hires come on board
+                    Number of months until new hires come on board
                     </p>
                     <Input
                       type="number"
@@ -239,7 +216,7 @@ const UserInput = () => {
                   <form className="grid gap-2">
                     <Label className="">Non-Payroll Reduction</Label>
                     <p className="text-gray-500 text-sm">
-                      Amount of planned reduction in non-payroll expenses
+                    Amount of planned reduction in non-payroll expenses
                     </p>
                     <Input
                       type="number"
@@ -252,7 +229,7 @@ const UserInput = () => {
                   <form className="grid gap-2">
                     <Label className="">Non-Payroll Reduction</Label>
                     <p className="text-gray-500 text-sm">
-                      Month when non-payroll expense reduction takes effect
+                    Month when non-payroll expense reduction takes effect
                     </p>
                     <Input
                       type="number"
@@ -261,6 +238,7 @@ const UserInput = () => {
                       placeholder="$"
                     />
                   </form>
+
                 </div>
               )}
             </div>

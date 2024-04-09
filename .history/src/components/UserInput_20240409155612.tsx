@@ -36,7 +36,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input  type="number" name="name" placeholder="$0.00" onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
+            <Input  type="number" name="name" placeholder="$0.00" onChange={(e) => setCashBalance(e.currentTarget.)} />
             <span></span>
           </form>
         </div>
