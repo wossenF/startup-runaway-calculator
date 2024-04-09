@@ -59,7 +59,6 @@ const UserInput = () => {
 
     return runwayMonths;
   }
-  
 
   return (
     <>
@@ -359,7 +358,6 @@ const UserInput = () => {
       </div>
     </>
   );
-
 };
 
 export default UserInput;

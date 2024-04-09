@@ -59,8 +59,6 @@ const UserInput = () => {
 
     return runwayMonths;
   }
-  
-
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
@@ -357,9 +355,10 @@ const UserInput = () => {
           </form>
         </div>
       </div>
+
+      
     </>
   );
-
 };
 
 export default UserInput;
