@@ -20,7 +20,8 @@ const UserInput = () => {
   const [monthlyCompensation, setMonthlyCompensation] = useState(0);
   const [newHiresTimeline, setNewHiresTimeline] = useState(0);
   const [nonPayrollReduction, setNonPayrollReduction] = useState(0);
-  const [nonPayrollReductionTimeline, setNonPayrollReductionTimeline] =useState(0);
+  const [nonPayrollReductionTimeline, setNonPayrollReductionTimeline] =
+    useState(0);
 
   const handleInputClick = (event: MouseEvent) => {
     event.stopPropagation();
@@ -326,5 +327,8 @@ const UserInput = () => {
   );
 };
 
+export function runaway_result() {
+  let initialCashBAlance = cashBalance - payRoll - nonPayRoll;
+}
 
 export default UserInput;

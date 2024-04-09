@@ -4,27 +4,30 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
 
+
+const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
+const [showFundraising, setShowFundraising] = useState(false);
+const [showHiring, setShowHiring] = useState(false);
+const [showExpenseReduction, setShowExpenseReduction] = useState(false);
+const [cashBalance, setCashBalance] = useState(0);
+const [payRoll,setPayRoll]=useState(0);
+const [nonPayRoll,setNonPayRoll]=useState(0);
+const [monthlyIncome,setMonthlyIncome]=useState(0);
+const [monthlyGrowthRate,setMonthlyGrowthRate]=useState(0);
+const [cogsPercentage,setCogsPercentage]=useState(0);
+const [fundraisingTimeline,setFundraisingTimeline]=useState(0);
+const [fundraisingAmount,setFundraisingAmount]=useState(0);
+const [monthlyCompensation,setMonthlyCompensation]=useState(0);
+const [newHiresTimeline,setNewHiresTimeline]=useState(0);
+const [nonPayrollReduction,setNonPayrollReduction]=useState(0);
+const [nonPayrollReductionTimeline,setNonPayrollReductionTimeline]=useState(0);
+
 const UserInput = () => {
-  const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
-  const [showFundraising, setShowFundraising] = useState(false);
-  const [showHiring, setShowHiring] = useState(false);
-  const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  const [cashBalance, setCashBalance] = useState(0);
-  const [payRoll, setPayRoll] = useState(0);
-  const [nonPayRoll, setNonPayRoll] = useState(0);
-  const [monthlyIncome, setMonthlyIncome] = useState(0);
-  const [monthlyGrowthRate, setMonthlyGrowthRate] = useState(0);
-  const [cogsPercentage, setCogsPercentage] = useState(0);
-  const [fundraisingTimeline, setFundraisingTimeline] = useState(0);
-  const [fundraisingAmount, setFundraisingAmount] = useState(0);
-  const [monthlyCompensation, setMonthlyCompensation] = useState(0);
-  const [newHiresTimeline, setNewHiresTimeline] = useState(0);
-  const [nonPayrollReduction, setNonPayrollReduction] = useState(0);
-  const [nonPayrollReductionTimeline, setNonPayrollReductionTimeline] =useState(0);
 
   const handleInputClick = (event: MouseEvent) => {
     event.stopPropagation();
   };
+
 
   return (
     <>
@@ -35,12 +38,11 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input
-              type="number"
-              name="name"
-              placeholder="$0.00"
-              onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))}
-            />
+            <Input  
+            type="number" 
+            name="name" 
+            placeholder="$0.00" 
+            onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
             <span></span>
           </form>
         </div>
@@ -72,9 +74,7 @@ const UserInput = () => {
                   type="number"
                   name="name"
                   placeholder="negative number"
-                  onChange={(e) =>
-                    setNonPayRoll(parseInt(e.currentTarget.value))
-                  }
+                  onChange={(e) => setNonPayRoll(parseInt(e.currentTarget.value))}
                 />
               </form>
             </div>
@@ -89,14 +89,13 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input
-              type="number"
-              name="name"
-              placeholder="$0.00"
-              onChange={(e) =>
-                setMonthlyIncome(parseInt(e.currentTarget.value) || 0)
-              }
+            <Input 
+            type="number" 
+            name="name" 
+            placeholder="$0.00" 
+            onChange={(e)=>setMonthlyIncome(parseInt(e.currentTarget.value) || 0)}
             />
+            
           </form>
 
           <form className="growth-rate grid gap-2 pt-5">
@@ -104,13 +103,11 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               percentage increase in monthly revenue
             </p>
-            <Input
-              type="number"
-              name="name"
-              placeholder="%"
-              onChange={(e) =>
-                setMonthlyGrowthRate(parseInt(e.currentTarget.value) || 0)
-              }
+            <Input 
+            type="number" 
+            name="name" 
+            placeholder="%"
+            onChange={(e)=>setMonthlyGrowthRate(parseInt(e.currentTarget.value) || 0)}
             />
           </form>
         </div>
@@ -148,9 +145,7 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) =>
-                        setCogsPercentage(parseInt(e.currentTarget.value) || 0)
-                      }
+                      onChange = {(e)=>setCogsPercentage(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
                 </div>
@@ -182,11 +177,7 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) =>
-                        setFundraisingTimeline(
-                          parseInt(e.currentTarget.value) || 0
-                        )
-                      }
+                      onChange={(e)=>setFundraisingTimeline(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
                   <form className="grid gap-2">
@@ -199,11 +190,7 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) =>
-                        setFundraisingAmount(
-                          parseInt(e.currentTarget.value) || 0
-                        )
-                      }
+                      onChange={(e)=>setFundraisingAmount(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
                 </div>
@@ -236,11 +223,7 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) =>
-                        setMonthlyCompensation(
-                          parseInt(e.currentTarget.value) || 0
-                        )
-                      }
+                      onChange={(e)=>setMonthlyCompensation(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
 
@@ -254,11 +237,7 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) =>
-                        setNewHiresTimeline(
-                          parseInt(e.currentTarget.value) || 0
-                        )
-                      }
+                      onChange={(e)=>setNewHiresTimeline(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
                 </div>
@@ -291,11 +270,7 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) =>
-                        setNonPayrollReduction(
-                          parseInt(e.currentTarget.value) || 0
-                        )
-                      }
+                      onC
                     />
                   </form>
 
@@ -309,11 +284,6 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) =>
-                        setNonPayrollReductionTimeline(
-                          parseInt(e.currentTarget.value) || 0
-                        )
-                      }
                     />
                   </form>
                 </div>
@@ -326,5 +296,8 @@ const UserInput = () => {
   );
 };
 
+export function runaway_result(){
+  let initialCashBAlance= cashBalance - payRoll - nonPayRoll;
+}
 
 export default UserInput;

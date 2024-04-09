@@ -326,5 +326,8 @@ const UserInput = () => {
   );
 };
 
+export function runaway_result() {
+  let initialCashBAlance = cashBalance - payRoll - nonPayRoll;
+}
 
 export default UserInput;
