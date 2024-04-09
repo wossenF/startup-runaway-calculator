@@ -143,7 +143,7 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange = {(e)=>setCogsPercentage(parseInt(e.currentTarget.value) || 0)}
+                      onChange
                     />
                   </form>
                 </div>

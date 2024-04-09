@@ -90,10 +90,8 @@ const UserInput = () => {
             <Input 
             type="number" 
             name="name" 
-            placeholder="$0.00" 
-            onChange={(e)=>setMonthlyIncome(parseInt(e.currentTarget.value) || 0)}
-            />
-            
+            placeholder="$0.00" />
+            onChange={(e:number) => setMonthlyIncome(parseInt(e.currentTarget.value))}
           </form>
 
           <form className="growth-rate grid gap-2 pt-5">
@@ -101,12 +99,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               percentage increase in monthly revenue
             </p>
-            <Input 
-            type="number" 
-            name="name" 
-            placeholder="%"
-            onChange={(e)=>setMonthlyGrowthRate(parseInt(e.currentTarget.value) || 0)}
-            />
+            <Input type="number" name="name" placeholder="%" />
           </form>
         </div>
 
@@ -143,7 +136,6 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange = {(e)=>setCogsPercentage(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
                 </div>

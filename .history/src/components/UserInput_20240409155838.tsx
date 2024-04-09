@@ -39,8 +39,7 @@ const UserInput = () => {
             <Input  
             type="number" 
             name="name" 
-            placeholder="$0.00" 
-            onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
+            placeholder="$0.00" onChange={(e) => setCashBalance(parseInt(e.currentTarget.value))} />
             <span></span>
           </form>
         </div>
@@ -58,7 +57,6 @@ const UserInput = () => {
                   type="number"
                   name="name"
                   placeholder="negative number"
-                  onChange={(e) => setPayRoll(parseInt(e.currentTarget.value))}
                 />
               </form>
             </div>
@@ -72,7 +70,6 @@ const UserInput = () => {
                   type="number"
                   name="name"
                   placeholder="negative number"
-                  onChange={(e) => setNonPayRoll(parseInt(e.currentTarget.value))}
                 />
               </form>
             </div>
@@ -87,13 +84,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               Current amount of cash available
             </p>
-            <Input 
-            type="number" 
-            name="name" 
-            placeholder="$0.00" 
-            onChange={(e)=>setMonthlyIncome(parseInt(e.currentTarget.value) || 0)}
-            />
-            
+            <Input type="number" name="name" placeholder="$0.00" />
           </form>
 
           <form className="growth-rate grid gap-2 pt-5">
@@ -101,12 +92,7 @@ const UserInput = () => {
             <p className="text-gray-500 text-sm">
               percentage increase in monthly revenue
             </p>
-            <Input 
-            type="number" 
-            name="name" 
-            placeholder="%"
-            onChange={(e)=>setMonthlyGrowthRate(parseInt(e.currentTarget.value) || 0)}
-            />
+            <Input type="number" name="name" placeholder="%" />
           </form>
         </div>
 
@@ -143,7 +129,6 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange = {(e)=>setCogsPercentage(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
                 </div>

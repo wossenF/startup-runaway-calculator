@@ -103,10 +103,7 @@ const UserInput = () => {
             </p>
             <Input 
             type="number" 
-            name="name" 
-            placeholder="%"
-            onChange={(e)=>setMonthlyGrowthRate(parseInt(e.currentTarget.value) || 0)}
-            />
+            name="name" placeholder="%" />
           </form>
         </div>
 
@@ -143,7 +140,6 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange = {(e)=>setCogsPercentage(parseInt(e.currentTarget.value) || 0)}
                     />
                   </form>
                 </div>
