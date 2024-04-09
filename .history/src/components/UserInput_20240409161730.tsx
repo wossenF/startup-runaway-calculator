@@ -4,8 +4,9 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
 
-
-const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
+export function AllState(){
+  return(
+    const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
 const [showFundraising, setShowFundraising] = useState(false);
 const [showHiring, setShowHiring] = useState(false);
 const [showExpenseReduction, setShowExpenseReduction] = useState(false);
@@ -21,6 +22,9 @@ const [monthlyCompensation,setMonthlyCompensation]=useState(0);
 const [newHiresTimeline,setNewHiresTimeline]=useState(0);
 const [nonPayrollReduction,setNonPayrollReduction]=useState(0);
 const [nonPayrollReductionTimeline,setNonPayrollReductionTimeline]=useState(0);
+
+  )
+}
 
 const UserInput = () => {
 

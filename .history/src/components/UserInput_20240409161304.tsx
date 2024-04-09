@@ -3,12 +3,6 @@ import { MouseEvent, useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
-
-
-const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
-const [showFundraising, setShowFundraising] = useState(false);
-const [showHiring, setShowHiring] = useState(false);
-const [showExpenseReduction, setShowExpenseReduction] = useState(false);
 const [cashBalance, setCashBalance] = useState(0);
 const [payRoll,setPayRoll]=useState(0);
 const [nonPayRoll,setNonPayRoll]=useState(0);
@@ -21,8 +15,13 @@ const [monthlyCompensation,setMonthlyCompensation]=useState(0);
 const [newHiresTimeline,setNewHiresTimeline]=useState(0);
 const [nonPayrollReduction,setNonPayrollReduction]=useState(0);
 const [nonPayrollReductionTimeline,setNonPayrollReductionTimeline]=useState(0);
-
 const UserInput = () => {
+  const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
+  const [showFundraising, setShowFundraising] = useState(false);
+  const [showHiring, setShowHiring] = useState(false);
+  const [showExpenseReduction, setShowExpenseReduction] = useState(false);
+
+  
 
   const handleInputClick = (event: MouseEvent) => {
     event.stopPropagation();

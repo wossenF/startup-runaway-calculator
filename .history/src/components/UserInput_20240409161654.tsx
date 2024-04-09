@@ -4,7 +4,9 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
 
-
+export function State(){
+  
+}
 const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
 const [showFundraising, setShowFundraising] = useState(false);
 const [showHiring, setShowHiring] = useState(false);
