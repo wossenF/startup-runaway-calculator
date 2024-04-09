@@ -34,13 +34,13 @@ const UserInput = () => {
     while (cashBalance) {
       
         // Calculate monthly revenue
-        let monthlyRevenue = monthlyIncome * (1 + monthlyGrowthRate / 100);
+        let monthlyRevenue = monthlyIncome * (1 + growthRate / 100);
 
         // Calculate gross profit
         let grossProfit = monthlyRevenue - (monthlyRevenue * (cogsPercentage / 100));
 
         // Calculate net income
-        let netIncome = grossProfit - (payRoll + nonPayRoll);
+        let netIncome = grossProfit - (payroll + nonPayroll);
 
         // Update cash balance
         cashBalance += netIncome;

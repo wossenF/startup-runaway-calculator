@@ -40,7 +40,7 @@ const UserInput = () => {
         let grossProfit = monthlyRevenue - (monthlyRevenue * (cogsPercentage / 100));
 
         // Calculate net income
-        let netIncome = grossProfit - (payRoll + nonPayRoll);
+        let netIncome = grossProfit - (payRoll + nonPayroll);
 
         // Update cash balance
         cashBalance += netIncome;

@@ -9,7 +9,7 @@ const UserInput = () => {
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
   const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  const [initialCashBalance, setCashBalance] = useState(0);
+  const [cashBalance, setCashBalance] = useState(0);
   const [payRoll, setPayRoll] = useState(0);
   const [nonPayRoll, setNonPayRoll] = useState(0);
   const [monthlyIncome, setMonthlyIncome] = useState(0);
@@ -27,38 +27,6 @@ const UserInput = () => {
     event.stopPropagation();
   };
 
-  const RunawayCalculator=()=>{
-    let cashBalance = initialCashBalance;
-    let runwayMonths = 0;
-
-    while (cashBalance) {
-      
-        // Calculate monthly revenue
-        let monthlyRevenue = monthlyIncome * (1 + monthlyGrowthRate / 100);
-
-        // Calculate gross profit
-        let grossProfit = monthlyRevenue - (monthlyRevenue * (cogsPercentage / 100));
-
-        // Calculate net income
-        let netIncome = grossProfit - (payRoll + nonPayRoll);
-
-        // Update cash balance
-        cashBalance += netIncome;
-        cashBalance += fundraisingAmount; // Assuming fundraising adds cash
-        cashBalance -= monthlyCompensation; // Assuming monthly hiring costs
-        cashBalance -= nonPayrollReduction; // Assuming reduction in non-payroll expenses
-
-        // Move to the next month
-        runwayMonths++;
-
-        if (fundraisingTimeline && runwayMonths >= fundraisingTimeline) {
-            // End calculation after fundraising timeline
-            break;
-        }
-    }
-
-    return runwayMonths;
-  }
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
@@ -356,7 +324,15 @@ const UserInput = () => {
         </div>
       </div>
 
+      let runwayMonths = 0;
+      let initialCashBalance=cashBalance-monthlyExpense 
+
+      let monthlyExpense=payroll + nonPayroll 
       
+      let monthlyRevenue=monthlyIncome*(GrowthRate)+ initialCashBalance 
+      let GrossProfit=monthlyRevenue-cogsPercentage 
+      let netIncome = GrossProfit - monthlyExpense cashBalance += netIncome cashBalance += fundraisingAmount
+      cashBalance -= monthlyCompensation cashBalance -= nonPayrollReduction
     </>
   );
 };
