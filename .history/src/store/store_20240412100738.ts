@@ -1,0 +1,35 @@
+import create from 'zustand';
+
+const inputStore = create((set) => ({
+    data:[],
+    // addData: (data) => set((state) => ({ data: [...state.data, data] })),
+    addInitialCashBalance:(initialCashBalance:number)=>set((state:any)=>({initialCashBalance})),
+    addMonthlyIncome:(monthlyIncome:number)=>set((state:any)=>({monthlyIncome})),
+    addMonthlyGrowthRate:(monthlyGrowthRate:number)=>set((state:any)=>({monthlyGrowthRate})),
+    addCogsPercentage:(cogsPercentage:number)=>set((state:any)=>({cogsPercentage})),
+    addPayRoll:(payRoll:number)=>set((state:any)=>({payRoll})),
+    addNonPayRoll:(nonPayRoll:number)=>set((state:any)=>({nonPayRoll})),
+    addFundraisingAmount:(fundraisingAmount:number)=>set((state:any)=>({fundraisingAmount})),
+    addMonthlyCompensation:(monthlyCompensation:number)=>set((state:any)=>({monthlyCompensation})),
+    addNonPayrollReduction:(nonPayrollReduction:number)=>set((state:any)=>({nonPayrollReduction})),
+    addNonPayrollReductionTimeline:(nonPayrollReductionTimeline:number)=>set((state:any)=>({nonPayrollReductionTimeline})),
+    addFundraisingTimeline:(fundraisingTimeline:number)=>set((state:any)=>({fundraisingTimeline})),
+    addnewHiresTimeline:(newHiresTimeline:number)=>set((state:any)=>({newHiresTimeline})),
+    resetInputs:()=>{set((state:any)=>({
+        initialCashBalance:0,
+        monthlyIncome:0,
+        monthlyGrowthRate:0,
+        cogsPercentage:0,
+        payRoll:0,
+        nonPayRoll:0,
+        fundraisingAmount:0,
+        monthlyCompensation:0,
+        nonPayrollReduction:0,
+        nonPayrollReductionTimeline:0,
+        fundraisingTimeline:0,
+        newHiresTimeline:0
+    }))},
+}));
+export default inputStore;
+
+  
