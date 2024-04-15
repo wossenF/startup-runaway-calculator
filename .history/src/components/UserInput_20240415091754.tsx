@@ -4,75 +4,71 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
 import useInputStore from "../store/store";
-import { ZodError, any, boolean } from "zod";
+import {z} from "zod";
 
-interface Errors {
-  [key: string]: boolean;
-}
-const UserInput = () => {
-  const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
-  const [showFundraising, setShowFundraising] = useState(false);
-  const [showHiring, setShowHiring] = useState(false);
-  const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  const handleInputClick = (event: MouseEvent) => {
-    event.stopPropagation();
-  };
+const schema = z.object({
+  initialCashBalance: z.number(),
+  monthlyIncome: z.number(),
+  monthlyGrowthRate: z.number(),
+  cogsPercentage: z.number(),
+  payRoll: z.number(),
+  nonPayRoll: z.number(),
+  fundraisingAmount: z.number(),
+  monthlyCompensation: z.number(),
+  nonPayrollReduction: z.number(),
+  nonPayrollReductionTimeline: z.number(),
+  fundraisingTimeline: z.number(),
+  newHiresTimeline: z.number(),
+});
 
+export const SettingsForm = () => {
+  const [formState, setFormState] = useState<z.infer<typeof schema>>({
+    initialCashBalance: 0,
+    monthlyIncome: 0,
+    monthlyGrowthRate: 0,
+    cogsPercentage: 0,
+    payRoll: 0,
+    nonPayRoll: 0,
+    fundraisingAmount: 0,
+    monthlyCompensation: 0,
+    nonPayrollReduction: 0,
+    nonPayrollReductionTimeline: 0,
+    fundraisingTimeline: 0,
+    newHiresTimeline: 0,
+  });
   const setField = useInputStore((state) => state.setField);
-  const validationErrors = useInputStore((state) => state.validationErrors);
-  const [errors, setErrors] = useState<Errors>({});
 
-  const handleInputChange = (field: any, value: string) => {
-    try {
-      setField(field, parseFloat(value)); // Parse and set the value
-    } catch (error) {
-      if (error instanceof ZodError) {
-        // Check if it's a ZodError
-        console.error("Zod Validation Error:", error);
-        // Update errors state with a user-friendly message
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [field]: "Please enter a valid number",
-        }));
-      } else {
-        throw error; // Re-throw other errors
-      }
-    }
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: parseInt(value),
+    }));
   };
 
-  type InputStoreState = ReturnType<typeof useInputStore>;
-  const validateField = (field: keyof InputStoreState) => {
-    const value = useInputStore((state) => state[field]);
-    if (isNaN(value)) {
-      setErrors((prevErrors) => ({ ...prevErrors, [field]: true }));
-    } else {
-      setErrors((prevErrors) => ({ ...prevErrors, [field]: false }));
-    }
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    schema.parse(formState);
+    Object.entries(formState).forEach(([key, value]) => {
+      setField(key as keyof typeof formState, value);
+    });
   };
+
   return (
-    <>
-      <div className="container grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
+    <form onSubmit={handleFormSubmit}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
         <div className="cash-balance bg-secondary/50 rounded-lg p-7">
-          <form className="grid gap-2">
-            <Label className="font-medium text-xl">Cash Balance</Label>
-            <p className="text-gray-500 text-sm">
-              Current amount of cash available
-            </p>
-            <Input
-              type="number"
-              name="name"
-              placeholder="$1000,000"
-              // value={useInputStore((state) => state.initialCashBalance)}
-              onChange={(e) =>
-                setField("initialCashBalance", parseFloat(e.target.value))
-              }
-            />
-            {errors.initialCashBalance && (
-              <span className="text-[#Ff0000]">
-                error: {errors.initialCashBalance}
-              </span>
-            )}
-          </form>
+          <Label className="font-medium text-xl">Cash Balance</Label>
+          <p className="text-gray-500 text-sm">
+            Current amount of cash available
+          </p>
+          <Input
+            type="number"
+            name="initialCashBalance"
+            placeholder="$0.00"
+            value={formState.initialCashBalance}
+            onChange={handleFormChange}
+          />
         </div>
 
         <div className="monthly-expense bg-secondary/50 rounded-lg p-7 grid gap-2">
@@ -85,35 +81,70 @@ const UserInput = () => {
               </p>
               <Input
                 type="number"
-                name="name"
+                name="payRoll"
                 placeholder="negative number"
-                onChange={(e) => {
-                  setField("payRoll", parseFloat(e.target.value));
-                }}
-              />
-              {errors.payRoll && (
-                <span className="text-[#Ff0000]">error: {errors.payRoll}</span>
-              )}
-            </form>
-            <form className="grid gap-2">
-              <Label className="">NonPayroll</Label>
-              <p className="text-gray-500 text-sm">
-                expenses like marketing, travel, and equipment
-              </p>
-              <Input
-                type="number"
-                name="name"
-                placeholder="negative number"
-                onChange={(e) => {
-                  setField("nonPayRoll", parseFloat(e.target.value) || 0);
-                }}
-              />
-              {errors.nonPayRoll && (
-                <span className="text-[#Ff0000]">
-                  error: {errors.nonPayRoll}
-                </span>
-              )}
-            </form>
+
+const UserInput = () => {
+
+  const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
+  const [showFundraising, setShowFundraising] = useState(false);
+  const [showHiring, setShowHiring] = useState(false);
+  const [showExpenseReduction, setShowExpenseReduction] = useState(false);  
+  const handleInputClick = (event: MouseEvent) => {
+    event.stopPropagation();
+  };
+
+  const setField = useInputStore((state) => state.setField);
+  
+  return (
+    <>
+      <div className="container grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
+        <div className="cash-balance bg-secondary/50 rounded-lg p-7">
+          <form className="grid gap-2">
+            <Label className="font-medium text-xl">Cash Balance</Label>
+            <p className="text-gray-500 text-sm">
+              Current amount of cash available
+            </p>
+            <Input
+              type="number"
+              name="name"
+              placeholder="$0.00"
+              value={useInputStore((state) => state.initialCashBalance)}
+              onChange={(e) =>
+                setField("initialCashBalance", parseFloat(e.target.value))
+              }
+            />
+            <span></span>
+          </form>
+        </div>
+
+        <div className="monthly-expense bg-secondary/50 rounded-lg p-7 grid gap-2">
+          <Label className="font-medium text-xl">Monthly Expenses</Label>
+          <div className="grid grid-cols-2 gap-3 pt-1">
+              <form className="grid gap-2">
+                <Label className="">Payroll</Label>
+                <p className="text-gray-500 text-sm">
+                  monthly payroll salaries and contractor payments
+                </p>
+                <Input
+                  type="number"
+                  name="name"
+                  placeholder="negative number"
+                  onChange={(e)=>{setField("payRoll", parseFloat(e.target.value))}}
+                />
+              </form>
+              <form className="grid gap-2">
+                <Label className="">NonPayroll</Label>
+                <p className="text-gray-500 text-sm">
+                  expenses like marketing, travel, and equipment
+                </p>
+                <Input
+                  type="number"
+                  name="name"
+                  placeholder="negative number"
+                  onChange={(e)=>{setField("nonPayRoll", parseFloat(e.target.value) || 0)}}
+                />
+              </form>
           </div>
         </div>
 
@@ -128,15 +159,8 @@ const UserInput = () => {
               type="number"
               name="name"
               placeholder="$0.00"
-              onChange={(e) => {
-                setField("monthlyIncome", parseFloat(e.target.value) || 0);
-              }}
+              onChange={(e)=>{setField('monthlyIncome', parseFloat(e.target.value) || 0)}}
             />
-            {errors.monthlyIncome && (
-              <span className="text-[#Ff0000]">
-                error: {errors.monthlyIncome}
-              </span>
-            )}
           </form>
 
           <form className="growth-rate grid gap-2 pt-5">
@@ -148,15 +172,8 @@ const UserInput = () => {
               type="number"
               name="name"
               placeholder="%"
-              onChange={(e) => {
-                setField("monthlyGrowthRate", parseFloat(e.target.value) || 0);
-              }}
+              onChange={(e)=>{setField('monthlyGrowthRate', parseFloat(e.target.value) || 0)}}
             />
-            {errors.monthlyGrowthRate && (
-              <span className="text-[#Ff0000]">
-                error: {errors.monthlyGrowthRate}
-              </span>
-            )}
           </form>
         </div>
 
@@ -193,18 +210,8 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) => {
-                        setField(
-                          "cogsPercentage",
-                          parseFloat(e.target.value) || 0
-                        );
-                      }}
+                     onChange={(e)=>{setField('cogsPercentage', parseFloat(e.target.value) || 0)}}
                     />
-                    {errors.cogsPercentage && (
-                      <span className="text-[#Ff0000]">
-                        error: {errors.cogsPercentage}
-                      </span>
-                    )}
                   </form>
                 </div>
               )}
@@ -235,18 +242,9 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) => {
-                        setField(
-                          "fundraisingTimeline",
-                          parseFloat(e.target.value) || 0
-                        );
-                      }}
+                      onChange={(e)=>{setField('fundraisingTimeline', parseFloat(e.target.value) || 0)}}
+                      
                     />
-                    {errors.fundraisingTimeline && (
-                      <span className="text-[#Ff0000]">
-                        {errors.fundraisingTimeline}
-                      </span>
-                    )}
                   </form>
                   <form className="grid gap-2">
                     <Label className="">Fundraising amount</Label>
@@ -258,19 +256,9 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) => {
-                        setField(
-                          "fundraisingAmount",
-                          parseFloat(e.target.value) || 0
-                        );
-                      }}
+                      onChange={(e)=>{setField('fundraisingAmount', parseFloat(e.target.value) || 0)}}
+                      
                     />
-                    {errors.fundraisingAmount && (
-                      <span className="text-[#Ff0000]">
-                        error: {errors.fundraisingAmount}
-                      </span>
-                    )}
-
                   </form>
                 </div>
               )}
@@ -302,18 +290,8 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) => {
-                        setField(
-                          "monthlyCompensation",
-                          parseFloat(e.target.value) || 0
-                        );
-                      }}
+                      onChange={(e)=>{setField('monthlyCompensation', parseFloat(e.target.value) || 0)}}
                     />
-                    {
-                      errors.monthlyCompensation && (
-                        <span className="text-red-500">{errors.monthlyCompensation}</span>
-                      )
-                    }
                   </form>
 
                   <form className="pt-5 grid gap-2">
@@ -326,18 +304,8 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) => {
-                        setField(
-                          "newHiresTimeline",
-                          parseFloat(e.target.value) || 0
-                        );
-                      }}
+                      onChange={(e)=>{setField('newHiresTimeline', parseFloat(e.target.value) || 0)}}
                     />
-                    {
-                      errors.newHiresTimeline && (
-                        <span className="text-red-500">{errors.newHiresTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}
@@ -369,18 +337,8 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) => {
-                        setField(
-                          "nonPayrollReduction",
-                          parseFloat(e.target.value) || 0
-                        );
-                      }}
+                      onChange={(e)=>{setField('nonPayrollReduction', parseFloat(e.target.value) || 0)}}
                     />
-                    {
-                      errors.nonPayrollReduction && (
-                        <span className="text-red-500">{errors.nonPayrollReduction}</span>
-                      )
-                    }
                   </form>
 
                   <form className="grid gap-2">
@@ -393,18 +351,8 @@ const UserInput = () => {
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
-                      onChange={(e) => {
-                        setField(
-                          "nonPayrollReductionTimeline",
-                          parseFloat(e.target.value) || 0
-                        );
-                      }}
+                      onChange={(e)=>{setField('nonPayrollReductionTimeline', parseFloat(e.target.value) || 0)}}
                     />
-                    {
-                      errors.nonPayrollReductionTimeline && (
-                        <span className="text-red-500">{errors.nonPayrollReductionTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}
@@ -414,6 +362,7 @@ const UserInput = () => {
       </div>
     </>
   );
+
 };
 
 export default UserInput;

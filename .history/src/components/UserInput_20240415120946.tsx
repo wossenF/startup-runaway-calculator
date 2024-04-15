@@ -92,8 +92,10 @@ const UserInput = () => {
                 }}
               />
               {errors.payRoll && (
-                <span className="text-[#Ff0000]">error: {errors.payRoll}</span>
-              )}
+              <span className="text-[#Ff0000]">
+                error: {errors.payRoll}
+              </span>
+            )}
             </form>
             <form className="grid gap-2">
               <Label className="">NonPayroll</Label>
@@ -109,10 +111,10 @@ const UserInput = () => {
                 }}
               />
               {errors.nonPayRoll && (
-                <span className="text-[#Ff0000]">
-                  error: {errors.nonPayRoll}
-                </span>
-              )}
+              <span className="text-[#Ff0000]">
+                error: {errors.nonPayRoll}
+              </span>
+            )}
             </form>
           </div>
         </div>
@@ -200,11 +202,11 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {errors.cogsPercentage && (
-                      <span className="text-[#Ff0000]">
-                        error: {errors.cogsPercentage}
-                      </span>
-                    )}
+                     {errors.cog && (
+              <span className="text-[#Ff0000]">
+                error: {errors.initialCashBalance}
+              </span>
+            )}
                   </form>
                 </div>
               )}
@@ -242,11 +244,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {errors.fundraisingTimeline && (
-                      <span className="text-[#Ff0000]">
-                        {errors.fundraisingTimeline}
-                      </span>
-                    )}
                   </form>
                   <form className="grid gap-2">
                     <Label className="">Fundraising amount</Label>
@@ -265,12 +262,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {errors.fundraisingAmount && (
-                      <span className="text-[#Ff0000]">
-                        error: {errors.fundraisingAmount}
-                      </span>
-                    )}
-
                   </form>
                 </div>
               )}
@@ -309,11 +300,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.monthlyCompensation && (
-                        <span className="text-red-500">{errors.monthlyCompensation}</span>
-                      )
-                    }
                   </form>
 
                   <form className="pt-5 grid gap-2">
@@ -333,11 +319,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.newHiresTimeline && (
-                        <span className="text-red-500">{errors.newHiresTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}
@@ -376,11 +357,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReduction && (
-                        <span className="text-red-500">{errors.nonPayrollReduction}</span>
-                      )
-                    }
                   </form>
 
                   <form className="grid gap-2">
@@ -400,11 +376,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReductionTimeline && (
-                        <span className="text-red-500">{errors.nonPayrollReductionTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}

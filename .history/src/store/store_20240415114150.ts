@@ -4,6 +4,7 @@ import { number, z, ZodType } from 'zod';
 // Define Zod schema
 const InputSchema = z.object({
   
+  [key:string]:number,
   initialCashBalance: z.number().nonnegative(),
   monthlyIncome: z.number().nonnegative(),
   monthlyGrowthRate: z.number().min(0).max(100),
@@ -28,7 +29,7 @@ type ValidationErrors = Partial<Record<keyof InputStoreState, string>>;
 
 // Create store
 const useInputStore = create<InputStoreState & { setField: SetField; validationErrors: ValidationErrors }>((set) => ({
-  initialCashBalance: 0,
+  initialCashBalance:0,
   monthlyIncome: 0,
   monthlyGrowthRate: 0,
   cogsPercentage: 0,
@@ -51,6 +52,7 @@ const useInputStore = create<InputStoreState & { setField: SetField; validationE
     // Clear validation error for the field
     set((state) => ({ ...state, validationErrors: { ...state.validationErrors, [field]: undefined } }));
   },
+  
 }));
 
 export default useInputStore;

@@ -3,7 +3,6 @@ import { number, z, ZodType } from 'zod';
 
 // Define Zod schema
 const InputSchema = z.object({
-  
   initialCashBalance: z.number().nonnegative(),
   monthlyIncome: z.number().nonnegative(),
   monthlyGrowthRate: z.number().min(0).max(100),

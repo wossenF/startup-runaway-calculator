@@ -2,35 +2,34 @@ import { create } from 'zustand';
 import { number, z, ZodType } from 'zod';
 
 // Define Zod schema
-const InputSchema = z.object({
-  
-  initialCashBalance: z.number().nonnegative(),
+  [key:string]:number,
   monthlyIncome: z.number().nonnegative(),
-  monthlyGrowthRate: z.number().min(0).max(100),
   cogsPercentage: z.number().min(0).max(100),
-  payRoll: z.number().negative(),
   nonPayRoll: z.number().negative(),
-  fundraisingAmount: z.number(),
   monthlyCompensation: z.number(),
-  nonPayrollReduction: z.number(),
   nonPayrollReductionTimeline: z.number().min(0).max(12),
-  fundraisingTimeline: z.number().min(0).max(12),
   newHiresTimeline: z.number().min(0).max(12),
-});
 
-// Define type for input store state
 type InputStoreState = z.infer<typeof InputSchema>;
-
 // Define setField function signature
-type SetField = (field: keyof InputStoreState, value: number) => void;
 
-type ValidationErrors = Partial<Record<keyof InputStoreState, string>>;
 
-// Create store
 const useInputStore = create<InputStoreState & { setField: SetField; validationErrors: ValidationErrors }>((set) => ({
-  initialCashBalance: 0,
   monthlyIncome: 0,
-  monthlyGrowthRate: 0,
+const InputSchema = z.object({
+});
+   newHiresTimeline: z.number().min(0).max(12),
+   fundraisingTimeline: z.number().min(0).max(12),
+   nonPayrollReductionTimeline: z.number().min(0).max(12),
+   nonPayrollReduction: z.number(),
+   monthlyCompensation: z.number(),
+   fundraisingAmount: z.number(),
+   nonPayRoll: z.number().negative(),
+   payRoll: z.number().negative(),
+   cogsPercentage: z.number().min(0).max(100),
+   monthlyGrowthRate: z.number().min(0).max(100),
+   monthlyIncome: z.number().nonnegative(),
+   initialCashBalance: z.number().nonnegative(),
   cogsPercentage: 0,
   payRoll: 0,
   nonPayRoll: 0,

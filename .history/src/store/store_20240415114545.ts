@@ -3,7 +3,7 @@ import { number, z, ZodType } from 'zod';
 
 // Define Zod schema
 const InputSchema = z.object({
-  
+  [key: string]: number,
   initialCashBalance: z.number().nonnegative(),
   monthlyIncome: z.number().nonnegative(),
   monthlyGrowthRate: z.number().min(0).max(100),
@@ -30,26 +30,17 @@ type ValidationErrors = Partial<Record<keyof InputStoreState, string>>;
 const useInputStore = create<InputStoreState & { setField: SetField; validationErrors: ValidationErrors }>((set) => ({
   initialCashBalance: 0,
   monthlyIncome: 0,
-  monthlyGrowthRate: 0,
-  cogsPercentage: 0,
-  payRoll: 0,
-  nonPayRoll: 0,
-  fundraisingAmount: 0,
-  monthlyCompensation: 0,
-  nonPayrollReduction: 0,
-  nonPayrollReductionTimeline: 0,
-  fundraisingTimeline: 0,
-  newHiresTimeline: 0,
-  validationErrors: {}, // Initialize validation errors object
+  // ... other fields
+  validationErrors: {},
 
   // Define setField function
   setField: (field, value) => {
-    console.log("Received value:", value); // Log the received value
-    // Validate input against schema using the shape property
+    console.log("Received value:", value);
     const validatedValue = InputSchema.shape[field].parse(value);
-    set((state) => ({ ...state, [field]: validatedValue }));
-    // Clear validation error for the field
-    set((state) => ({ ...state, validationErrors: { ...state.validationErrors, [field]: undefined } }));
+    set((state) => ({
+      [field]: validatedValue,
+      validationErrors: { ...state.validationErrors, [field]: undefined },
+    }));
   },
 }));
 

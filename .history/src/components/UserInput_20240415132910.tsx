@@ -376,11 +376,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReduction && (
-                        <span className="text-red-500">{errors.nonPayrollReduction}</span>
-                      )
-                    }
                   </form>
 
                   <form className="grid gap-2">
@@ -400,11 +395,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReductionTimeline && (
-                        <span className="text-red-500">{errors.nonPayrollReductionTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}

@@ -1,21 +1,24 @@
 import { create } from 'zustand';
-import { number, z, ZodType } from 'zod';
+import { z, ZodType } from 'zod';
 
 // Define Zod schema
 const InputSchema = z.object({
-  
   initialCashBalance: z.number().nonnegative(),
-  monthlyIncome: z.number().nonnegative(),
-  monthlyGrowthRate: z.number().min(0).max(100),
-  cogsPercentage: z.number().min(0).max(100),
-  payRoll: z.number().negative(),
-  nonPayRoll: z.number().negative(),
+  monthlyIncome: z.number().min(0).max(100),
+  monthlyGrowthRate: z.number(
+    {message:'Monthly growth rate must be a number'}
+  ).nonnegative(
+    {message:'Monthly growth rate cannot be negative'}
+  ),
+  cogsPercentage: z.number(),
+  payRoll: z.number(),
+  nonPayRoll: z.number(),
   fundraisingAmount: z.number(),
   monthlyCompensation: z.number(),
   nonPayrollReduction: z.number(),
-  nonPayrollReductionTimeline: z.number().min(0).max(12),
-  fundraisingTimeline: z.number().min(0).max(12),
-  newHiresTimeline: z.number().min(0).max(12),
+  nonPayrollReductionTimeline: z.number(),
+  fundraisingTimeline: z.number(),
+  newHiresTimeline: z.number(),
 });
 
 // Define type for input store state
@@ -25,10 +28,9 @@ type InputStoreState = z.infer<typeof InputSchema>;
 type SetField = (field: keyof InputStoreState, value: number) => void;
 
 type ValidationErrors = Partial<Record<keyof InputStoreState, string>>;
-
 // Create store
-const useInputStore = create<InputStoreState & { setField: SetField; validationErrors: ValidationErrors }>((set) => ({
-  initialCashBalance: 0,
+const useInputStore = create<InputStoreState & { setField: SetField }>((set) => ({
+  initialCashBalance: 10000,
   monthlyIncome: 0,
   monthlyGrowthRate: 0,
   cogsPercentage: 0,
@@ -40,7 +42,6 @@ const useInputStore = create<InputStoreState & { setField: SetField; validationE
   nonPayrollReductionTimeline: 0,
   fundraisingTimeline: 0,
   newHiresTimeline: 0,
-  validationErrors: {}, // Initialize validation errors object
 
   // Define setField function
   setField: (field, value) => {
@@ -48,9 +49,8 @@ const useInputStore = create<InputStoreState & { setField: SetField; validationE
     // Validate input against schema using the shape property
     const validatedValue = InputSchema.shape[field].parse(value);
     set((state) => ({ ...state, [field]: validatedValue }));
-    // Clear validation error for the field
-    set((state) => ({ ...state, validationErrors: { ...state.validationErrors, [field]: undefined } }));
   },
+  
 }));
 
 export default useInputStore;

@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
 import useInputStore from "../store/store";
-import { ZodError, any, boolean } from "zod";
+import { any, boolean } from "zod";
 
 interface Errors {
   [key: string]: boolean;
@@ -23,26 +23,12 @@ const UserInput = () => {
   const [errors, setErrors] = useState<Errors>({});
 
   const handleInputChange = (field: any, value: string) => {
-    try {
-      setField(field, parseFloat(value)); // Parse and set the value
-    } catch (error) {
-      if (error instanceof ZodError) {
-        // Check if it's a ZodError
-        console.error("Zod Validation Error:", error);
-        // Update errors state with a user-friendly message
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [field]: "Please enter a valid number",
-        }));
-      } else {
-        throw error; // Re-throw other errors
-      }
-    }
+    setField(field, parseFloat(value));
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: false }));
   };
 
-  type InputStoreState = ReturnType<typeof useInputStore>;
-  const validateField = (field: keyof InputStoreState) => {
-    const value = useInputStore((state) => state[field]);
+  const validateField = (field: number) => {
+    const value = useInputStore((state) => state[field:b]);
     if (isNaN(value)) {
       setErrors((prevErrors) => ({ ...prevErrors, [field]: true }));
     } else {
@@ -67,11 +53,7 @@ const UserInput = () => {
                 setField("initialCashBalance", parseFloat(e.target.value))
               }
             />
-            {errors.initialCashBalance && (
-              <span className="text-[#Ff0000]">
-                error: {errors.initialCashBalance}
-              </span>
-            )}
+            <span className="text-[#Ff0000]">error</span>
           </form>
         </div>
 
@@ -91,9 +73,6 @@ const UserInput = () => {
                   setField("payRoll", parseFloat(e.target.value));
                 }}
               />
-              {errors.payRoll && (
-                <span className="text-[#Ff0000]">error: {errors.payRoll}</span>
-              )}
             </form>
             <form className="grid gap-2">
               <Label className="">NonPayroll</Label>
@@ -108,11 +87,6 @@ const UserInput = () => {
                   setField("nonPayRoll", parseFloat(e.target.value) || 0);
                 }}
               />
-              {errors.nonPayRoll && (
-                <span className="text-[#Ff0000]">
-                  error: {errors.nonPayRoll}
-                </span>
-              )}
             </form>
           </div>
         </div>
@@ -132,11 +106,6 @@ const UserInput = () => {
                 setField("monthlyIncome", parseFloat(e.target.value) || 0);
               }}
             />
-            {errors.monthlyIncome && (
-              <span className="text-[#Ff0000]">
-                error: {errors.monthlyIncome}
-              </span>
-            )}
           </form>
 
           <form className="growth-rate grid gap-2 pt-5">
@@ -152,11 +121,6 @@ const UserInput = () => {
                 setField("monthlyGrowthRate", parseFloat(e.target.value) || 0);
               }}
             />
-            {errors.monthlyGrowthRate && (
-              <span className="text-[#Ff0000]">
-                error: {errors.monthlyGrowthRate}
-              </span>
-            )}
           </form>
         </div>
 
@@ -200,11 +164,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {errors.cogsPercentage && (
-                      <span className="text-[#Ff0000]">
-                        error: {errors.cogsPercentage}
-                      </span>
-                    )}
                   </form>
                 </div>
               )}
@@ -242,11 +201,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {errors.fundraisingTimeline && (
-                      <span className="text-[#Ff0000]">
-                        {errors.fundraisingTimeline}
-                      </span>
-                    )}
                   </form>
                   <form className="grid gap-2">
                     <Label className="">Fundraising amount</Label>
@@ -265,12 +219,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {errors.fundraisingAmount && (
-                      <span className="text-[#Ff0000]">
-                        error: {errors.fundraisingAmount}
-                      </span>
-                    )}
-
                   </form>
                 </div>
               )}
@@ -309,11 +257,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.monthlyCompensation && (
-                        <span className="text-red-500">{errors.monthlyCompensation}</span>
-                      )
-                    }
                   </form>
 
                   <form className="pt-5 grid gap-2">
@@ -333,11 +276,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.newHiresTimeline && (
-                        <span className="text-red-500">{errors.newHiresTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}
@@ -376,11 +314,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReduction && (
-                        <span className="text-red-500">{errors.nonPayrollReduction}</span>
-                      )
-                    }
                   </form>
 
                   <form className="grid gap-2">
@@ -400,11 +333,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReductionTimeline && (
-                        <span className="text-red-500">{errors.nonPayrollReductionTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}

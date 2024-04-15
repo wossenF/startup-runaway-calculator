@@ -310,9 +310,7 @@ const UserInput = () => {
                       }}
                     />
                     {
-                      errors.monthlyCompensation && (
-                        <span className="text-red-500">{errors.monthlyCompensation}</span>
-                      )
+                      err
                     }
                   </form>
 
@@ -333,11 +331,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.newHiresTimeline && (
-                        <span className="text-red-500">{errors.newHiresTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}
@@ -376,11 +369,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReduction && (
-                        <span className="text-red-500">{errors.nonPayrollReduction}</span>
-                      )
-                    }
                   </form>
 
                   <form className="grid gap-2">
@@ -400,11 +388,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {
-                      errors.nonPayrollReductionTimeline && (
-                        <span className="text-red-500">{errors.nonPayrollReductionTimeline}</span>
-                      )
-                    }
                   </form>
                 </div>
               )}

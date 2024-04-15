@@ -402,8 +402,7 @@ const UserInput = () => {
                     />
                     {
                       errors.nonPayrollReductionTimeline && (
-                        <span className="text-red-500">{errors.nonPayrollReductionTimeline}</span>
-                      )
+                        <span className="text-red
                     }
                   </form>
                 </div>

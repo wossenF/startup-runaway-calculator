@@ -3,7 +3,12 @@ import { number, z, ZodType } from 'zod';
 
 // Define Zod schema
 const InputSchema = z.object({
-  
+  [key: string]: number, // Allow any key but the value must be a number
+});
+
+export type InputStoreState = Readonly<z.infer<typeof InputSchema>>;
+
+type SetInputAction = (name:
   initialCashBalance: z.number().nonnegative(),
   monthlyIncome: z.number().nonnegative(),
   monthlyGrowthRate: z.number().min(0).max(100),
