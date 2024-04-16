@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
 import useInputStore  from "../store/store";
-import { ZodError} from "zod";
+import { ZodError, any, boolean } from "zod";
 
 interface Errors {
   [key: string]: boolean;

@@ -3,9 +3,9 @@ import { MouseEvent, useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
-import useInputStore  from "../store/store";
-import { ZodError} from "zod";
-
+import useInputStore from "../store/store";
+import { ZodError, any, boolean } from "zod";
+import {validation}
 interface Errors {
   [key: string]: boolean;
 }

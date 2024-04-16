@@ -30,11 +30,7 @@ export default function Home() {
       </p>
       
       {isClicked ? <Result /> : <UserInput />}
-      {isClicked && (
-        <div className="mt-4">
-          <p>Runway Months: {runawayMonths}</p>
-        </div>
-      )}
+      
       <Button type="submit" onClick={handleOnClick}>
         {isClicked ? back : calculate}
       </Button>

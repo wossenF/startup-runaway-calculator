@@ -28,13 +28,7 @@ export default function Home() {
         Empower your startup journey with financial clarity. Our calculator helps you understand
         your runway and make strategic decisions effortlessly.
       </p>
-      
       {isClicked ? <Result /> : <UserInput />}
-      {isClicked && (
-        <div className="mt-4">
-          <p>Runway Months: {runawayMonths}</p>
-        </div>
-      )}
       <Button type="submit" onClick={handleOnClick}>
         {isClicked ? back : calculate}
       </Button>

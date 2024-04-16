@@ -3,8 +3,8 @@ import { MouseEvent, useState } from "react";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
-import useInputStore  from "../store/store";
-import { ZodError} from "zod";
+import useInputStore from "../store/store";
+import { ZodError, any, boolean } from "zod";
 
 interface Errors {
   [key: string]: boolean;
@@ -51,7 +51,7 @@ const UserInput = () => {
   };
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
+      <div className="container grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
         <div className="cash-balance bg-secondary/50 rounded-lg p-7">
           <form className="grid gap-2">
             <Label className="font-medium text-xl">Cash Balance</Label>
