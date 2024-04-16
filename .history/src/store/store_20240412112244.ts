@@ -1,0 +1,65 @@
+import {create} from 'zustand';
+
+// type InputStoreState = {
+//   initialCashBalance: number;
+//   monthlyIncome: number;
+//   monthlyGrowthRate: number;
+//   cogsPercentage: number;
+//   payRoll: number;
+//   nonPayRoll: number;
+//   fundraisingAmount: number;
+//   monthlyCompensation: number;
+//   nonPayrollReduction: number;
+//   nonPayrollReductionTimeline: number;
+//   fundraisingTimeline: number;
+//   newHiresTimeline: number;
+  
+// };
+
+const useInputStore = create((set) => ({
+  initialCashBalance: 0,
+  monthlyIncome: 0,
+  monthlyGrowthRate: 0,
+  cogsPercentage: 0,
+  payRoll: 0,
+  nonPayRoll: 0,
+  fundraisingAmount: 0,
+  monthlyCompensation: 0,
+  nonPayrollReduction: 0,
+  nonPayrollReductionTimeline: 0,
+  fundraisingTimeline: 0,
+  newHiresTimeline: 0,
+
+  setinitialCashBalance: (value:number),
+  setmonthlyIncome: (value:number),
+  setmonthlyGrowthRate: (value:number),
+  setcogsPercentage: (value:number),
+  setpayRoll: (value:number),
+  setnonPayRoll: (value:number),
+  setfundraisingAmount: (value:number),
+  setmonthlyCompensation: (value:number),
+  setnonPayrollReduction: (value:number),
+  setnonPayrollReductionTimeline: (value:number),
+  setfundraisingTimeline: (value:number),
+  setnewHiresTimeline: (value:number),
+//   addData: (data:any) => set((state) => ({ ...state, ...data })),
+//   resetInputs: () =>
+//     set((state) => ({
+//       ...state,
+//       initialCashBalance: 0,
+//       monthlyIncome: 0,
+//       monthlyGrowthRate: 0,
+//       cogsPercentage: 0,
+//       payRoll: 0,
+//       nonPayRoll: 0,
+//       fundraisingAmount: 0,
+//       monthlyCompensation: 0,
+//       nonPayrollReduction: 0,
+//       nonPayrollReductionTimeline: 0,
+//       fundraisingTimeline: 0,
+//       newHiresTimeline: 0,
+//     })),
+
+}));
+
+export default useInputStore;
