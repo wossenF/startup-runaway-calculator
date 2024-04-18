@@ -22,7 +22,7 @@ export default function Home() {
       </p>
       {isClicked ? <MyComponent /> : <UserInput />}
       <Button onClick={handleClick}>
-        {isClicked ? "Back to Calculator" : "Calculate Runaway"}
+        {isClicked ? "Back to Calculator" : "Calculate RunAway"}
       </Button>
     </main>
   );

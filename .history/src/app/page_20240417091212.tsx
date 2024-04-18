@@ -1,4 +1,3 @@
-"use client"
 import { useState } from "react";
 import UserInput from "../components/UserInput";
 import { Button } from "../components/ui/button";
@@ -22,7 +21,7 @@ export default function Home() {
       </p>
       {isClicked ? <MyComponent /> : <UserInput />}
       <Button onClick={handleClick}>
-        {isClicked ? "Back to Calculator" : "Calculate Runaway"}
+        {isClicked ? "Back to Calculator" : "Show Chart"}
       </Button>
     </main>
   );

@@ -97,6 +97,7 @@ const MyComponent = () => {
       {Object.values(validationErrors).map((error, index) => (
         <p key={index} style={{ color: 'red' }}>{error}</p>
       ))}
+      {/* End of input fields */}
       {/* Display runway value */}
       <p>Estimated Runway: {runway} months</p>
       {/* Render the BarChart component */}

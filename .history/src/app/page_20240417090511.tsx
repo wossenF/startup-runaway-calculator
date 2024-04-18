@@ -1,16 +1,7 @@
 "use client"
-import { useState } from "react";
 import UserInput from "../components/UserInput";
-import { Button } from "../components/ui/button";
-import MyComponent from "../components/Result";
-
+import {Button} from "../components/ui/button"
 export default function Home() {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleClick = () => {
-    setIsClicked(prevState => !prevState);
-  };
-
   return (
     <main className="w-3/4 m-12">
       <h1 className="font-extrabold text-4xl">
@@ -20,10 +11,7 @@ export default function Home() {
         Empower your startup journey with financial clarity. Our calculator helps you understand
         your runway and make strategic decisions effortlessly.
       </p>
-      {isClicked ? <MyComponent /> : <UserInput />}
-      <Button onClick={handleClick}>
-        {isClicked ? "Back to Calculator" : "Calculate Runaway"}
-      </Button>
+      <UserInput/>
     </main>
   );
 }

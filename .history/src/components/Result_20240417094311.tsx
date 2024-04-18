@@ -88,15 +88,18 @@ const MyComponent = () => {
   
   return (
     <>
-      
+      {/* Display validation errors */}
+      {Object.values(validationErrors).map((error, index) => (
+        <p key={index} style={{ color: 'red' }}>{error}</p>
+      ))}
+      {/* Input fields */}
+      {/* You can replace this part with your input fields */}
       <input
         type="number"
         value={initialCashBalance}
         onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
       />
-      {Object.values(validationErrors).map((error, index) => (
-        <p key={index} style={{ color: 'red' }}>{error}</p>
-      ))}
+      {/* End of input fields */}
       {/* Display runway value */}
       <p>Estimated Runway: {runway} months</p>
       {/* Render the BarChart component */}

@@ -4,6 +4,7 @@ import useInputStore, { InputStoreState } from "../store/store"; // Import Input
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
 
 const MyComponent = () => {
+  // Destructure the state and functions from the useInputStore
   const { 
     initialCashBalance, 
     monthlyIncome, 
@@ -26,6 +27,7 @@ const MyComponent = () => {
     revenue: string;
   }
 
+  // Define states for runway and projected revenue
   const [runway, setRunway] = useState<number>(0);
   const [projectedRevenue, setProjectedRevenue] = useState<ProjectedRevenue[]>([]);
 
@@ -74,13 +76,14 @@ const MyComponent = () => {
       {
         label: 'Startup Runway',
         data: [runway],
-        backgroundColor: 'rgba(19, 33, 60, 1)',
+        backgroundColor: 'rgba(19, 33, 60, 1)
+        ',
         borderColor: 'rgba(255, 215, 0, 1)',
       },
       {
         label: 'Projected Monthly Revenue',
         data: projectedRevenue.map((data) => Number(data.revenue)), 
-        backgroundColor: 'rgba(250, 180, 70, 1)',
+        backgroundColor: 'rgba(255, 215, 0, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
       },
     ],
@@ -88,15 +91,18 @@ const MyComponent = () => {
   
   return (
     <>
-      
+      {/* Display validation errors */}
+      {Object.values(validationErrors).map((error, index) => (
+        <p key={index} style={{ color: 'red' }}>{error}</p>
+      ))}
+      {/* Input fields */}
+      {/* You can replace this part with your input fields */}
       <input
         type="number"
         value={initialCashBalance}
         onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
       />
-      {Object.values(validationErrors).map((error, index) => (
-        <p key={index} style={{ color: 'red' }}>{error}</p>
-      ))}
+      {/* End of input fields */}
       {/* Display runway value */}
       <p>Estimated Runway: {runway} months</p>
       {/* Render the BarChart component */}
