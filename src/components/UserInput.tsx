@@ -363,9 +363,7 @@ const UserInput = () => {
           </form>
         </div>
       </div>
-      <Button onClick={calculateRunaway}>
-        {isClicked ? "Back to Calculator" : "Calculate Runaway"}
-      </Button>
+    
       </>
     )
     }

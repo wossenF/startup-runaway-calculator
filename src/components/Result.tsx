@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BarChart from "./BarChart";
-import useInputStore, { InputStoreState } from "../store/store"; // Import InputStoreState
+import useInputStore, { InputStoreState } from "../store/store";
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
 
 const MyComponent = () => {
@@ -30,7 +30,7 @@ const MyComponent = () => {
   const [projectedRevenue, setProjectedRevenue] = useState<ProjectedRevenue[]>([]);
 
   useEffect(() => {
-    // Calculate runway based on input values
+    // Calculate runway and projected revenue whenever the input values change
     const userInput: InputStoreState = { 
       initialCashBalance, 
       monthlyIncome, 
@@ -44,13 +44,12 @@ const MyComponent = () => {
       nonPayrollReductionTimeline,
       fundraisingTimeline,
       newHiresTimeline,
-      validationErrors // Include validationErrors property
+      validationErrors
     };
     const calculatedRunway = calculateRunway(userInput);
     const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 12);
     
-    // Update state with calculated values
-    setRunway(Number(calculatedRunway));
+    setRunway(calculatedRunway.runway);
     setProjectedRevenue(calculatedProjectedRevenue);
   }, [
     initialCashBalance, 
@@ -65,7 +64,7 @@ const MyComponent = () => {
     nonPayrollReductionTimeline,
     fundraisingTimeline,
     newHiresTimeline,
-    validationErrors // Include validationErrors property in dependencies
+    validationErrors
   ]);
 
   const chartData = {
@@ -88,7 +87,6 @@ const MyComponent = () => {
   
   return (
     <>
-      
       <input
         type="number"
         value={initialCashBalance}
@@ -97,9 +95,7 @@ const MyComponent = () => {
       {Object.values(validationErrors).map((error, index) => (
         <p key={index} style={{ color: 'red' }}>{error}</p>
       ))}
-      {/* Display runway value */}
       <p>Estimated Runway: {runway} months</p>
-      {/* Render the BarChart component */}
       <BarChart datasets={chartData.datasets} labels={chartData.labels} />
     </>
   );
