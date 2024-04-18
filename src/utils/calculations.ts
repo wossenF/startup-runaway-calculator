@@ -1,14 +1,15 @@
 import { InputStoreState } from '../store/store';
+
 export function calculateRunway(userInput: InputStoreState): { runway: number; monthsRemaining: number | string } {
   const { initialCashBalance, payRoll, nonPayRoll } = userInput;
   const totalBurnRate = payRoll + nonPayRoll;
 
   if (totalBurnRate <= 0) {
-    return { runway: Infinity, monthsRemaining: "∞" }; // Return Infinity if burn rate is zero or negative
+    return { runway: Infinity, monthsRemaining: "∞" };
   }
 
-  const runwayMonths = initialCashBalance / totalBurnRate;
-  const monthsRemaining = Math.ceil(runwayMonths); // Round up to nearest whole month
+  const runwayMonths = Math.ceil(initialCashBalance / totalBurnRate);
+  const monthsRemaining = Math.ceil(runwayMonths);
 
   return { runway: runwayMonths, monthsRemaining };
 }
@@ -22,7 +23,7 @@ export function calculateProjectedRevenue(userInput: InputStoreState, months: nu
   for (let month = 1; month <= months; month++) {
     const growthAmount = currentRevenue * growthRateDecimal;
     currentRevenue += growthAmount;
-    projectedRevenue.push({ month, revenue: currentRevenue.toFixed(2) }); 
+    projectedRevenue.push({ month, revenue: currentRevenue.toFixed(2) });
   }
 
   return projectedRevenue;
