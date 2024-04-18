@@ -6,6 +6,7 @@ import { calculateRunway, calculateProjectedRevenue } from '../utils/calculation
 const MyComponent = () => {
   const { 
     initialCashBalance, 
+    currentCashBalance,
     monthlyIncome, 
     monthlyGrowthRate, 
     cogsPercentage, 
@@ -33,6 +34,7 @@ const MyComponent = () => {
     // Calculate runway and projected revenue whenever the input values change
     const userInput: InputStoreState = { 
       initialCashBalance, 
+      currentCashBalance,
       monthlyIncome, 
       monthlyGrowthRate, 
       cogsPercentage, 
@@ -67,20 +69,27 @@ const MyComponent = () => {
     validationErrors
   ]);
 
+  const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
+
   const chartData = {
-    labels: ['Runway (Months)'],
+    labels: projectedRevenue.map(data => `Month ${data.month}`),
     datasets: [
       {
-        label: 'Startup Runway',
-        data: [runway],
-        backgroundColor: 'rgba(19, 33, 60, 1)',
-        borderColor: 'rgba(255, 215, 0, 1)',
+        label: 'Projected Monthly Revenue',
+        data: projectedRevenue.map(data => Number(data.revenue)), 
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
       },
       {
-        label: 'Projected Monthly Revenue',
-        data: projectedRevenue.map((data) => Number(data.revenue)), 
-        backgroundColor: 'rgba(250, 180, 70, 1)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        label: 'Current Cash Balance',
+        data: projectedRevenue.map((data, index) => {
+          const cashBalance = initialCashBalance - (totalBurnRate * index);
+          return cashBalance.toFixed(2);
+        }),
+        type: 'bar',
+        fill: false,
+        backgroundColor: 'rgba(255, 215, 0, 0.5)',
+        borderColor: 'rgba(255, 0, 0, 1)',
       },
     ],
   };
@@ -92,6 +101,7 @@ const MyComponent = () => {
         value={initialCashBalance}
         onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
       />
+      {/* Display validation errors if any */}
       {Object.values(validationErrors).map((error, index) => (
         <p key={index} style={{ color: 'red' }}>{error}</p>
       ))}
