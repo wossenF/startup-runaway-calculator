@@ -6,6 +6,7 @@ import { calculateRunway, calculateProjectedRevenue } from '../utils/calculation
 const MyComponent = () => {
   const { 
     initialCashBalance, 
+    currentCashBalance,
     monthlyIncome, 
     monthlyGrowthRate, 
     cogsPercentage, 
@@ -33,6 +34,7 @@ const MyComponent = () => {
     // Calculate runway and projected revenue whenever the input values change
     const userInput: InputStoreState = { 
       initialCashBalance, 
+      currentCashBalance,
       monthlyIncome, 
       monthlyGrowthRate, 
       cogsPercentage, 
