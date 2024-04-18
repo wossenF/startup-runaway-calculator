@@ -6,7 +6,13 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
 import  MyComponent  from "./Result";
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  initialCashBalance: yup.number().positive().required("Cash balance is required"),
+});
 const UserInput = () => {
+
   const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
@@ -32,7 +38,25 @@ const UserInput = () => {
   const calculateRunaway = () => {
     setIsClicked((prev)=>!(prev));
   };
+  const [initialCashBalanceError, setInitialCashBalanceError] = useState("");
+  const handleInitialCashBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+  
+    if (value === "" ) {
+      setInitialCashBalanceError("");
+      setField("initialCashBalance",0); // Update the field value to null or whatever default value you prefer
+    } else if (isNaN(parseFloat(value))) {
+      setInitialCashBalanceError("Cash balance must be a number");
+    } else if (parseFloat(value) < 0) {
+      setInitialCashBalanceError("Cash balance must be a non-negative number");
+    } else {
+      setInitialCashBalanceError("");
+      setField("initialCashBalance", parseFloat(value));
+    }
+  };
 
+
+  
   return (
     <>
     {isClicked? (<MyComponent/>): (
@@ -48,10 +72,11 @@ const UserInput = () => {
               type="number"
               name="name"
               placeholder="$1000,000"
-              onChange={(e) =>
-                setField("initialCashBalance", parseFloat(e.target.value))
-              }
-            />
+              onChange={handleInitialCashBalanceChange}
+        />
+        {initialCashBalanceError && (
+          <p className="text-red-500 text-sm">{initialCashBalanceError}</p>
+        )}
           </form>
         </div>
 
@@ -344,9 +369,10 @@ const UserInput = () => {
       </>
     )
     }
-      
+     
     </>
   );
+
 };
 
 export default UserInput;
