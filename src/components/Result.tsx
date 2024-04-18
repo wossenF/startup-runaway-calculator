@@ -68,18 +68,12 @@ const MyComponent = () => {
   ]);
 
   const chartData = {
-    labels: ['Runway (Months)'],
+    labels: projectedRevenue.map(data => `Month ${data.month}`), // Use the month as labels
     datasets: [
       {
-        label: 'Startup Runway',
-        data: [runway],
-        backgroundColor: 'rgba(19, 33, 60, 1)',
-        borderColor: 'rgba(255, 215, 0, 1)',
-      },
-      {
         label: 'Projected Monthly Revenue',
-        data: projectedRevenue.map((data) => Number(data.revenue)), 
-        backgroundColor: 'rgba(250, 180, 70, 1)',
+        data: projectedRevenue.map(data => Number(data.revenue)), 
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
         borderColor: 'rgba(54, 162, 235, 1)',
       },
     ],
@@ -92,6 +86,7 @@ const MyComponent = () => {
         value={initialCashBalance}
         onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
       />
+      {/* Display validation errors if any */}
       {Object.values(validationErrors).map((error, index) => (
         <p key={index} style={{ color: 'red' }}>{error}</p>
       ))}

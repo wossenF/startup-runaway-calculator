@@ -1,8 +1,8 @@
 import { InputStoreState } from '../store/store';
 
 export function calculateRunway(userInput: InputStoreState): { runway: number; monthsRemaining: number | string } {
-  const { initialCashBalance, payRoll, nonPayRoll } = userInput;
-  const totalBurnRate = payRoll + nonPayRoll;
+  const { initialCashBalance, payRoll, nonPayRoll,monthlyIncome } = userInput;
+  const totalBurnRate = monthlyIncome -(payRoll + nonPayRoll);
 
   if (totalBurnRate <= 0) {
     return { runway: Infinity, monthsRemaining: "∞" };
@@ -20,7 +20,7 @@ export function calculateProjectedRevenue(userInput: InputStoreState, months: nu
 
   const projectedRevenue: { month: number; revenue: string }[] = [];
   let currentRevenue = monthlyIncome;
-  for (let month = 1; month <= months; month++) {
+  for (let month = 1; month <= 6; month++) {
     const growthAmount = currentRevenue * growthRateDecimal;
     currentRevenue += growthAmount;
     projectedRevenue.push({ month, revenue: currentRevenue.toFixed(2) });
