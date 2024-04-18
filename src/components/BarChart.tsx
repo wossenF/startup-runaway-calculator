@@ -5,6 +5,10 @@ interface BarChartProps {
   datasets: {
     data: number[];
     label: string;
+    type?: string;
+    fill?: boolean;
+    backgroundColor?: string;
+    borderColor?: string;
   }[];
   labels: string[];
 }
@@ -23,14 +27,14 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
         }
         // Create a new chart instance
         chartInstance.current = new Chart(ctx, {
-          type: 'bar',
+          type: 'line',
           data: {
             labels: labels,
-            datasets: datasets.map((dataset, index) => ({
+            datasets: (datasets.map((dataset, index) => ({
               ...dataset,
-              backgroundColor: index === 0 ? 'rgba(255, 215, 0, 0.2)' : 'rgba(54, 162, 235, 0.2)',
-              borderColor: index === 0 ? 'rgba(255, 215, 0, 1)' : 'rgba(54, 162, 235, 1)',
-            })),
+              backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
+              borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
+            })) as Chart.ChartData<'bar'>),
           },
           options: {
             scales: {

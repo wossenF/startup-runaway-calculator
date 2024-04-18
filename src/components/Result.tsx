@@ -69,14 +69,27 @@ const MyComponent = () => {
     validationErrors
   ]);
 
+  const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
+
   const chartData = {
-    labels: projectedRevenue.map(data => `Month ${data.month}`), // Use the month as labels
+    labels: projectedRevenue.map(data => `Month ${data.month}`),
     datasets: [
       {
         label: 'Projected Monthly Revenue',
         data: projectedRevenue.map(data => Number(data.revenue)), 
         backgroundColor: 'rgba(54, 162, 235, 0.5)',
         borderColor: 'rgba(54, 162, 235, 1)',
+      },
+      {
+        label: 'Current Cash Balance',
+        data: projectedRevenue.map((data, index) => {
+          const cashBalance = initialCashBalance - (totalBurnRate * index);
+          return cashBalance.toFixed(2);
+        }),
+        type: 'bar',
+        fill: false,
+        backgroundColor: 'rgba(255, 215, 0, 0.5)',
+        borderColor: 'rgba(255, 0, 0, 1)',
       },
     ],
   };
