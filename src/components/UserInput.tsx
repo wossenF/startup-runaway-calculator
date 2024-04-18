@@ -1,15 +1,25 @@
 "use client";
 import React, { useState } from "react"; // Import useState from 'react'
+import { Button } from "./ui/button";
 import useInputStore from "../store/store";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { ChevronDown } from "lucide-react";
+import  MyComponent  from "./Result";
+import * as yup from 'yup';
+
+const validationSchema = yup.object().shape({
+  initialCashBalance: yup.number().positive().required("Cash balance is required"),
+});
 const UserInput = () => {
+
   const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
   const [showExpenseReduction, setShowExpenseReduction] = useState(false);
 
+
+  const [isClicked, setIsClicked] = useState(false);
   const {
     initialCashBalance,
     monthlyIncome,
@@ -17,7 +27,6 @@ const UserInput = () => {
     cogsPercentage,
     payRoll,
     nonPayRoll,
-    validationErrors,
   } = useInputStore();
   const setField = useInputStore((state) => state.setField);
 
@@ -26,8 +35,32 @@ const UserInput = () => {
     event.stopPropagation();
   };
 
+  const calculateRunaway = () => {
+    setIsClicked((prev)=>!(prev));
+  };
+  const [initialCashBalanceError, setInitialCashBalanceError] = useState("");
+  const handleInitialCashBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+  
+    if (value === "" ) {
+      setInitialCashBalanceError("");
+      setField("initialCashBalance",0); // Update the field value to null or whatever default value you prefer
+    } else if (isNaN(parseFloat(value))) {
+      setInitialCashBalanceError("Cash balance must be a number");
+    } else if (parseFloat(value) < 0) {
+      setInitialCashBalanceError("Cash balance must be a non-negative number");
+    } else {
+      setInitialCashBalanceError("");
+      setField("initialCashBalance", parseFloat(value));
+    }
+  };
+
+
+  
   return (
     <>
+    {isClicked? (<MyComponent/>): (
+      <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
         <div className="cash-balance bg-secondary/50 rounded-lg p-7">
           <form className="grid gap-2">
@@ -36,17 +69,14 @@ const UserInput = () => {
               Current amount of cash available
             </p>
             <Input
+              type="number"
               name="name"
               placeholder="$1000,000"
-              onChange={(e) =>
-                setField("initialCashBalance", parseFloat(e.target.value))
-              }
-            />
-            {Object.values(validationErrors).map((error, index) => (
-              <p key={index} style={{ color: "red" }}>
-                {error}
-              </p>
-            ))}
+              onChange={handleInitialCashBalanceChange}
+        />
+        {initialCashBalanceError && (
+          <p className="text-red-500 text-sm">{initialCashBalanceError}</p>
+        )}
           </form>
         </div>
 
@@ -59,17 +89,13 @@ const UserInput = () => {
                 monthly payroll salaries and contractor payments
               </p>
               <Input
+                type="number"
                 name="name"
                 placeholder="negative number"
                 onChange={(e) => {
                   setField("payRoll", parseFloat(e.target.value));
                 }}
               />
-              {Object.values(validationErrors).map((error, index) => (
-                <p key={index} style={{ color: "red" }}>
-                  {error}
-                </p>
-              ))}
             </form>
             <form className="grid gap-2">
               <Label className="">NonPayroll</Label>
@@ -77,17 +103,13 @@ const UserInput = () => {
                 expenses like marketing, travel, and equipment
               </p>
               <Input
+                type="number"
                 name="name"
                 placeholder="negative number"
                 onChange={(e) => {
                   setField("nonPayRoll", parseFloat(e.target.value) || 0);
                 }}
               />
-              {Object.values(validationErrors).map((error, index) => (
-                <p key={index} style={{ color: "red" }}>
-                  {error}
-                </p>
-              ))}
             </form>
           </div>
         </div>
@@ -107,11 +129,6 @@ const UserInput = () => {
                 setField("monthlyIncome", parseFloat(e.target.value) || 0);
               }}
             />
-            {Object.values(validationErrors).map((error, index) => (
-              <p key={index} style={{ color: "red" }}>
-                {error}
-              </p>
-            ))}
           </form>
 
           <form className="growth-rate grid gap-2 pt-5">
@@ -120,17 +137,13 @@ const UserInput = () => {
               percentage increase in monthly revenue
             </p>
             <Input
+              type="number"
               name="name"
               placeholder="%"
               onChange={(e) => {
                 setField("monthlyGrowthRate", parseFloat(e.target.value) || 0);
               }}
             />
-            {Object.values(validationErrors).map((error, index) => (
-              <p key={index} style={{ color: "red" }}>
-                {error}
-              </p>
-            ))}
           </form>
         </div>
 
@@ -163,6 +176,7 @@ const UserInput = () => {
                       Percentage of revenue spent on COGS (number).
                     </p>
                     <Input
+                      type="number"
                       onClick={handleInputClick}
                       name="name"
                       placeholder="$"
@@ -173,11 +187,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {Object.values(validationErrors).map((error, index) => (
-                      <p key={index} style={{ color: "red" }}>
-                        {error}
-                      </p>
-                    ))}
                   </form>
                 </div>
               )}
@@ -215,11 +224,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {Object.values(validationErrors).map((error, index) => (
-                      <p key={index} style={{ color: "red" }}>
-                        {error}
-                      </p>
-                    ))}
                   </form>
                   <form className="grid gap-2">
                     <Label className="">Fundraising amount</Label>
@@ -238,11 +242,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {Object.values(validationErrors).map((error, index) => (
-                      <p key={index} style={{ color: "red" }}>
-                        {error}
-                      </p>
-                    ))}
                   </form>
                 </div>
               )}
@@ -281,11 +280,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {Object.values(validationErrors).map((error, index) => (
-                      <p key={index} style={{ color: "red" }}>
-                        {error}
-                      </p>
-                    ))}
                   </form>
 
                   <form className="pt-5 grid gap-2">
@@ -305,11 +299,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {Object.values(validationErrors).map((error, index) => (
-                      <p key={index} style={{ color: "red" }}>
-                        {error}
-                      </p>
-                    ))}
                   </form>
                 </div>
               )}
@@ -348,11 +337,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {Object.values(validationErrors).map((error, index) => (
-                      <p key={index} style={{ color: "red" }}>
-                        {error}
-                      </p>
-                    ))}
                   </form>
 
                   <form className="grid gap-2">
@@ -372,11 +356,6 @@ const UserInput = () => {
                         );
                       }}
                     />
-                    {Object.values(validationErrors).map((error, index) => (
-                      <p key={index} style={{ color: "red" }}>
-                        {error}
-                      </p>
-                    ))}
                   </form>
                 </div>
               )}
@@ -384,8 +363,16 @@ const UserInput = () => {
           </form>
         </div>
       </div>
+      <Button onClick={calculateRunaway}>
+        {isClicked ? "Back to Calculator" : "Calculate Runaway"}
+      </Button>
+      </>
+    )
+    }
+     
     </>
   );
+
 };
 
 export default UserInput;
