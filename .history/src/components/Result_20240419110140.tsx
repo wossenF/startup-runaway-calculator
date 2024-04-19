@@ -77,8 +77,8 @@ const MyComponent = () => {
       {
         label: 'Projected Monthly Revenue',
         data: projectedRevenue.map(data => Number(data.revenue)), 
-        backgroundColor: 'rgba(19, 33, 60, 1)',
-        borderColor: 'rgba(19, 33, 60, 1)',
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
       },
       {
         label: 'Current Cash Balance',
@@ -88,8 +88,8 @@ const MyComponent = () => {
         }),
         type: 'bar',
         fill: false,
-        backgroundColor: 'rgba(250, 180, 70, 1)',
-        borderColor: 'rgba(250, 180, 70, 1)',
+        backgroundColor: 'rgba(19, 33, 60, 1)',
+        borderColor: 'rgba(19, 33, 60, 1)',
       },
     ],
   };
