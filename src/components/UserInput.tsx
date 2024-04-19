@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react"; // Import useState from 'react'
+import { Button } from "./ui/button";
 import useInputStore from "../store/store";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -59,7 +60,7 @@ const UserInput = () => {
   return (
     <>
     {isClicked? (<MyComponent/>): (
-      
+      <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
         <div className="cash-balance bg-secondary/50 rounded-lg p-7">
           <form className="grid gap-2">
@@ -68,7 +69,7 @@ const UserInput = () => {
               Current amount of cash available
             </p>
             <Input
-              
+              type="number"
               name="name"
               placeholder="$1000,000"
               onChange={handleInitialCashBalanceChange}
@@ -362,7 +363,8 @@ const UserInput = () => {
           </form>
         </div>
       </div>
-      
+    
+      </>
     )
     }
      
