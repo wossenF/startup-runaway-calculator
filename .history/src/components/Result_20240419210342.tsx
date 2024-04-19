@@ -97,7 +97,7 @@ const FinalResult = () => {
 
 
   return (
-    <div className="my-3">
+    <div className="">
       <input
         type="number"
         name="initialCashBalance"

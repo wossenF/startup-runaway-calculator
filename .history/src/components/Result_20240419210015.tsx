@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import BarChart from "./BarChart";
 import useInputStore, { InputStoreState } from "../store/store";
@@ -97,7 +96,7 @@ const FinalResult = () => {
 
 
   return (
-    <div className="my-3">
+    <>
       <input
         type="number"
         name="initialCashBalance"
@@ -110,8 +109,8 @@ const FinalResult = () => {
       ))}
       <p>Estimated Runway: {runway} months</p>
       <BarChart datasets={chartData.datasets} labels={chartData.labels} />
-    </div>
+    </>
   );
 };
 
-export default FinalResult;
+export default ;

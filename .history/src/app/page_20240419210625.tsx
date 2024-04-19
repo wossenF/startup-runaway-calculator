@@ -20,7 +20,7 @@ export default function Home() {
         your runway and make strategic decisions effortlessly.
       </p>
       {isClicked ? <FinalResult/> : <UserInput />}
-      <button className="bg-[#13213C] text-primary-foreground hover:bg-primary/90 p-3 my-5" onClick={handleClick}>
+      <button className="bg-[#13213C] text-primary-foreground hover:bg-primary/90 p-3 my-3" onClick={handleClick}>
         {isClicked ? "Back to Calculator" : "Calculate Runaway"}
       </button>
     </main>

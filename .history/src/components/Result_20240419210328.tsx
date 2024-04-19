@@ -97,7 +97,7 @@ const FinalResult = () => {
 
 
   return (
-    <div className="my-3">
+    <div>
       <input
         type="number"
         name="initialCashBalance"
@@ -110,7 +110,7 @@ const FinalResult = () => {
       ))}
       <p>Estimated Runway: {runway} months</p>
       <BarChart datasets={chartData.datasets} labels={chartData.labels} />
-    </div>
+    </>
   );
 };
 
