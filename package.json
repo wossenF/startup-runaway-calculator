@@ -26,6 +26,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
     "shadcn-ui": "^0.2.3",
+    "tailwindcss-animate": "^1.0.7",
     "yup": "^1.4.0",
     "zod": "^3.22.4",
     "zustand": "^4.5.2"
@@ -39,9 +40,9 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "postcss": "^8",
+    "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5",
-    "tailwind-merge": "2.3.0"
+    "typescript": "^5"
   },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "postcss.config.js",

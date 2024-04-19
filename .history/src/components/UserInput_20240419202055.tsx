@@ -60,7 +60,7 @@ const UserInput = () => {
     <>
       {isClicked ? (<MyComponent />) : (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="pt-  grid grid-cols-1 lg:grid-cols-2 gap-10 pb-5">
             <div className="cash-balance bg-secondary/50 rounded-lg p-7">
               <form className="grid gap-2">
                 <Label className="font-medium text-xl">Cash Balance</Label>

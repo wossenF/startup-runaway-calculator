@@ -3,7 +3,7 @@ import BarChart from "./BarChart";
 import useInputStore, { InputStoreState } from "../store/store";
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
 
-const FinalResult = () => {
+const Final = () => {
   const {
     initialCashBalance,
     currentCashBalance,
@@ -113,4 +113,4 @@ const FinalResult = () => {
   );
 };
 
-export default FinalResult;
+export default MyComponent;

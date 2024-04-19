@@ -113,4 +113,4 @@ const FinalResult = () => {
   );
 };
 
-export default FinalResult;
+export default MyComponent;
