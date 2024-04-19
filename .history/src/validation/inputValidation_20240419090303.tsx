@@ -1,0 +1,49 @@
+import { useState } from "react";
+import useInputStore from "../store/store";
+import { z } from "zod";
+
+// Define the validation schema using Zod
+export const validationSchema = z.object({
+  initialCashBalance: z.number().positive().nonnegative().optional(),
+  currentCashBalance: z.number().positive().nonnegative().optional(),
+  monthlyIncome: z.number().positive().nonnegative().optional(),
+  monthlyGrowthRate: z.number().min(0).optional(),
+  cogsPercentage: z.number().min(0).max(100).optional(),
+  payRoll: z.number().min(0).optional(),
+  nonPayRoll: z.number().min(0).optional(),
+  fundraisingAmount: z.number().min(0).optional(),
+  monthlyCompensation: z.number().min(0).optional(),
+  nonPayrollReduction: z.number().min(0).optional(),
+  nonPayrollReductionTimeline: z.number().min(0).optional(),
+  fundraisingTimeline: z.number().min(0).optional(),
+  newHiresTimeline: z.number().min(0).optional(),
+});
+
+const {
+  initialCashBalance: initialCashBalanceValue,
+  monthlyIncome: monthlyIncomeValue,
+  monthlyGrowthRate: monthlyGrowthRateValue,
+  cogsPercentage: cogsPercentageValue,
+  payRoll: payRollValue,
+  nonPayRoll: nonPayRollValue,
+} = useInputStore();
+const setField = useInputStore((state) => state.setField);
+
+// Function to handle changes in initial cash balance
+const [initialCashBalanceError, setInitialCashBalanceError] = useState("");
+export const handleInitialCashBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value;
+
+  if (value === "" ) {
+    setInitialCashBalanceError("");
+    setField("initialCashBalance",0); // Update the field value to null or whatever default value you prefer
+  } else if (isNaN(parseFloat(value))) {
+    setInitialCashBalanceError("Cash balance must be a number");
+  } else if (parseFloat(value) < 0) {
+    setInitialCashBalanceError("Cash balance must be a non-negative number");
+  } else {
+    setInitialCashBalanceError("");
+    setField("initialCashBalance", parseFloat(value));
+  }
+};
+// State for initial cash balance error
