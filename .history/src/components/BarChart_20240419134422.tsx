@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
+import { Chart, ChartConfiguration, ChartTypeRegistry, LinearScale } from 'chart.js';
 
 interface BarChartProps {
   datasets: {
-    data: any[];
+    data: number[];
     label: string;
-    type?: string;
+    type?: keyof ChartTypeRegistry;
     fill?: boolean;
     backgroundColor?: string;
     borderColor?: string;
@@ -15,7 +15,7 @@ interface BarChartProps {
 
 const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart>();
+  const chartInstance = useRef<Chart<keyof ChartTypeRegistry> | null>(null);
 
   useEffect(() => {
     if (chartRef.current) {
@@ -25,8 +25,10 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
         if (chartInstance.current) {
           chartInstance.current.destroy();
         }
+        // Register the linear scale
+        Chart.register(LinearScale);
         // Create a new chart instance
-        chartInstance.current = new Chart(ctx, {
+        chartInstance.current = new Chart<keyof ChartTypeRegistry>(ctx, {
           type: 'line',
           data: {
             labels: labels,
@@ -35,23 +37,18 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
               backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
               borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
             })),
-          } as ChartData<'line'>,
+          },
           options: {
             scales: {
               y: {
+                type: 'linear', // Use 'linear' as the scale type
                 beginAtZero: true,
               },
             },
-          } as ChartOptions<'line'>,
+          },
         });
       }
     }
-    // Cleanup function to destroy the chart instance when component unmounts
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
   }, [datasets, labels]);
 
   return <canvas ref={chartRef} />;

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
+import ChartJS from 'chart.js/auto'; // Rename Chart to ChartJS or any other appropriate name
 
 interface BarChartProps {
   datasets: {
-    data: any[];
+    data: number[];
     label: string;
     type?: string;
     fill?: boolean;
@@ -15,7 +15,7 @@ interface BarChartProps {
 
 const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart>();
+  const chartInstance = useRef<ChartJS>(); // Change Chart to ChartJS
 
   useEffect(() => {
     if (chartRef.current) {
@@ -26,23 +26,23 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
           chartInstance.current.destroy();
         }
         // Create a new chart instance
-        chartInstance.current = new Chart(ctx, {
+        chartInstance.current = new ChartJS(ctx, { // Change Chart to ChartJS
           type: 'line',
           data: {
             labels: labels,
-            datasets: datasets.map((dataset, index) => ({
+            datasets: (datasets.map((dataset, index) => ({
               ...dataset,
               backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
               borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
-            })),
-          } as ChartData<'line'>,
+            })) as ChartJS.ChartData<'bar'>),
+          },
           options: {
             scales: {
               y: {
                 beginAtZero: true,
               },
             },
-          } as ChartOptions<'line'>,
+          },
         });
       }
     }

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
+import Bar  from 'chart.js/auto';
 
 interface BarChartProps {
   datasets: {
-    data: any[];
+    data: number[];
     label: string;
     type?: string;
     fill?: boolean;
@@ -15,7 +15,7 @@ interface BarChartProps {
 
 const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart>();
+  const chartInstance = useRef<Bar>();
 
   useEffect(() => {
     if (chartRef.current) {
@@ -26,32 +26,26 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
           chartInstance.current.destroy();
         }
         // Create a new chart instance
-        chartInstance.current = new Chart(ctx, {
-          type: 'line',
+        chartInstance.current = new Bar(ctx, {
+          type: 'bar',
           data: {
             labels: labels,
-            datasets: datasets.map((dataset, index) => ({
+            datasets: (datasets.map((dataset, index) => ({
               ...dataset,
               backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
               borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
-            })),
-          } as ChartData<'line'>,
+            })) as Bar.ChartData<'bar'>),
+          },
           options: {
             scales: {
               y: {
                 beginAtZero: true,
               },
             },
-          } as ChartOptions<'line'>,
+          },
         });
       }
     }
-    // Cleanup function to destroy the chart instance when component unmounts
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
   }, [datasets, labels]);
 
   return <canvas ref={chartRef} />;

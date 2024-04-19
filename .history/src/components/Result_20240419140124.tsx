@@ -4,13 +4,13 @@ import useInputStore, { InputStoreState } from "../store/store";
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
 
 const MyComponent = () => {
-  const {
-    initialCashBalance,
+  const { 
+    initialCashBalance, 
     currentCashBalance,
-    monthlyIncome,
-    monthlyGrowthRate,
-    cogsPercentage,
-    payRoll,
+    monthlyIncome, 
+    monthlyGrowthRate, 
+    cogsPercentage, 
+    payRoll, 
     nonPayRoll,
     fundraisingAmount,
     monthlyCompensation,
@@ -19,7 +19,7 @@ const MyComponent = () => {
     fundraisingTimeline,
     newHiresTimeline,
     validationErrors,
-    setField
+    setField 
   } = useInputStore();
 
   interface ProjectedRevenue {
@@ -32,13 +32,13 @@ const MyComponent = () => {
 
   useEffect(() => {
     // Calculate runway and projected revenue whenever the input values change
-    const userInput: InputStoreState = {
-      initialCashBalance,
+    const userInput: InputStoreState = { 
+      initialCashBalance, 
       currentCashBalance,
-      monthlyIncome,
-      monthlyGrowthRate,
-      cogsPercentage,
-      payRoll,
+      monthlyIncome, 
+      monthlyGrowthRate, 
+      cogsPercentage, 
+      payRoll, 
       nonPayRoll,
       fundraisingAmount,
       monthlyCompensation,
@@ -50,15 +50,15 @@ const MyComponent = () => {
     };
     const calculatedRunway = calculateRunway(userInput);
     const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 12);
-
+    
     setRunway(calculatedRunway.runway);
     setProjectedRevenue(calculatedProjectedRevenue);
   }, [
-    initialCashBalance,
-    monthlyIncome,
-    monthlyGrowthRate,
-    cogsPercentage,
-    payRoll,
+    initialCashBalance, 
+    monthlyIncome, 
+    monthlyGrowthRate, 
+    cogsPercentage, 
+    payRoll, 
     nonPayRoll,
     fundraisingAmount,
     monthlyCompensation,
@@ -76,7 +76,7 @@ const MyComponent = () => {
     datasets: [
       {
         label: 'Projected Monthly Revenue',
-        data: projectedRevenue.map(data => Number(data.revenue)),
+        data: projectedRevenue.map(data => Number(data.revenue)), 
         backgroundColor: 'rgba(19, 33, 60, 1)',
         borderColor: 'rgba(19, 33, 60, 1)',
       },
@@ -94,16 +94,19 @@ const MyComponent = () => {
     ],
   };
 
-
+  const handleInputChange = (e) => {
+    setField(e.target.name, parseInt(e.target.value));
+  };
+  
   return (
     <>
       <input
         type="number"
         name="initialCashBalance"
         value={initialCashBalance}
-        onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
-
+        onChange={handleInputChange}
       />
+      {/* Display validation errors if any */}
       {Object.values(validationErrors).map((error, index) => (
         <p key={index} style={{ color: 'red' }}>{error}</p>
       ))}

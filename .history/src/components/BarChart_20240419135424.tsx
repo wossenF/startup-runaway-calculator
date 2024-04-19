@@ -3,7 +3,7 @@ import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
 
 interface BarChartProps {
   datasets: {
-    data: any[];
+    data: number[];
     label: string;
     type?: string;
     fill?: boolean;

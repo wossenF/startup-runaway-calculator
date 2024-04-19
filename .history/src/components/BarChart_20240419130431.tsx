@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
+import {Chart} from 'chart.js/auto';
 
 interface BarChartProps {
   datasets: {
-    data: any[];
+    data: number[];
     label: string;
     type?: string;
     fill?: boolean;
@@ -30,19 +30,19 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
           type: 'line',
           data: {
             labels: labels,
-            datasets: datasets.map((dataset, index) => ({
+            datasets: (datasets.map((dataset, index) => ({
               ...dataset,
               backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
               borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
-            })),
-          } as ChartData<'line'>,
+            })) as Chart.ChartData<'bar'>),
+          },
           options: {
             scales: {
               y: {
                 beginAtZero: true,
               },
             },
-          } as ChartOptions<'line'>,
+          },
         });
       }
     }
@@ -52,7 +52,10 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
         chartInstance.current.destroy();
       }
     };
-  }, [datasets, labels]);
+  
+    
+    
+    , [datasets, labels]);
 
   return <canvas ref={chartRef} />;
 };
