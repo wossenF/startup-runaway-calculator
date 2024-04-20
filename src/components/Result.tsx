@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 const FinalResult = () => {
+
   const handleDownloadClick = () => {
     const input = document.getElementById('pdf-content');
 
@@ -71,11 +72,15 @@ const FinalResult = () => {
       newHiresTimeline,
       validationErrors
     };
+
     const calculatedRunway = calculateRunway(userInput);
+
     const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 12);
 
     setRunway(calculatedRunway.runway);
+
     setProjectedRevenue(calculatedProjectedRevenue);
+
   }, [
     initialCashBalance,
     monthlyIncome,
@@ -117,22 +122,24 @@ const FinalResult = () => {
     ],
   };
 
+const initialCostValue = useInputStore((state)=> state.initialCashBalance)
+console.log(">>>> updated initial cost", initialCostValue);
   return (
     <>
-      <div className="my-3" id="pdf-content">
+      <div className="my-3 space-y-4" id="pdf-content">
         <input
           type="number"
           name="initialCashBalance"
-          value={initialCashBalance}
+          value={initialCostValue}
           onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
         />
         {Object.values(validationErrors).map((error, index) => (
           <p key={index} style={{ color: 'red' }}>{error}</p>
         ))}
-        <p>Estimated Runway: {runway} months</p>
+        <p>Estimated Runway: {runway || ""} months</p>
         <BarChart datasets={chartData.datasets} labels={chartData.labels} />
       </div>
-      <button onClick={handleDownloadClick}>Download as PDF</button>
+      <button className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 mr-3 my-5" onClick={handleDownloadClick}>Download as PDF</button>
     </>
   );
 };

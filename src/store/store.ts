@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 // Define type for store state
 export interface InputStoreState {
@@ -16,18 +16,21 @@ export interface InputStoreState {
   fundraisingTimeline: number;
   newHiresTimeline: number;
   validationErrors: Partial<Record<keyof InputStoreState, string>>;
-  
 }
 
 // Define setField function signature
 type SetField = (field: keyof InputStoreState, value: number) => void;
+type UpdateCostValue = (field: keyof InputStoreState, value: number) => void;
 
-type InputStore = InputStoreState & { setField: SetField };
+type InputStore = InputStoreState & {
+  setField: SetField;
+  updateCostValue: UpdateCostValue;
+};
 
 // Create store
 const useInputStore = create<InputStore>((set) => ({
   initialCashBalance: 0,
- currentCashBalance: 0,
+  currentCashBalance: 0,
   monthlyIncome: 0,
   monthlyGrowthRate: 0,
   cogsPercentage: 0,
@@ -44,14 +47,29 @@ const useInputStore = create<InputStore>((set) => ({
   // Define setField function
   setField: (field, value) => {
     console.log("Received value:", value);
-    if (typeof value !== 'number' || isNaN(value)) {
+    if (typeof value !== "number" || isNaN(value)) {
       // Set validation error message if value is not a number
-      set((state) => ({ ...state, validationErrors: { ...state.validationErrors, [field]: "Value must be a number." } }));
+      set((state) => ({
+        ...state,
+        validationErrors: {
+          ...state.validationErrors,
+          [field]: "Value must be a number.",
+        },
+      }));
     } else {
       // Clear validation error and update field value
-      set((state) => ({ ...state, [field]: value, validationErrors: { ...state.validationErrors, [field]: undefined } }));
+      set((state) => ({
+        ...state,
+        [field]: value,
+        validationErrors: { ...state.validationErrors, [field]: undefined },
+      }));
     }
   },
+
+  updateCostValue: () =>
+    
+    set((state) => ({ initialCashBalance: state.initialCashBalance })),
+
 }));
 
 export default useInputStore;
