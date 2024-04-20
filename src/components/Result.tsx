@@ -3,8 +3,39 @@ import React, { useEffect, useState } from "react";
 import BarChart from "./BarChart";
 import useInputStore, { InputStoreState } from "../store/store";
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 const FinalResult = () => {
+ 
+  const handleDownloadClick = () => {
+    const input = document.getElementById('pdf-content');
+
+    if (input) {
+      html2canvas(input).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        const imgWidth = 210;
+        const pageHeight = 295;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        pdf.save('my_page.pdf');
+      });
+    }
+  }
   const {
     initialCashBalance,
     currentCashBalance,
@@ -97,7 +128,8 @@ const FinalResult = () => {
 
 
   return (
-    <div className="my-3">
+    <>
+    <div className="my-3" id="pdf-content">
       <input
         type="number"
         name="initialCashBalance"
@@ -110,7 +142,10 @@ const FinalResult = () => {
       ))}
       <p>Estimated Runway: {runway} months</p>
       <BarChart datasets={chartData.datasets} labels={chartData.labels} />
+      
     </div>
+    <button onClick={handleDownloadClick}>Download as PDF</button>
+    </>
   );
 };
 
