@@ -6,9 +6,7 @@ import { calculateRunway, calculateProjectedRevenue } from '../utils/calculation
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-
 const FinalResult = () => {
- 
   const handleDownloadClick = () => {
     const input = document.getElementById('pdf-content');
 
@@ -35,10 +33,10 @@ const FinalResult = () => {
         pdf.save('my_page.pdf');
       });
     }
-  }
+  };
+
   const {
     initialCashBalance,
-    currentCashBalance,
     monthlyIncome,
     monthlyGrowthRate,
     cogsPercentage,
@@ -54,19 +52,12 @@ const FinalResult = () => {
     setField
   } = useInputStore();
 
-  interface ProjectedRevenue {
-    month: number;
-    revenue: string;
-  }
-
   const [runway, setRunway] = useState<number>(0);
-  const [projectedRevenue, setProjectedRevenue] = useState<ProjectedRevenue[]>([]);
+  const [projectedRevenue, setProjectedRevenue] = useState<{ month: number; revenue: string }[]>([]);
 
   useEffect(() => {
-    // Calculate runway and projected revenue whenever the input values change
     const userInput: InputStoreState = {
       initialCashBalance,
-      currentCashBalance,
       monthlyIncome,
       monthlyGrowthRate,
       cogsPercentage,
@@ -126,25 +117,22 @@ const FinalResult = () => {
     ],
   };
 
-
   return (
     <>
-    <div className="my-3" id="pdf-content">
-      <input
-        type="number"
-        name="initialCashBalance"
-        value={initialCashBalance}
-        onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
-
-      />
-      {Object.values(validationErrors).map((error, index) => (
-        <p key={index} style={{ color: 'red' }}>{error}</p>
-      ))}
-      <p>Estimated Runway: {runway} months</p>
-      <BarChart datasets={chartData.datasets} labels={chartData.labels} />
-      
-    </div>
-    <button onClick={handleDownloadClick}>Download as PDF</button>
+      <div className="my-3" id="pdf-content">
+        <input
+          type="number"
+          name="initialCashBalance"
+          value={initialCashBalance}
+          onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
+        />
+        {Object.values(validationErrors).map((error, index) => (
+          <p key={index} style={{ color: 'red' }}>{error}</p>
+        ))}
+        <p>Estimated Runway: {runway} months</p>
+        <BarChart datasets={chartData.datasets} labels={chartData.labels} />
+      </div>
+      <button onClick={handleDownloadClick}>Download as PDF</button>
     </>
   );
 };
