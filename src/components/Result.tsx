@@ -70,7 +70,8 @@ const FinalResult = () => {
       nonPayrollReductionTimeline,
       fundraisingTimeline,
       newHiresTimeline,
-      validationErrors
+      validationErrors,
+      currentCashBalance: 0
     };
 
     const calculatedRunway = calculateRunway(userInput);

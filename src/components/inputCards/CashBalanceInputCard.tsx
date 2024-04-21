@@ -6,8 +6,6 @@ import useInputStore from '@/store/store';
 function CashBalanceInputCard() {
     const updateCostValue = useInputStore((state) => state.updateCostValue)
 
-
-
     // console.log(">>>> updated initial cost", updateCostValue);
 
     // const handleInitialCashBalanceChange = (e: any) => {
@@ -29,9 +27,7 @@ function CashBalanceInputCard() {
                     name="name"
                     placeholder="$1000,000"
                     // onChange={handleInitialCashBalanceChange}
-
                 />
-
                 {/* {initialCashBalanceError && (
                 <p className="text-red-500 text-sm">{initialCashBalanceError}</p>
               )} */}

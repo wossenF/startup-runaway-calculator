@@ -1,9 +1,6 @@
 "use client";
-import React, { useState } from "react"; // Import useState from 'react'
+import React, { useState } from "react"; 
 import useInputStore from "../store/store";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { ChevronDown } from "lucide-react";
 import MyComponent from "./Result";
 import * as yup from 'yup';
 import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
@@ -15,13 +12,6 @@ const validationSchema = yup.object().shape({
   initialCashBalance: yup.number().positive().required("Cash balance is required"),
 });
 const UserInput = () => {
-
-  const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
-  const [showFundraising, setShowFundraising] = useState(false);
-  const [showHiring, setShowHiring] = useState(false);
-  const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-
-
   const [isClicked, setIsClicked] = useState(false);
   const {
     initialCashBalance,
@@ -34,7 +24,6 @@ const UserInput = () => {
   const setField = useInputStore((state) => state.setField);
 
   const handleInputClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    // Specify React.MouseEvent<HTMLDivElement> type
     event.stopPropagation();
   };
 
@@ -63,20 +52,12 @@ const UserInput = () => {
   return (
     <>
       {isClicked ? (<MyComponent />) : (
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-3">
-         {/*  */}
           <CashBalanceInputCard />
-
           <ExpenseInputCard />
-
           <IncomeInputCard />
-
           <EstimationInputCard />
-
         </div>
-
-
       )
       }
 
