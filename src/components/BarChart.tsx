@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import ApexCharts, { ApexOptions } from 'apexcharts';
+import React, { useEffect, useRef, useState } from 'react';
+import Chart from 'react-apexcharts';
 
 interface BarChartProps {
   datasets: {
@@ -7,62 +7,72 @@ interface BarChartProps {
     label: string;
     type?: string;
     fill?: boolean;
-    backgroundColor?: string;
-    borderColor?: string;
   }[];
   labels: string[];
+  colors?: string[];
 }
 
-const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
-  const chartRef = useRef<HTMLDivElement>(null);
-  const chartInstance = useRef<ApexCharts>();
+const BarChart: React.FC<BarChartProps> = ({ datasets, labels, colors }) => {
+  const [options, setOptions] = useState<any>({
+    chart: {
+      height: 400,
+      type: 'bar',
+      toolbar: {
+        show: false, // Disable the toolbar
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+      },
+    },
+    xaxis: {
+      categories: labels,
+    },
+    yaxis: {
+      labels: {
+        formatter: (value: number) => value.toFixed(2),
+      },
+    },
+    colors: colors || undefined, // Set the colors based on the prop if provided
+    dataLabels: {
+      enabled: false, // Disable data labels by default
+    },
+    tooltip: {
+      enabled: true, // Enable tooltip to display values on hover
+    },
+  });
+
+  const [series, setSeries] = useState<any>([]);
+
+  const chartRef = useRef<any>(null);
+
+  useEffect(() => {
+    const chartData = datasets.map((dataset, index) => ({
+      name: dataset.label,
+      data: dataset.data,
+      color: colors ? colors[index] : undefined, // Set the color based on the prop if provided
+    }));
+
+    setSeries(chartData);
+  }, [datasets, colors]);
 
   useEffect(() => {
     if (chartRef.current) {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-
-      chartInstance.current = new ApexCharts(chartRef.current, {
-        chart: {
-          height: '300', // Adjust the height as desired
-        },
-        series: datasets.map((dataset, index) => ({
-          name: dataset.label,
-          type: dataset.type ,
-          data: dataset.data,
-          fill: dataset.fill || false,
-          backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
-          borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
-        })),
-        xaxis: {
-          categories: labels,
-        },
-        yaxis: {
-          show: true,
-          labels: {
-            formatter: (value) => value.toFixed(2),
-          },
-        },
-      } as ApexOptions);
-
-      chartInstance.current.render();
-
-      // Hide the menu icon using CSS
-      const chartElement = chartRef.current.getElementsByClassName('apexcharts-menu-icon')[0] as HTMLElement;
-      if (chartElement) {
-        chartElement.style.display = 'none';
-      }
+      const apexChart = chartRef.current?.chart;
+      apexChart?.updateOptions(options);
     }
+  }, [options]);
 
-    return () => {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
-    };
-  }, [datasets, labels]);
-
-  return <BarChart datasets={datasets} labels={labels} /> ;
+  return (
+    <Chart
+      options={options}
+      series={series}
+      type="bar"
+      height={400}
+      ref={chartRef}
+    />
+  );
 };
 
 export default BarChart;

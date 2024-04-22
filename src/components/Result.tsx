@@ -5,7 +5,7 @@ import useInputStore, { InputStoreState } from "../store/store";
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import ApexCharts, { ApexOptions } from 'apexcharts';
+
 
 const FinalResult = () => {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -104,63 +104,11 @@ const FinalResult = () => {
 
   const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
 
-  useEffect(() => {
-    if (chartRef.current) {
-      if (chartInstance.current) {
-        chartInstance.current.destroy();
-      }
 
       // ...
 
-      const options: ApexOptions = {
-        chart: {
-          type: 'line',
-          height: 400,
-        },
-        series: [
-          {
-            name: 'Projected Monthly Revenue',
-            data: projectedRevenue.map((data) => Number(data.revenue)),
-          },
-          {
-            name: 'Current Cash Balance',
-            data: projectedRevenue.map((data, index) => {
-              const cashBalance = initialCashBalance - totalBurnRate * index;
-              return Number(cashBalance.toFixed(2)); // Convert the calculated value to a number explicitly
-            }),
-            type: 'bar',
-          },
-        ],
-        xaxis: {
-          categories: projectedRevenue.map((data) => `Month ${data.month}`),
-        },
-        tooltip: {
-          enabled: true,
-          y: {
-            formatter: function (val) {
-              return val.toFixed(2);
-            },
-          },
-        },
-        dataLabels: {
-          enabled: false, // Hide the data values
-        },
-        markers: {
-          size: 6, // Set the size of the markers
-          colors: ['#ffffff'], // Set the color of the markers
-          strokeColors: '#000000', // Set the color of the stroke around the markers
-          strokeWidth: 2, // Set the width of the stroke around the markers
-        },
-        colors: ['rgba(19, 33, 60, 1)', 'rgba(250, 180, 70, 1)'], // Set the colors for the bars
-      };
       
-
-// ...
-      chartInstance.current = new ApexCharts(chartRef.current, options);
-      chartInstance.current.render();
-    }
-  }, [projectedRevenue]);
-
+  
   return (
     <>
       <div className="my-3 space-y-4" id="pdf-content">
@@ -174,8 +122,25 @@ const FinalResult = () => {
           <p key={index} style={{ color: 'red' }}>{error}</p>
         ))}
         <p>Estimated Runway: {runway || ""} months</p>
-        <div ref={chartRef}></div>
-      </div>
+        <BarChart
+  datasets={[
+    {
+      data: projectedRevenue.map(data => Number(data.revenue)),
+      label: 'Projected Monthly Revenue',
+      type: 'bar',
+    },
+    {
+      data: projectedRevenue.map((data, index) => {
+        const cashBalance = initialCashBalance - totalBurnRate * index;
+        return Number(cashBalance.toFixed(2));
+      }),
+      label: 'Current Cash Balance',
+      type: 'bar',
+    },
+  ]}
+  labels={projectedRevenue.map(data => `Month ${data.month}`)}
+  colors={['rgba(19, 33, 60, 1)', 'rgba(250, 180, 70, 1)']} // Specify custom colors for the datasets
+/></div>
       <button className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 mr-3 my-5" onClick={handleDownloadClick}>Download as PDF</button>
     </>
   );
