@@ -94,7 +94,7 @@ export default function TableResult() {
       </TableHeader>
       <TableBody>
         {Result.map((result) => (
-          <TableRow>
+          <TableRow key={result.month}>
              <TableCell>{result.month}</TableCell>
             <TableCell className="font-medium">{result.cashBalance}</TableCell>
             <TableCell>{result.burnRate}</TableCell>
