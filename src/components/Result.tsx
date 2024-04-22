@@ -8,8 +8,7 @@ import html2canvas from 'html2canvas';
 
 
 const FinalResult = () => {
-  const chartRef = useRef<HTMLDivElement>(null);
-  const chartInstance = useRef<ApexCharts>();
+ 
   const handleDownloadClick = () => {
     const input = document.getElementById('pdf-content');
 
@@ -33,7 +32,7 @@ const FinalResult = () => {
           heightLeft -= pageHeight;
         }
 
-        pdf.save('my_page.pdf');
+        pdf.save('StartupRunawayResult.pdf');
       });
     }
   };
