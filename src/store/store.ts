@@ -69,6 +69,7 @@ const useInputStore = create<InputStore>((set) => ({
     
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
 
+    
 }));
 
 export default useInputStore;

@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 // Define Zod schema for input validation
 export const InputSchema = z.object({
-  initialCashBalance: z.number().nonnegative(),
+  initialCashBalance: z.number().nonnegative({message: "Initial cash balance must be a positive number."}),
   monthlyIncome: z.number().nonnegative(),
   monthlyGrowthRate: z.number().min(0).max(100),
   cogsPercentage: z.number().min(0).max(100),

@@ -81,7 +81,7 @@ const FinalResult = () => {
 
     const calculatedRunway = calculateRunway(userInput);
 
-    const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 12);
+    const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 6);
 
     setRunway(calculatedRunway.runway);
 
@@ -102,7 +102,12 @@ const FinalResult = () => {
     validationErrors,
   ]);
 
-  const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
+  const totalBurnRate =
+    cogsPercentage * monthlyIncome -
+    payRoll -
+    nonPayRoll +
+    monthlyCompensation * newHiresTimeline +
+    nonPayrollReduction * nonPayrollReductionTimeline;
 
   const chartData = {
     labels: projectedRevenue.map((data) => `Month ${data.month}`),

@@ -60,7 +60,9 @@ export function calculateProjectedRevenue(
 function calculateRunwayFull(userInput: InputStoreState): {
   runway: number;
   monthsRemaining: number | string;
-} {
+  totalBurnRate: number;
+} 
+{
   const {
     initialCashBalance,
     payRoll,
@@ -75,14 +77,13 @@ function calculateRunwayFull(userInput: InputStoreState): {
     newHiresTimeline,
   } = userInput;
   const totalBurnRate =
-    payRoll +
+    cogsPercentage * monthlyIncome -
+    payRoll -
     nonPayRoll +
     monthlyCompensation * newHiresTimeline +
-    nonPayrollReduction * nonPayrollReductionTimeline +
-    cogsPercentage * monthlyIncome;
-
+    nonPayrollReduction * nonPayrollReductionTimeline;
   if (totalBurnRate <= 0) {
-    return { runway: Infinity, monthsRemaining: "∞" };
+    return { runway: Infinity, monthsRemaining: "∞", totalBurnRate: 0 };
   }
 
   const runwayMonths = Math.ceil(
@@ -94,7 +95,7 @@ function calculateRunwayFull(userInput: InputStoreState): {
   );
   const monthsRemaining = Math.ceil(runwayMonths);
 
-  return { runway: runwayMonths, monthsRemaining };
+  return { runway: runwayMonths, monthsRemaining, totalBurnRate };
 }
 // Existing calculateProjectedRevenue function
 function calculateProjectedRevenueFull(
@@ -118,17 +119,18 @@ function calculateProjectedRevenueFull(
   } = userInput;
   const growthRateDecimal = monthlyGrowthRate / 100;
   const totalBurnRate =
-    payRoll +
+  cogsPercentage * monthlyIncome-
+    payRoll -
     nonPayRoll +
     monthlyCompensation * newHiresTimeline +
-    nonPayrollReduction * nonPayrollReductionTimeline +
-    cogsPercentage * monthlyIncome;
+    nonPayrollReduction * nonPayrollReductionTimeline;
 
   const projectedRevenue: { month: number; revenue: string }[] = [];
   let currentRevenue = monthlyIncome;
   let currentCashBalance = initialCashBalance;
 
   for (let month = 1; month <= 6; month++) {
+    
     currentCashBalance -= totalBurnRate;
     const growthAmount = monthlyIncome + monthlyIncome * growthRateDecimal;
     currentRevenue += growthAmount;

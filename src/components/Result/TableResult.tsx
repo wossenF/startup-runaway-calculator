@@ -1,71 +1,90 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import useInputStore,{InputStoreState} from "@/store/store"
+import { useEffect, useState } from "react"
 
-const invoices = [
+const Result = [
   {
-    invoice: "M-01",
-    paymentStatus: "$3453",
+    month: "M-01",
+    cashBalance: "$3453",
     totalAmount: "$250.00",
-    paymentMethod: "10%",
+    burnRate: "100",
     salesIncome: "$250.00",
   },
   {
-    invoice: "M-02",
-    paymentStatus: "$3453",
+    month: "M-02",
+    cashBalance: "$3453",
     totalAmount: "$250.00",
-    paymentMethod: "10%",
+    burnRate: "100",
     salesIncome: "$250.00",
-
   },
   {
-    invoice: "M-03",
-    paymentStatus: "$3453",
+    month: "M-03",
+    cashBalance: "$3453",
     totalAmount: "$250.00",
-    paymentMethod: "10%",
+    burnRate: "100",
     salesIncome: "$250.00",
-
   },
   {
-    invoice: "M-04",
-    paymentStatus: "$3453",
+    month: "M-04",
+    cashBalance: "$3453",
     totalAmount: "$250.00",
-    paymentMethod: "10%",
+    burnRate: "100",
     salesIncome: "$250.00",
-
   },
   {
-    invoice: "M-05",
-    paymentStatus: "$3453",
+    month: "M-05",
+    cashBalance: "$3453",
     totalAmount: "$250.00",
-    paymentMethod: "10%",
+    burnRate: "100",
     salesIncome: "$250.00",
-
   },
   {
-    invoice: "M-06",
-    paymentStatus: "$3453",
+    month: "M-06",
+    cashBalance: "$3453",
     totalAmount: "$250.00",
-    paymentMethod: "10%",
+    burnRate: "100",
     salesIncome: "$250.00",
-
   },
+
   
 ]
 
 export default function TableResult() {
+  
+  const {
+    initialCashBalance,
+    monthlyIncome,
+    monthlyGrowthRate,
+    cogsPercentage,
+    payRoll,
+    nonPayRoll,
+    fundraisingAmount,
+    monthlyCompensation,
+    nonPayrollReduction,
+    nonPayrollReductionTimeline,
+    fundraisingTimeline,
+    newHiresTimeline,
+    validationErrors,
+    setField,
+  } = useInputStore();
+
+  const [projectedRevenue, setProjectedRevenue] = useState<
+    { month: number; revenue: string }[]
+  >([]);
+
   return (
     <Table className="my-3">
       <TableHeader>
         <TableRow>
-          <TableHead>Monthes</TableHead>
+          <TableHead>Month</TableHead>
           <TableHead>Cash Balance</TableHead>
           <TableHead>Burn Rate</TableHead>
           <TableHead>Sales Income</TableHead>
@@ -74,13 +93,13 @@ export default function TableResult() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell>{invoice.salesIncome}</TableCell>
-            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+        {Result.map((result) => (
+          <TableRow>
+             <TableCell>{result.month}</TableCell>
+            <TableCell className="font-medium">{result.cashBalance}</TableCell>
+            <TableCell>{result.burnRate}</TableCell>
+            <TableCell>{result.salesIncome}</TableCell>
+            <TableCell className="text-right">{result.totalAmount}</TableCell>
           </TableRow>
         ))}
       </TableBody>

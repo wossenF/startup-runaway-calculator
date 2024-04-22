@@ -2,7 +2,7 @@
 import { useState } from "react";
 import UserInput from "../components/UserInput";
 import useInputStore from "@/store/store";
-import { ResultPage } from "@/components/Result/ResultPage";
+import { ResultDashBoard } from "@/components/Result/ResultDashBoard";
 
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
@@ -25,7 +25,7 @@ export default function Home() {
         effortlessly.
       </p>
 
-      {isClicked ? <ResultPage /> : <UserInput />}
+      {isClicked ? <ResultDashBoard /> : <UserInput />}
 
       <button
         disabled={!initialCashBalance && !monthlyIncome}
