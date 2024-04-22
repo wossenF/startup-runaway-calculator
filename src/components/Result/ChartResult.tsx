@@ -1,6 +1,5 @@
 
 import {
-  Activity,
   CreditCard,
   DollarSign,
   Users,
@@ -9,16 +8,15 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import FinalResult  from "./Result"
 export function Dashboard() {
   return (  
-      <main className="flex flex-1 flex-col gap-4 md:gap-8 md:p-8">
+      <main className="flex flex-1 flex-col gap-4 md:gap-8 md:py-8">
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-          <Card x-chunk="dashboard-01-chunk-0">
+          <Card >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Revenue
@@ -32,7 +30,7 @@ export function Dashboard() {
               </p>
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-1">
+          <Card >
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Subscriptions
@@ -46,7 +44,7 @@ export function Dashboard() {
               </p>
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-2">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Sales</CardTitle>
               <CreditCard className="h-4 w-4 text-muted-foreground" />
@@ -58,7 +56,6 @@ export function Dashboard() {
               </p>
             </CardContent>
           </Card>
-         
         </div>
         <div className="grid grid-cols" >
           <Card

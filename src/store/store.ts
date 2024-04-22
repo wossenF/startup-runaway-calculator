@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-// Define type for store state
 export interface InputStoreState {
   initialCashBalance: number;
   currentCashBalance: number;
