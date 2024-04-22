@@ -25,12 +25,11 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
 
       chartInstance.current = new ApexCharts(chartRef.current, {
         chart: {
-          type: 'line',
           height: '300', // Adjust the height as desired
         },
         series: datasets.map((dataset, index) => ({
           name: dataset.label,
-          type: dataset.type || 'column',
+          type: dataset.type ,
           data: dataset.data,
           fill: dataset.fill || false,
           backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
@@ -48,6 +47,12 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
       } as ApexOptions);
 
       chartInstance.current.render();
+
+      // Hide the menu icon using CSS
+      const chartElement = chartRef.current.getElementsByClassName('apexcharts-menu-icon')[0] as HTMLElement;
+      if (chartElement) {
+        chartElement.style.display = 'none';
+      }
     }
 
     return () => {
@@ -57,7 +62,7 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
     };
   }, [datasets, labels]);
 
-  return <div ref={chartRef} />;
+  return <BarChart datasets={datasets} labels={labels} /> ;
 };
 
 export default BarChart;

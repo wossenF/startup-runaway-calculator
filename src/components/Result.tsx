@@ -112,42 +112,48 @@ const FinalResult = () => {
 
       // ...
 
-const options: ApexOptions = {
-  chart: {
-    type: 'bar',
-    height: 400,
-  },
-  series: [
-    {
-      name: 'Projected Monthly Revenue',
-      data: projectedRevenue.map((data) => Number(data.revenue)),
-      type: 'column',
-    },
-    {
-      name: 'Current Cash Balance',
-      data: projectedRevenue.map((data, index) => {
-        const cashBalance = initialCashBalance - totalBurnRate * index;
-        return Number(cashBalance.toFixed(2)); // Convert the calculated value to a number explicitly
-      }),
-      type: 'bar',
-    },
-  ],
-  xaxis: {
-    categories: projectedRevenue.map((data) => `Month ${data.month}`),
-  },
-  tooltip: {
-    enabled: true,
-    y: {
-      formatter: function (val) {
-        return val.toFixed(2);
-      },
-    },
-  },
-  dataLabels: {
-    enabled: false, // Remove the value labels from the bars
-  },
-  colors: ['rgba(19, 33, 60, 1)', 'rgba(250, 180, 70, 1)'], // Set the colors for the bars
-};
+      const options: ApexOptions = {
+        chart: {
+          type: 'line',
+          height: 400,
+        },
+        series: [
+          {
+            name: 'Projected Monthly Revenue',
+            data: projectedRevenue.map((data) => Number(data.revenue)),
+          },
+          {
+            name: 'Current Cash Balance',
+            data: projectedRevenue.map((data, index) => {
+              const cashBalance = initialCashBalance - totalBurnRate * index;
+              return Number(cashBalance.toFixed(2)); // Convert the calculated value to a number explicitly
+            }),
+            type: 'bar',
+          },
+        ],
+        xaxis: {
+          categories: projectedRevenue.map((data) => `Month ${data.month}`),
+        },
+        tooltip: {
+          enabled: true,
+          y: {
+            formatter: function (val) {
+              return val.toFixed(2);
+            },
+          },
+        },
+        dataLabels: {
+          enabled: false, // Hide the data values
+        },
+        markers: {
+          size: 6, // Set the size of the markers
+          colors: ['#ffffff'], // Set the color of the markers
+          strokeColors: '#000000', // Set the color of the stroke around the markers
+          strokeWidth: 2, // Set the width of the stroke around the markers
+        },
+        colors: ['rgba(19, 33, 60, 1)', 'rgba(250, 180, 70, 1)'], // Set the colors for the bars
+      };
+      
 
 // ...
       chartInstance.current = new ApexCharts(chartRef.current, options);
