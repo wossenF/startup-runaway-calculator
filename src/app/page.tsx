@@ -36,7 +36,7 @@ export default function Home() {
       </button>
       {!isClicked && !initialCashBalance && !monthlyIncome && (
         <div className="text-red-500">
-          Please don't forget to add value for the required fields(*)
+          Please dont forget to add value for the required fields(*)
         </div>
       )}
     </main>
