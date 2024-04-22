@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import useInputStore from "../store/store";
-import MyComponent from "./Result/Result";
+import MyComponent from "./Result/FinalResult";
 import * as yup from "yup";
 import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
 import ExpenseInputCard from "./inputCards/ExpenseInputCard";

@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
 import UserInput from "../components/UserInput";
-import FinalResult from "../components/Result/Result";
 import useInputStore from "@/store/store";
-import { Dashboard } from "@/components/Result/ChartResult";
+import { ResultPage } from "@/components/Result/ResultPage";
 
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
@@ -26,7 +25,7 @@ export default function Home() {
         effortlessly.
       </p>
 
-      {isClicked ? <Dashboard /> : <UserInput />}
+      {isClicked ? <ResultPage /> : <UserInput />}
 
       <button
         disabled={!initialCashBalance && !monthlyIncome}

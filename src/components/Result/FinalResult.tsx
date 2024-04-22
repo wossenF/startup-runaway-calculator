@@ -135,41 +135,40 @@ const FinalResult = () => {
   console.log(">>>> updated initial cost", initialCostValue);
   return (
     <>
-      <div
-        className="my-3 space-y-4 flex flex-cols justify-between"
-        id="pdf-content"
-      >
-        <div>
-          <Input
-            className="w-full rounded-none p-3 mb-1"
-            type="number"
-            name="initialCashBalance"
-            value={initialCostValue}
-            onChange={(e) =>
-              setField("initialCashBalance", parseInt(e.target.value))
-            }
-          />
-          {Object.values(validationErrors).map((error, index) => (
-            <p key={index} style={{ color: "red" }}>
-              {error}
-            </p>
-          ))}
+      <div id="pdf-content">
+        <div className="my-3 space-y-4 flex flex-cols justify-between">
+          <div>
+            <Input
+              className="w-full rounded-none p-3 mb-1"
+              type="number"
+              name="initialCashBalance"
+              value={initialCostValue}
+              onChange={(e) =>
+                setField("initialCashBalance", parseInt(e.target.value))
+              }
+            />
+            {Object.values(validationErrors).map((error, index) => (
+              <p key={index} style={{ color: "red" }}>
+                {error}
+              </p>
+            ))}
+          </div>
+          <button
+            className="bg-[#FAB446]  text-primary-foreground hover:bg-primary/90 px-3"
+            onClick={handleClick}
+          >
+            {isClicked ? "Chart" : "Table"}
+          </button>
         </div>
-        <button
-          className="bg-[#13213C] rounded-sm text-primary-foreground hover:bg-primary/90 px-3"
-          onClick={handleClick}
-        >
-          {isClicked ? "Table" : "Chart"}
-        </button>
+        <p className="mb-5">Estimated Runway: {runway || "infinity"} months</p>
+        {isClicked ? (
+          <TableResult />
+        ) : (
+          <BarChart datasets={chartData.datasets} labels={chartData.labels} />
+        )}
       </div>
-      <p>Estimated Runway: {runway || ""} months</p>
-      {isClicked ? (
-        <BarChart datasets={chartData.datasets} labels={chartData.labels} />
-      ) : (
-        <TableResult />
-      )}
       <button
-        className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 mr-3 my-5"
+        className="bg-[#13213C] rounded-sm text-primary-foreground hover:bg-primary/90 p-2 mr-2 my-3"
         onClick={handleDownloadClick}
       >
         Download as PDF
