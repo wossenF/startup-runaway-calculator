@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
+import ApexCharts, { ApexOptions } from 'apexcharts';
 
 interface BarChartProps {
   datasets: {
@@ -14,39 +14,42 @@ interface BarChartProps {
 }
 
 const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
-  const chartRef = useRef<HTMLCanvasElement>(null);
-  const chartInstance = useRef<Chart>();
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartInstance = useRef<ApexCharts>();
 
   useEffect(() => {
     if (chartRef.current) {
-      const ctx = chartRef.current.getContext('2d');
-      if (ctx) {
-        // Destroy the previous chart instance if it exists
-        if (chartInstance.current) {
-          chartInstance.current.destroy();
-        }
-        // Create a new chart instance
-        chartInstance.current = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: labels,
-            datasets: datasets.map((dataset, index) => ({
-              ...dataset,
-              backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
-              borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
-            })),
-          } as ChartData<'line'>,
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          } as ChartOptions<'line'>,
-        });
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
       }
+
+      chartInstance.current = new ApexCharts(chartRef.current, {
+        chart: {
+          type: 'line',
+          height: '300', // Adjust the height as desired
+        },
+        series: datasets.map((dataset, index) => ({
+          name: dataset.label,
+          type: dataset.type || 'column',
+          data: dataset.data,
+          fill: dataset.fill || false,
+          backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
+          borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
+        })),
+        xaxis: {
+          categories: labels,
+        },
+        yaxis: {
+          show: true,
+          labels: {
+            formatter: (value) => value.toFixed(2),
+          },
+        },
+      } as ApexOptions);
+
+      chartInstance.current.render();
     }
-    // Cleanup function to destroy the chart instance when component unmounts
+
     return () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
@@ -54,7 +57,7 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
     };
   }, [datasets, labels]);
 
-  return <canvas ref={chartRef} />;
+  return <div ref={chartRef} />;
 };
 
 export default BarChart;

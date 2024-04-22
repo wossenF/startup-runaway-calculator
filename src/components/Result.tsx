@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import BarChart from "./BarChart";
 import useInputStore, { InputStoreState } from "../store/store";
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import ApexCharts, { ApexOptions } from 'apexcharts';
 
 const FinalResult = () => {
-
+  const chartRef = useRef<HTMLDivElement>(null);
+  const chartInstance = useRef<ApexCharts>();
   const handleDownloadClick = () => {
     const input = document.getElementById('pdf-content');
 
@@ -39,6 +41,7 @@ const FinalResult = () => {
   const {
     initialCashBalance,
     monthlyIncome,
+    currentCashBalance,
     monthlyGrowthRate,
     cogsPercentage,
     payRoll,
@@ -52,13 +55,19 @@ const FinalResult = () => {
     validationErrors,
     setField
   } = useInputStore();
+  interface ProjectedRevenue {
+    month: number;
+    revenue: string;
+  }
 
   const [runway, setRunway] = useState<number>(0);
-  const [projectedRevenue, setProjectedRevenue] = useState<{ month: number; revenue: string }[]>([]);
+  const [projectedRevenue, setProjectedRevenue] = useState<ProjectedRevenue[]>([]);
 
   useEffect(() => {
+    // Calculate runway and projected revenue whenever the input values change
     const userInput: InputStoreState = {
       initialCashBalance,
+      currentCashBalance,
       monthlyIncome,
       monthlyGrowthRate,
       cogsPercentage,
@@ -70,17 +79,13 @@ const FinalResult = () => {
       nonPayrollReductionTimeline,
       fundraisingTimeline,
       newHiresTimeline,
-      validationErrors
+      validationErrors,
     };
-
     const calculatedRunway = calculateRunway(userInput);
-
     const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 12);
 
     setRunway(calculatedRunway.runway);
-
     setProjectedRevenue(calculatedProjectedRevenue);
-
   }, [
     initialCashBalance,
     monthlyIncome,
@@ -94,50 +99,76 @@ const FinalResult = () => {
     nonPayrollReductionTimeline,
     fundraisingTimeline,
     newHiresTimeline,
-    validationErrors
+    validationErrors,
   ]);
 
   const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
 
-  const chartData = {
-    labels: projectedRevenue.map(data => `Month ${data.month}`),
-    datasets: [
-      {
-        label: 'Projected Monthly Revenue',
-        data: projectedRevenue.map(data => Number(data.revenue)),
-        backgroundColor: 'rgba(19, 33, 60, 1)',
-        borderColor: 'rgba(19, 33, 60, 1)',
-      },
-      {
-        label: 'Current Cash Balance',
-        data: projectedRevenue.map((data, index) => {
-          const cashBalance = initialCashBalance - (totalBurnRate * index);
-          return cashBalance.toFixed(2);
-        }),
-        type: 'bar',
-        fill: false,
-        backgroundColor: 'rgba(250, 180, 70, 1)',
-        borderColor: 'rgba(250, 180, 70, 1)',
-      },
-    ],
-  };
+  useEffect(() => {
+    if (chartRef.current) {
+      if (chartInstance.current) {
+        chartInstance.current.destroy();
+      }
 
-const initialCostValue = useInputStore((state)=> state.initialCashBalance)
-console.log(">>>> updated initial cost", initialCostValue);
+      // ...
+
+const options: ApexOptions = {
+  chart: {
+    type: 'bar',
+    height: 400,
+  },
+  series: [
+    {
+      name: 'Projected Monthly Revenue',
+      data: projectedRevenue.map((data) => Number(data.revenue)),
+      type: 'column',
+    },
+    {
+      name: 'Current Cash Balance',
+      data: projectedRevenue.map((data, index) => {
+        const cashBalance = initialCashBalance - totalBurnRate * index;
+        return Number(cashBalance.toFixed(2)); // Convert the calculated value to a number explicitly
+      }),
+      type: 'bar',
+    },
+  ],
+  xaxis: {
+    categories: projectedRevenue.map((data) => `Month ${data.month}`),
+  },
+  tooltip: {
+    enabled: true,
+    y: {
+      formatter: function (val) {
+        return val.toFixed(2);
+      },
+    },
+  },
+  dataLabels: {
+    enabled: false, // Remove the value labels from the bars
+  },
+  colors: ['rgba(19, 33, 60, 1)', 'rgba(250, 180, 70, 1)'], // Set the colors for the bars
+};
+
+// ...
+      chartInstance.current = new ApexCharts(chartRef.current, options);
+      chartInstance.current.render();
+    }
+  }, [projectedRevenue]);
+
   return (
     <>
       <div className="my-3 space-y-4" id="pdf-content">
         <input
           type="number"
           name="initialCashBalance"
-          value={initialCostValue}
+          value={initialCashBalance}
           onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
         />
         {Object.values(validationErrors).map((error, index) => (
           <p key={index} style={{ color: 'red' }}>{error}</p>
         ))}
         <p>Estimated Runway: {runway || ""} months</p>
-        <BarChart datasets={chartData.datasets} labels={chartData.labels} />
+        <div ref={chartRef}></div>
       </div>
       <button className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 mr-3 my-5" onClick={handleDownloadClick}>Download as PDF</button>
     </>
