@@ -59,7 +59,6 @@ const UserInput = () => {
           <IncomeInputCard />
           <EstimationInputCard />
 
-
         </div>
       )}
     </>
