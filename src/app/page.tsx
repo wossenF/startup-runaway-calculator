@@ -7,11 +7,18 @@ import { ResultDashBoard } from "@/components/Result/ResultDashBoard";
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
 
+  const calculateRunway = useInputStore((state) => state.calculateRunway);
   const handleClick = () => {
-    setIsClicked((prevState) => !prevState);
+    setIsClicked(prevState => !prevState);
+    calculateRunway()
   };
 
-  const { initialCashBalance, monthlyIncome } = useInputStore();
+
+  const {
+    initialCashBalance,
+    monthlyIncome,
+
+  } = useInputStore();
 
   return (
     <main className="w-3/4 m-12">
@@ -36,7 +43,7 @@ export default function Home() {
       </button>
       {!isClicked && !initialCashBalance && !monthlyIncome && (
         <div className="text-red-500">
-          Please do not forget to add value for the required fields(*)
+          Please dont forget to add value for the required fields(*)
         </div>
       )}
     </main>

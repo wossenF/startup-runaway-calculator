@@ -76,7 +76,12 @@ function calculateRunwayFull(userInput: InputStoreState): {
     fundraisingTimeline,
     newHiresTimeline,
   } = userInput;
-  const totalBurnRate =monthlyIncome- payRoll - nonPayRoll;
+  const totalBurnRate =
+    cogsPercentage * monthlyIncome -
+    payRoll -
+    nonPayRoll +
+    monthlyCompensation * newHiresTimeline +
+    nonPayrollReduction * nonPayrollReductionTimeline;
   if (totalBurnRate <= 0) {
     return { runway: Infinity, monthsRemaining: "∞", totalBurnRate: 0 };
   }
@@ -92,6 +97,7 @@ function calculateRunwayFull(userInput: InputStoreState): {
 
   return { runway: runwayMonths, monthsRemaining, totalBurnRate };
 }
+
 // Existing calculateProjectedRevenue function
 function calculateProjectedRevenueFull(
   userInput: InputStoreState,
@@ -114,10 +120,12 @@ function calculateProjectedRevenueFull(
   } = userInput;
   const growthRateDecimal = monthlyGrowthRate / 100;
   const totalBurnRate =
-  monthlyIncome- payRoll - nonPayRoll
+  cogsPercentage * monthlyIncome-
+    payRoll -
+    nonPayRoll +
+    monthlyCompensation * newHiresTimeline +
+    nonPayrollReduction * nonPayrollReductionTimeline;
 
-
-  
   const projectedRevenue: { month: number; revenue: string }[] = [];
   let currentRevenue = monthlyIncome;
   let currentCashBalance = initialCashBalance;
