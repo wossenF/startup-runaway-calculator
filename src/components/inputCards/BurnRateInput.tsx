@@ -37,68 +37,69 @@ function BurnRateInput() {
   };
 
   return (
-  <div className='bg-secondary/50 rounded-lg p-7 grid gap-2'>
-    <Label className="font-medium  text-xl">Income</Label>
-    <div className="income  gap-4 flex rounded-lg ">
-      <form className="monthly-income grid w-full gap-2 pt-5">
-        <Label className="">Months</Label>
-        <p className="text-gray-500 text-sm">
-          Month
-        </p>
-        {[1, 2, 3].map((month) => (
-          <React.Fragment key={month}>
-            <Input
-              className='w-full'
-              type="date"
-              name={`monthlyIncome${month}`} 
-              placeholder={month === 1 ? "Enter Date" : ""}
-              value={monthlyDates[month - 1] || ""} // Provide a default value of an empty string
-              onChange={handleFirstInputChange}
-            />
-          </React.Fragment>
-        ))}
-      </form>
+    <div className='bg-secondary/50 rounded-lg p-7 grid gap-2'>
+      <Label className="font-medium  text-xl">Income</Label>
+      <div className="income  gap-4 flex rounded-lg ">
+        <form className="monthly-income grid w-full gap-2 pt-5">
+          <Label className="">Months</Label>
+          <p className="text-gray-500 text-sm">
+            Month
+          </p>
+          {[1, 2, 3].map((month) => (
+            <React.Fragment key={month}>
+              <Input
+                className='w-full'
+                type="date"
+                name={`monthlyIncome${month}`}
+                placeholder={month === 1 ? "Enter Date" : ""}
+                value={monthlyDates[month - 1] || ""} // Provide a default value of an empty string
+                onChange={handleFirstInputChange}
+              />
+            </React.Fragment>
+          ))}
+        </form>
 
-      <form className="growth-rate w-full grid gap-2 pt-5">
-        <Label>Current Balance</Label>
-        <p className="text-gray-500 text-sm">
-          Balance at this month
-        </p>
-        <Input
-          type="number"
-          name="name"
-          value={firstMonthBalance || ""}
-          placeholder="Current Balance"
-          onChange={(e) => {
-            setField("firstMonthBalance", parseFloat(e.target.value) || 0);
-            calculateBurnRate();
-          }}
-        />
+       
+        <form className="growth-rate w-full grid gap-2 pt-5">
+          <Label>Current Balance</Label>
+          <p className="text-gray-500 text-sm">
+            Balance at this month
+          </p>
+          <Input
+            type="number"
+            name="name"
+            value={firstMonthBalance || ""}
+            placeholder="Current Balance"
+            onChange={(e) => {
+              setField("firstMonthBalance", parseFloat(e.target.value) || 0);
+              calculateBurnRate();
+            }}
+          />
 
-        <Input
-          type="number"
-          name="name"
-          value={secondMonthBalance || ""}
-          placeholder="Current Balance"
-          onChange={(e) => {
-            setField("secondMonthBalance", parseFloat(e.target.value) || 0);
-            calculateBurnRate();
-          }}
-        />
+          <Input
+            type="number"
+            name="name"
+            value={secondMonthBalance || ""}
+            placeholder="Current Balance"
+            onChange={(e) => {
+              setField("secondMonthBalance", parseFloat(e.target.value) || 0);
+              calculateBurnRate();
+            }}
+          />
 
-        <Input
-          type="number"
-          name="name"
-          value={thirdMonthBalance || ""}
-          placeholder="Current Balance"
-          onChange={(e) => {
-            setField("thirdMonthBalance", parseFloat(e.target.value) || 0);
-            calculateBurnRate();
-          }}
-        />
-      </form>
+          <Input
+            type="number"
+            name="name"
+            value={thirdMonthBalance || ""}
+            placeholder="Current Balance"
+            onChange={(e) => {
+              setField("thirdMonthBalance", parseFloat(e.target.value) || 0);
+              calculateBurnRate();
+            }}
+          />
+        </form>
+      </div>
     </div>
-  </div>
   )
 }
 
