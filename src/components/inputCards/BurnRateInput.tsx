@@ -4,39 +4,42 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { addMonths } from 'date-fns';
 function BurnRateInput() {
+
   const setField = useInputStore((state) => state.setField);
-  const { firstMonthBalance, secondMonthBalance, thirdMonthBalance } = useInputStore((state) => state)
-  const { calculateBurnRate } = useInputStore((state) => state)
-  const [monthlyDates, setMonthlyDates] = useState(['null', 'null', 'null']); // Initial state for dates
+  const firstMonthBalance = useInputStore((state) => state.firstMonthBalance);
+  const secondMonthBalance = useInputStore((state) => state.secondMonthBalance);
+  const thirdMonthBalance = useInputStore((state) => state.thirdMonthBalance);
+  const [monthlyDates, setMonthlyDates] = useState([null, null, null]);
+  const updateFirstMonth = useInputStore((state) => state.updateFirstMonth);
+  const calculateBurnRate = useInputStore((state) => state.calculateBurnRate);
+  const burnRate = useInputStore((state) => state.burnRate);
 
-  console.log(">>>>>>>>> first month balance", firstMonthBalance);
+
   const handleFirstInputChange = (e: any) => {
-    const value = e.target.value; // No parsing as it's a date
 
-    // Set the date for the first month using entered value
-    setMonthlyDates([value, null, null]); // Update state with entered date
+    const value = e.target.value;
 
-    // Check if a valid date is entered (optional)
+    setMonthlyDates([value, null, null]);
+
     if (isNaN(Date.parse(e.target.value))) {
       console.error('Invalid date format. Please enter a valid date.');
-      return; // Prevent further processing if invalid
+      return;
     }
 
-    // Calculate and set dates for subsequent months
     const firstMonthDate = new Date(value);
     for (let index = 1; index < 3; index++) {
-      const nextMonth = addMonths(firstMonthDate, index); // Calculate next month
+      const nextMonth = addMonths(firstMonthDate, index);
       setMonthlyDates((prevDates: any[]) => [
         ...prevDates.slice(0, index),
         nextMonth.toISOString().split('T')[0],
-      ]); // Update state with next month date
+      ]);
     }
   };
 
   return (<div>
-    <Label className="font-medium text-xl">Income</Label>
-    <div className="income bg-secondary/50 items-center gap-4 flex rounded-lg p-7">
-      <form className="monthly-income grid gap-2 pt-5">
+    <Label className="font-medium  text-xl">Income</Label>
+    <div className="income bg-secondary/50 items-center justify-evenly gap-4 flex rounded-lg p-7">
+      <form className="monthly-income grid w-full gap-2 pt-5">
         <Label className="">Months</Label>
         <p className="text-gray-500 text-sm">
           Month
@@ -44,17 +47,18 @@ function BurnRateInput() {
         {[1, 2, 3].map((month) => (
           <React.Fragment key={month}>
             <Input
+              className='w-full'
               type="date"
-              name={`monthlyIncome${month}`} // Use descriptive names
+              name={`monthlyIncome${month}`} 
               placeholder={month === 1 ? "Enter Date" : ""}
-              value={monthlyDates[month - 1]} // Set value from state
+              value={monthlyDates[month - 1] || null} 
               onChange={handleFirstInputChange}
             />
           </React.Fragment>
         ))}
       </form>
 
-      <form className="growth-rate grid gap-2 pt-5">
+      <form className="growth-rate w-full grid gap-2 pt-5">
         <Label>Current Balance</Label>
         <p className="text-gray-500 text-sm">
           Balance at this month
@@ -62,19 +66,22 @@ function BurnRateInput() {
         <Input
           type="number"
           name="name"
-          value={firstMonthBalance}
+          value={firstMonthBalance || ""}
           placeholder="Current Balance"
           onChange={(e) => {
-            setField("monthlyGrowthRate", parseFloat(e.target.value) || 0);
+            setField("firstMonthBalance", parseFloat(e.target.value) || 0);
+            calculateBurnRate();
           }}
         />
+
         <Input
           type="number"
           name="name"
-          value={secondMonthBalance}
+          value={secondMonthBalance || ""}
           placeholder="Current Balance"
           onChange={(e) => {
-            setField("monthlyGrowthRate", parseFloat(e.target.value) || 0);
+            setField("secondMonthBalance", parseFloat(e.target.value) || 0);
+            calculateBurnRate();
           }}
         />
 
@@ -84,7 +91,8 @@ function BurnRateInput() {
           value={thirdMonthBalance || ""}
           placeholder="Current Balance"
           onChange={(e) => {
-            setField("monthlyGrowthRate", parseFloat(e.target.value) || 0);
+            setField("thirdMonthBalance", parseFloat(e.target.value) || 0);
+            calculateBurnRate();
           }}
         />
       </form>

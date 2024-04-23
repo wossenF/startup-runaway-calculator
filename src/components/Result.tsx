@@ -55,7 +55,7 @@ const FinalResult = () => {
     setField
   } = useInputStore();
 
-  const [runway, setRunway] = useState<number>(0);
+  // const [runway, setRunway] = useState<number>(0);
   const [projectedRevenue, setProjectedRevenue] = useState<DataPoint[]>([]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const FinalResult = () => {
 
     const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 12);
 
-    setRunway(calculatedRunway.runway);
+    // setRunway(calculatedRunway.runway);
 
     setProjectedRevenue(calculatedProjectedRevenue);
 
@@ -99,28 +99,33 @@ const FinalResult = () => {
     validationErrors
   ]);
 
-  const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
-
-  
+  const runway = useInputStore((state) => state.runway);
 
   const initialCostValue = useInputStore((state) => state.initialCashBalance)
 
-  console.log(">>>> updated initial cost", initialCostValue);
+  console.log(">>>> updated initial cost", runway);
+
   return (
     <>
       <div className="my-3 space-y-4" id="pdf-content">
+        
         <input
           type="number"
           name="initialCashBalance"
           value={initialCostValue}
           onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
         />
+
         {Object.values(validationErrors).map((error, index) => (
           <p key={index} style={{ color: 'red' }}>{error}</p>
         ))}
+
         <p>Estimated Runway: {runway || ""} months</p>
+
         <Chart datasets={projectedRevenue} />
+
       </div>
+
       <button className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 mr-3 my-5" onClick={handleDownloadClick}>Download as PDF</button>
     </>
   );

@@ -4,15 +4,14 @@ import { Input } from '../ui/input'
 import useInputStore from '@/store/store';
 
 function CashBalanceInputCard() {
-    const updateCostValue = useInputStore((state) => state.updateCostValue)
+
+    const setField = useInputStore((state) => state.setField);
+
+    const initialCashBalance = useInputStore((state) => state.initialCashBalance)
+    
+    console.log(">>>> updated initial cost", initialCashBalance);
 
 
-
-    // console.log(">>>> updated initial cost", updateCostValue);
-
-    // const handleInitialCashBalanceChange = (e: any) => {
-    //     updateCostValue(parseFloat(e.target.value));
-    // }
 
     return (
         <div className="cash-balance bg-secondary/50 rounded-lg p-7">
@@ -28,7 +27,11 @@ function CashBalanceInputCard() {
                     type="number"
                     name="name"
                     placeholder="$1000,000"
-                    // onChange={handleInitialCashBalanceChange}
+                    value={initialCashBalance || ''}
+                    onChange={(e) => {
+                        setField("initialCashBalance", parseFloat(e.target.value) || 0);
+                    }
+                    }
 
                 />
 

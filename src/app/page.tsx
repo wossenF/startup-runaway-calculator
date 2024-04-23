@@ -7,9 +7,12 @@ import useInputStore from "@/store/store";
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
 
+  const calculateRunway = useInputStore((state) => state.calculateRunway);
   const handleClick = () => {
     setIsClicked(prevState => !prevState);
+    calculateRunway()
   };
+
 
   const {
     initialCashBalance,
