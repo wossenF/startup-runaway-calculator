@@ -36,9 +36,10 @@ function BurnRateInput() {
     }
   };
 
-  return (<div>
+  return (
+  <div className='bg-secondary/50 rounded-lg p-7 grid gap-2'>
     <Label className="font-medium  text-xl">Income</Label>
-    <div className="income bg-secondary/50 items-center justify-evenly gap-4 flex rounded-lg p-7">
+    <div className="income  gap-4 flex rounded-lg ">
       <form className="monthly-income grid w-full gap-2 pt-5">
         <Label className="">Months</Label>
         <p className="text-gray-500 text-sm">

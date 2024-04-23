@@ -12,7 +12,7 @@ function ExpenseInputCard() {
         <form className="grid gap-2">
           <Label className="">Payroll</Label>
           <p className="text-gray-500 text-sm">
-            monthly payroll salaries and contractor payments
+            monthly payroll salaries 
           </p>
           <Input
             type="number"
@@ -26,7 +26,7 @@ function ExpenseInputCard() {
         <form className="grid gap-2">
           <Label className="">NonPayroll</Label>
           <p className="text-gray-500 text-sm">
-            expenses like marketing, travel, and equipment
+            expenses like marketing and equipment
           </p>
           <Input
             type="number"

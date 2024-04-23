@@ -54,9 +54,9 @@ const UserInput = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-3">
           {/*  */}
           <CashBalanceInputCard />
-          <BurnRateInput />
-          <IncomeInputCard />
           <ExpenseInputCard />
+          <BurnRateInput />
+          {/* <IncomeInputCard /> */}
           <EstimationInputCard />
 
 

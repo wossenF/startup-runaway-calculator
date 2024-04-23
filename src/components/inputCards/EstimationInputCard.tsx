@@ -10,7 +10,7 @@ function EstimationInputCard() {
   const [showCostOfGoodsSold, setShowCostOfGoodsSold] = useState(false);
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
-  const [showExpenseReduction, setShowExpenseReduction] = useState(false);
+  // const [showExpenseReduction, setShowExpenseReduction] = useState(false);
 
   const handleInputClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Specify React.MouseEvent<HTMLDivElement> type
@@ -167,63 +167,7 @@ function EstimationInputCard() {
           )}
         </div>
 
-        <div
-          className="p-3 gap-20 border rounded-md cursor-pointer"
-          onClick={() => setShowExpenseReduction(!showExpenseReduction)}
-        >
-          <div className="flex justify-between">
-            <p>Expense Reduction</p>
-            {/* Toggle chevron icon based on showHiddenContent state */}
-            <ChevronDown
-              size={20}
-              className={showExpenseReduction ? "transform rotate-180" : ""}
-            />
-          </div>
-          {/* Conditionally render the hidden content based on showHiddenContent state */}
-
-          {showExpenseReduction && (
-            <div className="p-5 bg-slate-100 m-2">
-              <form className="grid gap-2">
-                <Label className="">Non-Payroll Reduction</Label>
-                <p className="text-gray-500 text-sm">
-                  Amount of planned reduction in non-payroll expenses
-                </p>
-                <Input
-                  type="number"
-                  onClick={handleInputClick}
-                  name="name"
-                  placeholder="$"
-                  onChange={(e) => {
-                    setField(
-                      "nonPayrollReduction",
-                      parseFloat(e.target.value) || 0
-                    );
-                  }}
-                />
-              </form>
-
-              <form className="grid gap-2">
-                <Label className="">Non-Payroll Reduction</Label>
-                <p className="text-gray-500 text-sm">
-                  Month when non-payroll expense reduction takes effect
-                </p>
-                <Input
-                  type="number"
-                  onClick={handleInputClick}
-                  name="name"
-                  placeholder="$"
-                  onChange={(e) => {
-                    setField(
-                      "nonPayrollReductionTimeline",
-                      parseFloat(e.target.value) || 0
-                    );
-                  }}
-                />
-              </form>
-            </div>
-          )}
-        </div>
-
+       
       </form>
     
   );
