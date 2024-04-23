@@ -38,6 +38,7 @@ const FinalResult = () => {
   };
 
   const {
+    currency,
     initialCashBalance,
     monthlyIncome,
     currentCashBalance,
@@ -65,6 +66,7 @@ const FinalResult = () => {
   useEffect(() => {
     // Calculate runway and projected revenue whenever the input values change
     const userInput: InputStoreState = {
+      currency,
       initialCashBalance,
       currentCashBalance,
       monthlyIncome,
@@ -86,6 +88,7 @@ const FinalResult = () => {
     setRunway(calculatedRunway.runway);
     setProjectedRevenue(calculatedProjectedRevenue);
   }, [
+    currency,
     initialCashBalance,
     monthlyIncome,
     monthlyGrowthRate,
@@ -106,21 +109,26 @@ const FinalResult = () => {
 
       // ...
 
-      
+const handleCurrencyButtonClick = (selectedCurrency: string) => {
+        setField("currency", selectedCurrency);
+        console.log(currency)
+      };
   
   return (
     <>
       <div className="my-3 space-y-4" id="pdf-content">
-        <input
-          type="number"
-          name="initialCashBalance"
-          value={initialCashBalance}
-          onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
-        />
+      <input
+  type="number"
+  name="initialCashBalance"
+  value={initialCashBalance}
+  onChange={(e) => setField("initialCashBalance", parseInt(e.target.value))}
+/>
+<span className="text-black">{currency}</span>
         {Object.values(validationErrors).map((error, index) => (
           <p key={index} style={{ color: 'red' }}>{error}</p>
         ))}
-        <p>Estimated Runway: {runway || ""} months</p>
+        <p>Estimated Runway: {runway || ""} months </p>
+       
         <BarChart
   datasets={[
     {
@@ -137,7 +145,7 @@ const FinalResult = () => {
       type: 'bar',
     },
   ]}
-  labels={projectedRevenue.map(data => `Month ${data.month}`)}
+  labels={ ["1", "2", "3","4" ,"5", "6"]}
   colors={['rgba(19, 33, 60, 1)', 'rgba(250, 180, 70, 1)']} // Specify custom colors for the datasets
 /></div>
       <button className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 mr-3 my-5" onClick={handleDownloadClick}>Download as PDF</button>

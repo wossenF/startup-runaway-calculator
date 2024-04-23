@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 // Define type for store state
 export interface InputStoreState {
+  currency:string;
   initialCashBalance: number;
   currentCashBalance: number;
   monthlyIncome: number;
@@ -19,7 +20,8 @@ export interface InputStoreState {
 }
 
 // Define setField function signature
-type SetField = (field: keyof InputStoreState, value: number) => void;
+type SetField = (field: keyof InputStoreState, value: number | string) => void;
+
 type UpdateCostValue = (field: keyof InputStoreState, value: number) => void;
 
 type InputStore = InputStoreState & {
@@ -29,6 +31,7 @@ type InputStore = InputStoreState & {
 
 // Create store
 const useInputStore = create<InputStore>((set) => ({
+  currency:"",
   initialCashBalance: 0,
   currentCashBalance: 0,
   monthlyIncome: 0,
