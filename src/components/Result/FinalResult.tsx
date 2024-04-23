@@ -141,7 +141,9 @@ const FinalResult = () => {
   const handleClick = () => {
     setIsClicked((prevState) => !prevState);
   };
-  const runway = useInputStore((state) => state.runway);
+  let runway = useInputStore((state) => state.runway);
+  runway = Math.round(runway);
+
   const initialCostValue = useInputStore((state) => state.initialCashBalance);
   console.log(">>>> updated initial cost", initialCostValue);
   return (
