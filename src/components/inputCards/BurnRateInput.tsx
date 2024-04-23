@@ -51,7 +51,7 @@ function BurnRateInput() {
               type="date"
               name={`monthlyIncome${month}`} 
               placeholder={month === 1 ? "Enter Date" : ""}
-              value={monthlyDates[month - 1] || null} 
+              value={monthlyDates[month - 1] || ""} 
               onChange={handleFirstInputChange}
             />
           </React.Fragment>

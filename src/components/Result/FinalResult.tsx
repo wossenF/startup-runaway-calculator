@@ -77,6 +77,11 @@ const FinalResult = () => {
       newHiresTimeline,
       validationErrors,
       currentCashBalance: 0,
+      firstMonthBalance: 0,
+      secondMonthBalance: 0,
+      thirdMonthBalance: 0,
+      burnRate: 0,
+      runway: 0
     };
 
     const calculatedRunway = calculateRunway(userInput);
