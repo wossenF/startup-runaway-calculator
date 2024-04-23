@@ -56,7 +56,7 @@ const FinalResult = () => {
     setField,
   } = useInputStore();
 
-  const [runway, setRunway] = useState<number>(0);
+  // const [runway, setRunway] = useState<number>(0);
   const [projectedRevenue, setProjectedRevenue] = useState<
     { month: number; revenue: string }[]
   >([]);
@@ -77,13 +77,18 @@ const FinalResult = () => {
       newHiresTimeline,
       validationErrors,
       currentCashBalance: 0,
+      firstMonthBalance: 0,
+      secondMonthBalance: 0,
+      thirdMonthBalance: 0,
+      burnRate: 0,
+      runway: 0
     };
 
     const calculatedRunway = calculateRunway(userInput);
 
     const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 6);
 
-    setRunway(calculatedRunway.runway);
+    // setRunway(calculatedRunway.runway);
 
     setProjectedRevenue(calculatedProjectedRevenue);
   }, [
@@ -136,6 +141,7 @@ const FinalResult = () => {
   const handleClick = () => {
     setIsClicked((prevState) => !prevState);
   };
+  const runway = useInputStore((state) => state.runway);
   const initialCostValue = useInputStore((state) => state.initialCashBalance);
   console.log(">>>> updated initial cost", initialCostValue);
   return (
@@ -165,7 +171,7 @@ const FinalResult = () => {
             {isClicked ? "Chart" : "Table"}
           </button>
         </div>
-        <p className="mb-5">Estimated Runway: {runway || "infinity"} months</p>
+        <p className="mb-5">Estimated Runway: {runway || ""} months</p>
         {isClicked ? (
           <TableResult />
         ) : (

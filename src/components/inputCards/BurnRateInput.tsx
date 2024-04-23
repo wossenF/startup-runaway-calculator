@@ -1,8 +1,8 @@
 import useInputStore from '@/store/store';
 import React, { useState } from 'react'
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
 import { addMonths } from 'date-fns';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
 function BurnRateInput() {
 
   const setField = useInputStore((state) => state.setField);
@@ -51,7 +51,7 @@ function BurnRateInput() {
               type="date"
               name={`monthlyIncome${month}`} 
               placeholder={month === 1 ? "Enter Date" : ""}
-              value={monthlyDates[month - 1] || null} 
+              value={monthlyDates[month - 1] || ""} // Provide a default value of an empty string
               onChange={handleFirstInputChange}
             />
           </React.Fragment>
