@@ -27,7 +27,7 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
         }
         // Create a new chart instance
         chartInstance.current = new Chart(ctx, {
-          type: 'line',
+          type: 'bar',
           data: {
             labels: labels,
             datasets: datasets.map((dataset, index) => ({
@@ -35,14 +35,14 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
               backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
               borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
             })),
-          } as ChartData<'line'>,
+          } as ChartData<'bar'>,
           options: {
             scales: {
               y: {
                 beginAtZero: true,
               },
             },
-          } as ChartOptions<'line'>,
+          } as ChartOptions<'bar'>,
         });
       }
     }

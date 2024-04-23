@@ -1,67 +1,129 @@
+import { InputStoreState } from "../store/store";
 
+export function calculateRunway(userInput: InputStoreState): {
+  runway: number;
+  monthsRemaining: number | string;
+} {
+  const {
+    cogsPercentage,
+    fundraisingAmount,
+    monthlyCompensation,
+    nonPayrollReduction,
+    nonPayrollReductionTimeline,
+    fundraisingTimeline,
+    newHiresTimeline,
+  } = userInput;
 
-
-import { InputStoreState } from '../store/store';
-
-export function calculateRunway(userInput: InputStoreState): { runway: number; monthsRemaining: number | string } {
-  const { cogsPercentage, fundraisingAmount, monthlyCompensation, nonPayrollReduction, nonPayrollReductionTimeline, fundraisingTimeline, newHiresTimeline } = userInput;
-
-  if (cogsPercentage !== undefined && fundraisingAmount !== undefined && monthlyCompensation !== undefined && nonPayrollReduction !== undefined && nonPayrollReductionTimeline !== undefined && fundraisingTimeline !== undefined && newHiresTimeline !== undefined) {
+  if (
+    cogsPercentage !== undefined &&
+    fundraisingAmount !== undefined &&
+    monthlyCompensation !== undefined &&
+    nonPayrollReduction !== undefined &&
+    nonPayrollReductionTimeline !== undefined &&
+    fundraisingTimeline !== undefined &&
+    newHiresTimeline !== undefined
+  ) {
     return calculateRunwayFull(userInput);
   } else {
     return calculateRunwaySimplified(userInput);
   }
 }
 
-export function calculateProjectedRevenue(userInput: InputStoreState, months: number): { month: number; revenue: string }[] {
-  const { cogsPercentage, fundraisingAmount, monthlyCompensation, nonPayrollReduction, nonPayrollReductionTimeline, fundraisingTimeline, newHiresTimeline } = userInput;
+export function calculateProjectedRevenue(
+  userInput: InputStoreState,
+  months: number
+): { month: number; revenue: string }[] {
+  const {
+    cogsPercentage,
+    fundraisingAmount,
+    monthlyCompensation,
+    nonPayrollReduction,
+    nonPayrollReductionTimeline,
+    fundraisingTimeline,
+    newHiresTimeline,
+  } = userInput;
 
-  if (cogsPercentage !== undefined && fundraisingAmount !== undefined && monthlyCompensation !== undefined && nonPayrollReduction !== undefined && nonPayrollReductionTimeline !== undefined && fundraisingTimeline !== undefined && newHiresTimeline !== undefined) {
+  if (
+    cogsPercentage !== undefined &&
+    fundraisingAmount !== undefined &&
+    monthlyCompensation !== undefined &&
+    nonPayrollReduction !== undefined &&
+    nonPayrollReductionTimeline !== undefined &&
+    fundraisingTimeline !== undefined &&
+    newHiresTimeline !== undefined
+  ) {
     return calculateProjectedRevenueFull(userInput, months);
   } else {
     return calculateProjectedRevenueSimplified(userInput, months);
   }
 }
-function calculateRunwayFull(userInput: InputStoreState): { runway: number; monthsRemaining: number | string } {
-  const { initialCashBalance, payRoll, nonPayRoll, monthlyIncome,
-    currentCashBalance,
- 
-     monthlyGrowthRate,
-     cogsPercentage,
-   
-     fundraisingAmount,
-     monthlyCompensation,
-     nonPayrollReduction,
-     nonPayrollReductionTimeline,
-     fundraisingTimeline,
-     newHiresTimeline, } = userInput;
-  const totalBurnRate =  payRoll + nonPayRoll + (monthlyCompensation * newHiresTimeline) + (nonPayrollReduction * nonPayrollReductionTimeline) 
-  + (cogsPercentage * monthlyIncome)
-
-  if (totalBurnRate <= 0) {
-    return { runway: Infinity, monthsRemaining: "∞" };
-  }
-
-  const runwayMonths = Math.ceil( (initialCashBalance + fundraisingAmount) /
-   ((totalBurnRate - nonPayrollReduction) - monthlyIncome - (monthlyIncome * fundraisingTimeline)));
-  const monthsRemaining = Math.ceil(runwayMonths);
-
-  return { runway: runwayMonths, monthsRemaining };
-}
-// Existing calculateProjectedRevenue function
-function calculateProjectedRevenueFull(userInput: InputStoreState, months: number): { month: number; revenue: string }[] {
-  const { initialCashBalance, monthlyIncome, monthlyGrowthRate, payRoll, nonPayRoll, newHiresTimeline, 
-
+function calculateRunwayFull(userInput: InputStoreState): {
+  runway: number;
+  monthsRemaining: number | string;
+  totalBurnRate: number;
+} 
+{
+  const {
+    initialCashBalance,
+    payRoll,
+    nonPayRoll,
+    monthlyIncome,
     cogsPercentage,
-  
     fundraisingAmount,
     monthlyCompensation,
     nonPayrollReduction,
     nonPayrollReductionTimeline,
-    fundraisingTimeline, } = userInput;
+    fundraisingTimeline,
+    newHiresTimeline,
+  } = userInput;
+  const totalBurnRate =
+    cogsPercentage * monthlyIncome -
+    payRoll -
+    nonPayRoll +
+    monthlyCompensation * newHiresTimeline +
+    nonPayrollReduction * nonPayrollReductionTimeline;
+  if (totalBurnRate <= 0) {
+    return { runway: Infinity, monthsRemaining: "∞", totalBurnRate: 0 };
+  }
+
+  const runwayMonths = Math.ceil(
+    (initialCashBalance + fundraisingAmount) /
+      (totalBurnRate -
+        nonPayrollReduction -
+        monthlyIncome -
+        monthlyIncome * fundraisingTimeline)
+  );
+  const monthsRemaining = Math.ceil(runwayMonths);
+
+  return { runway: runwayMonths, monthsRemaining, totalBurnRate };
+}
+// Existing calculateProjectedRevenue function
+function calculateProjectedRevenueFull(
+  userInput: InputStoreState,
+  months: number
+): {
+  month: number;
+  revenue: string;
+}[] {
+  const {
+    initialCashBalance,
+    monthlyIncome,
+    monthlyGrowthRate,
+    payRoll,
+    nonPayRoll,
+    newHiresTimeline,
+    cogsPercentage,
+    monthlyCompensation,
+    nonPayrollReduction,
+    nonPayrollReductionTimeline,
+  } = userInput;
   const growthRateDecimal = monthlyGrowthRate / 100;
-  const totalBurnRate =  payRoll + nonPayRoll + (monthlyCompensation * newHiresTimeline) + (nonPayrollReduction * nonPayrollReductionTimeline) 
-  + (cogsPercentage * monthlyIncome)
+  const totalBurnRate =
+  cogsPercentage * monthlyIncome-
+    payRoll -
+    nonPayRoll +
+    monthlyCompensation * newHiresTimeline +
+    nonPayrollReduction * nonPayrollReductionTimeline;
 
   const projectedRevenue: { month: number; revenue: string }[] = [];
   let currentRevenue = monthlyIncome;
@@ -69,8 +131,8 @@ function calculateProjectedRevenueFull(userInput: InputStoreState, months: numbe
 
   for (let month = 1; month <= 6; month++) {
     
-    currentCashBalance -= totalBurnRate ;
-    const growthAmount = monthlyIncome + (monthlyIncome * growthRateDecimal) ;
+    currentCashBalance -= totalBurnRate;
+    const growthAmount = monthlyIncome + monthlyIncome * growthRateDecimal;
     currentRevenue += growthAmount;
     projectedRevenue.push({ month, revenue: currentRevenue.toFixed(2) });
   }
@@ -78,7 +140,10 @@ function calculateProjectedRevenueFull(userInput: InputStoreState, months: numbe
   return projectedRevenue;
 }
 
-function calculateRunwaySimplified(userInput: InputStoreState): { runway: number; monthsRemaining: number | string } {
+function calculateRunwaySimplified(userInput: InputStoreState): {
+  runway: number;
+  monthsRemaining: number | string;
+} {
   const { initialCashBalance, payRoll, nonPayRoll, monthlyIncome } = userInput;
   const totalBurnRate = payRoll + nonPayRoll;
 
@@ -92,8 +157,17 @@ function calculateRunwaySimplified(userInput: InputStoreState): { runway: number
   return { runway: runwayMonths, monthsRemaining };
 }
 
-function calculateProjectedRevenueSimplified(userInput: InputStoreState, months: number): { month: number; revenue: string }[] {
-  const { initialCashBalance, monthlyIncome, monthlyGrowthRate, payRoll, nonPayRoll } = userInput;
+function calculateProjectedRevenueSimplified(
+  userInput: InputStoreState,
+  months: number
+): { month: number; revenue: string }[] {
+  const {
+    initialCashBalance,
+    monthlyIncome,
+    monthlyGrowthRate,
+    payRoll,
+    nonPayRoll,
+  } = userInput;
   const growthRateDecimal = monthlyGrowthRate / 100;
   const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
   const projectedRevenue: { month: number; revenue: string }[] = [];

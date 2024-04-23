@@ -1,9 +1,9 @@
-"use client"
-import React, { useState } from 'react'
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
-import useInputStore from '@/store/store';
-import { ChevronDown } from 'lucide-react';
+"use client";
+import React, { useState } from "react";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import useInputStore from "@/store/store";
+import { ChevronDown } from "lucide-react";
 
 function EstimationInputCard() {
   const setField = useInputStore((state) => state.setField);
@@ -11,20 +11,16 @@ function EstimationInputCard() {
   const [showFundraising, setShowFundraising] = useState(false);
   const [showHiring, setShowHiring] = useState(false);
   const [showExpenseReduction, setShowExpenseReduction] = useState(false);
-  
+
   const handleInputClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // Specify React.MouseEvent<HTMLDivElement> type
     event.stopPropagation();
   };
   return (
-    <div className="bg-secondary/50 rounded-lg p-7">
-      <form className="grid gap-2">
+    
+      <form className="grid gap-2 bg-secondary/50 rounded-lg p-7">
         <Label className="font-medium text-xl">For best estimate</Label>
-        <p className="text-gray-500 text-sm">
-          Current amount of cash available
-        </p>
-
-        {/* Main container div */}
+        <p className="text-gray-500 text-sm"> Current amount of cash available </p>
 
         <div
           className="p-3 gap-20 border rounded-md cursor-pointer"
@@ -52,10 +48,7 @@ function EstimationInputCard() {
                   name="name"
                   placeholder="$"
                   onChange={(e) => {
-                    setField(
-                      "cogsPercentage",
-                      parseFloat(e.target.value) || 0
-                    );
+                    setField("cogsPercentage", parseFloat(e.target.value) || 0);
                   }}
                 />
               </form>
@@ -136,8 +129,7 @@ function EstimationInputCard() {
               <form className="pt-5grid gap-2">
                 <Label className="">Monthly Compensation</Label>
                 <p className="text-gray-500 text-sm">
-                  Additional monthly payroll expense expected from new
-                  hires
+                  Additional monthly payroll expense expected from new hires
                 </p>
                 <Input
                   type="number"
@@ -231,9 +223,10 @@ function EstimationInputCard() {
             </div>
           )}
         </div>
+
       </form>
-    </div>
-  )
+    
+  );
 }
 
-export default EstimationInputCard
+export default EstimationInputCard;

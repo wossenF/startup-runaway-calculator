@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-// Define type for store state
 export interface InputStoreState {
   initialCashBalance: number;
   currentCashBalance: number;
@@ -70,6 +69,7 @@ const useInputStore = create<InputStore>((set) => ({
     
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
 
+    
 }));
 
 export default useInputStore;
