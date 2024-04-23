@@ -1,7 +1,7 @@
-import React from 'react'
-import { Label } from '../ui/label'
-import { Input } from '../ui/input'
-import useInputStore from '@/store/store';
+import React from "react";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import useInputStore from "@/store/store";
 
 function CashBalanceInputCard() {
 
@@ -44,4 +44,4 @@ function CashBalanceInputCard() {
     )
 }
 
-export default CashBalanceInputCard
+export default CashBalanceInputCard;
