@@ -10,6 +10,7 @@ import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
 import ExpenseInputCard from "./inputCards/ExpenseInputCard";
 import IncomeInputCard from "./inputCards/IncomeInputCard";
 import EstimationInputCard from "./inputCards/EstimationInputCard";
+import BurnRateInput from "./inputCards/BurnRateInput";
 
 const validationSchema = yup.object().shape({
   initialCashBalance: yup.number().positive().required("Cash balance is required"),
@@ -65,7 +66,7 @@ const UserInput = () => {
       {isClicked ? (<MyComponent />) : (
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-3">
-         {/*  */}
+          {/*  */}
           <CashBalanceInputCard />
 
           <ExpenseInputCard />
@@ -73,6 +74,8 @@ const UserInput = () => {
           <IncomeInputCard />
 
           <EstimationInputCard />
+
+          <BurnRateInput />
 
         </div>
 

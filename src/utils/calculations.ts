@@ -1,6 +1,4 @@
 
-
-
 import { InputStoreState } from '../store/store';
 
 export function calculateRunway(userInput: InputStoreState): { runway: number; monthsRemaining: number | string } {
@@ -22,6 +20,7 @@ export function calculateProjectedRevenue(userInput: InputStoreState, months: nu
     return calculateProjectedRevenueSimplified(userInput, months);
   }
 }
+
 function calculateRunwayFull(userInput: InputStoreState): { runway: number; monthsRemaining: number | string } {
   const { initialCashBalance, payRoll, nonPayRoll, monthlyIncome,
     currentCashBalance,
@@ -48,6 +47,7 @@ function calculateRunwayFull(userInput: InputStoreState): { runway: number; mont
 
   return { runway: runwayMonths, monthsRemaining };
 }
+
 // Existing calculateProjectedRevenue function
 function calculateProjectedRevenueFull(userInput: InputStoreState, months: number): { month: number; revenue: string }[] {
   const { initialCashBalance, monthlyIncome, monthlyGrowthRate, payRoll, nonPayRoll, newHiresTimeline, 

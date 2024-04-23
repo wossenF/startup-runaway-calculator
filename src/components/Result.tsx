@@ -4,7 +4,9 @@ import BarChart from "./BarChart";
 import useInputStore, { InputStoreState } from "../store/store";
 import { calculateRunway, calculateProjectedRevenue } from '../utils/calculations';
 import jsPDF from 'jspdf';
+import ReactApexChart from "react-apexcharts";
 import html2canvas from 'html2canvas';
+import Chart, { DataPoint } from "./Chart";
 
 const FinalResult = () => {
 
@@ -54,7 +56,7 @@ const FinalResult = () => {
   } = useInputStore();
 
   const [runway, setRunway] = useState<number>(0);
-  const [projectedRevenue, setProjectedRevenue] = useState<{ month: number; revenue: string }[]>([]);
+  const [projectedRevenue, setProjectedRevenue] = useState<DataPoint[]>([]);
 
   useEffect(() => {
     const userInput: InputStoreState = {
@@ -99,31 +101,11 @@ const FinalResult = () => {
 
   const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
 
-  const chartData = {
-    labels: projectedRevenue.map(data => `Month ${data.month}`),
-    datasets: [
-      {
-        label: 'Projected Monthly Revenue',
-        data: projectedRevenue.map(data => Number(data.revenue)),
-        backgroundColor: 'rgba(19, 33, 60, 1)',
-        borderColor: 'rgba(19, 33, 60, 1)',
-      },
-      {
-        label: 'Current Cash Balance',
-        data: projectedRevenue.map((data, index) => {
-          const cashBalance = initialCashBalance - (totalBurnRate * index);
-          return cashBalance.toFixed(2);
-        }),
-        type: 'bar',
-        fill: false,
-        backgroundColor: 'rgba(250, 180, 70, 1)',
-        borderColor: 'rgba(250, 180, 70, 1)',
-      },
-    ],
-  };
+  
 
-const initialCostValue = useInputStore((state)=> state.initialCashBalance)
-console.log(">>>> updated initial cost", initialCostValue);
+  const initialCostValue = useInputStore((state) => state.initialCashBalance)
+
+  console.log(">>>> updated initial cost", initialCostValue);
   return (
     <>
       <div className="my-3 space-y-4" id="pdf-content">
@@ -137,7 +119,7 @@ console.log(">>>> updated initial cost", initialCostValue);
           <p key={index} style={{ color: 'red' }}>{error}</p>
         ))}
         <p>Estimated Runway: {runway || ""} months</p>
-        <BarChart datasets={chartData.datasets} labels={chartData.labels} />
+        <Chart datasets={projectedRevenue} />
       </div>
       <button className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 mr-3 my-5" onClick={handleDownloadClick}>Download as PDF</button>
     </>

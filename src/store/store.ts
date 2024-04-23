@@ -2,6 +2,10 @@ import { create } from "zustand";
 
 // Define type for store state
 export interface InputStoreState {
+  firstMonthBalance: number;
+  secondMonthBalance: number;
+  thirdMonthBalance: number;
+  burnRate: number;
   initialCashBalance: number;
   currentCashBalance: number;
   monthlyIncome: number;
@@ -21,14 +25,20 @@ export interface InputStoreState {
 // Define setField function signature
 type SetField = (field: keyof InputStoreState, value: number) => void;
 type UpdateCostValue = (field: keyof InputStoreState, value: number) => void;
+type CalculateBurnRate = () => void;
 
 type InputStore = InputStoreState & {
   setField: SetField;
   updateCostValue: UpdateCostValue;
+  calculateBurnRate: CalculateBurnRate;
 };
 
 // Create store
 const useInputStore = create<InputStore>((set) => ({
+  firstMonthBalance: 0,
+  secondMonthBalance: 0,
+  thirdMonthBalance: 0,
+  burnRate: 0,
   initialCashBalance: 0,
   currentCashBalance: 0,
   monthlyIncome: 0,
@@ -67,9 +77,16 @@ const useInputStore = create<InputStore>((set) => ({
   },
 
   updateCostValue: () =>
-    
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
 
+  calculateBurnRate: () =>
+    set((state) => ({
+      burnRate:
+        state.firstMonthBalance +
+        state.secondMonthBalance +
+        state.thirdMonthBalance,
+    })),
+  
 }));
 
 export default useInputStore;
