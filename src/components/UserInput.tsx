@@ -56,7 +56,7 @@ const UserInput = () => {
           <CashBalanceInputCard />
           <ExpenseInputCard />
           <BurnRateInput />
-          {/* <IncomeInputCard /> */}
+          <IncomeInputCard />
           <EstimationInputCard />
 
 
