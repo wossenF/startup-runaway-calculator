@@ -14,7 +14,6 @@ function CashBalanceInputCard() {
           Current amount of cash available *
         </p>
         <Input
-          type="number"
           name="name"
           placeholder="$1000,000"
           onChange={(e) => {
