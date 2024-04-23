@@ -7,11 +7,18 @@ import { ResultDashBoard } from "@/components/Result/ResultDashBoard";
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
 
+  const calculateRunway = useInputStore((state) => state.calculateRunway);
   const handleClick = () => {
-    setIsClicked((prevState) => !prevState);
+    setIsClicked(prevState => !prevState);
+    calculateRunway()
   };
 
-  const { initialCashBalance, monthlyIncome } = useInputStore();
+
+  const {
+    initialCashBalance,
+    monthlyIncome,
+
+  } = useInputStore();
 
   return (
     <main className="w-3/4 m-12">

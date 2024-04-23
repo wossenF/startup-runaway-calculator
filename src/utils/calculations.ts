@@ -97,6 +97,7 @@ function calculateRunwayFull(userInput: InputStoreState): {
 
   return { runway: runwayMonths, monthsRemaining, totalBurnRate };
 }
+
 // Existing calculateProjectedRevenue function
 function calculateProjectedRevenueFull(
   userInput: InputStoreState,

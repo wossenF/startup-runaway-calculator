@@ -6,6 +6,7 @@ import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
 import ExpenseInputCard from "./inputCards/ExpenseInputCard";
 import IncomeInputCard from "./inputCards/IncomeInputCard";
 import EstimationInputCard from "./inputCards/EstimationInputCard";
+import BurnRateInput from "./inputCards/BurnRateInput";
 
 const UserInput = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -51,10 +52,14 @@ const UserInput = () => {
         <MyComponent />
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-3">
+          {/*  */}
           <CashBalanceInputCard />
-          <ExpenseInputCard />
+          <BurnRateInput />
           <IncomeInputCard />
+          <ExpenseInputCard />
           <EstimationInputCard />
+
+
         </div>
       )}
     </>
