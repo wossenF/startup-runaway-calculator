@@ -23,7 +23,7 @@ const UserInput = () => {
   const [initialCashBalanceError, setInitialCashBalanceError] = useState("");
 
   const {
-    currency,
+   
     initialCashBalance,
     monthlyIncome,
     monthlyGrowthRate,
@@ -57,10 +57,7 @@ const UserInput = () => {
     }
   };
 
-  const handleCurrencyButtonClick = (selectedCurrency: string) => {
-    setField("currency", selectedCurrency);
-    console.log(currency)
-  };
+
 
   return (
     <>

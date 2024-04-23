@@ -14,7 +14,7 @@ export function calculateRunway(userInput: InputStoreState): { runway: number; m
 }
 
 export function calculateProjectedRevenue(userInput: InputStoreState, months: number): { month: number; revenue: string }[] {
-  const { cogsPercentage, fundraisingAmount, monthlyCompensation, nonPayrollReduction, nonPayrollReductionTimeline, fundraisingTimeline, newHiresTimeline } = userInput;
+  const {cogsPercentage, fundraisingAmount, monthlyCompensation, nonPayrollReduction, nonPayrollReductionTimeline, fundraisingTimeline, newHiresTimeline } = userInput;
 
   if (cogsPercentage !== undefined && fundraisingAmount !== undefined && monthlyCompensation !== undefined && nonPayrollReduction !== undefined && nonPayrollReductionTimeline !== undefined && fundraisingTimeline !== undefined && newHiresTimeline !== undefined) {
     return calculateProjectedRevenueFull(userInput, months);
