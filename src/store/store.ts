@@ -56,7 +56,7 @@ const useInputStore = create<InputStore>((set) => ({
         },
       }));
     } else {
-      // Clear validation error and update field value
+
       set((state) => ({
         ...state,
         [field]: value,
