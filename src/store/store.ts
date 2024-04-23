@@ -1,6 +1,5 @@
 import { create } from "zustand";
 
-// Define type for store state
 export interface InputStoreState {
   initialCashBalance: number;
   currentCashBalance: number;
@@ -57,7 +56,7 @@ const useInputStore = create<InputStore>((set) => ({
         },
       }));
     } else {
-      // Clear validation error and update field value
+
       set((state) => ({
         ...state,
         [field]: value,
@@ -70,6 +69,7 @@ const useInputStore = create<InputStore>((set) => ({
     
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
 
+    
 }));
 
 export default useInputStore;
