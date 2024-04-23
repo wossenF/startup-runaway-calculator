@@ -54,11 +54,11 @@ const UserInput = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-3">
           {/*  */}
           <CashBalanceInputCard />
-          <ExpenseInputCard />
+          <BurnRateInput />
           <IncomeInputCard />
+          <ExpenseInputCard />
           <EstimationInputCard />
 
-          <BurnRateInput />
 
         </div>
       )}
