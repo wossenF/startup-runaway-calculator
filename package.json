@@ -29,13 +29,9 @@
     "next": "^14.2.2",
     "npx": "^10.2.2",
     "react": "^18",
-    "react-apexcharts": "^1.4.1",
-    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
     "shadcn-ui": "^0.8.0",
-    "tailwindcss-animate": "^1.0.7",
-    "yup": "^1.4.0",
     "zod": "^3.22.4",
     "zustand": "^4.5.2"
   },
