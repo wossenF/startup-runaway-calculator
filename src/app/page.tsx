@@ -19,7 +19,7 @@ export default function Home() {
         Startup Runaway <span className="text-[#FAB446]">Calculator</span>
       </h1>
 
-      <p className="pb-7 mx-auto max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl p-3 pl-0">
+      <p className="pb-7  max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl p-3 pl-0">
         Empower your startup journey with financial clarity. Our calculator
         helps you understand your runway and make strategic decisions
         effortlessly.
