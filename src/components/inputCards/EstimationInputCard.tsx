@@ -48,7 +48,7 @@ function EstimationInputCard() {
                   name="name"
                   placeholder="$"
                   onChange={(e) => {
-                    setField("cogsPercentage", parseFloat(e.target.value) || 0);
+                    setField("cogsPercentage", parseFloat(e.target.value) || 1);
                   }}
                 />
               </form>

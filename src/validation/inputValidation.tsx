@@ -1,51 +1,44 @@
-import { z } from 'zod';
+import { useState } from "react";
+import useInputStore, { InputStoreState } from "@/store/store";
 
-// Custom Zod schema to allow shorthand notation for large numbers
-const NumberOrShorthand = z
-  .string()
-  .refine((value) => {
-    const shorthandRegex = /^-?\d+(\.\d+)?[kmbt]$/i;
-    return shorthandRegex.test(value);
-  }, {
-    message: "Value must be a number or a valid shorthand representation (e.g., 10k, 5m, 2b, 100t).",
-  })
-  .transform((value) => {
-    const multiplier: Record<string, number> = {
-      'k': 1000,
-      'm': 1000000,
-      'b': 1000000000,
-      't': 1000000000000,
-    };
+export const useInputValidation = (fieldName?: string ) => {
+  const setField = useInputStore((state) => state.setField);
+  const [errorMessage, setErrorMessage] = useState("");
+  const error = useInputStore((state)=> state.setError)
+  const {initialCashBalance, monthlyIncome, payRoll, nonPayRoll} = useInputStore((state) => state);
+  
+  const handleInputChange = (value: any, e?: React.FormEvent<HTMLInputElement>) => {
+    e?.preventDefault()
 
-    const numericValue = parseFloat(value);
-    const unit = value.charAt(value.length - 1).toLowerCase();
+    const inputValue = value?.trim().toLowerCase();
+    let numericValue;
 
-    if (multiplier.hasOwnProperty(unit)) {
-      return numericValue * multiplier[unit];
-    }
+    if (/^\d+(\.\d+)?(k|m|b|t)?$/i.test(inputValue)) {
+      numericValue = parseFloat(inputValue);
 
-    // Refine only after transformation (if number)
-    if (!isNaN(numericValue)) {
-      return numericValue;
+      if (inputValue.endsWith("k")) {
+        numericValue *= 1000;
+      } else if (inputValue.endsWith("m")) {
+        numericValue *= 1000000;
+      } else if (inputValue.endsWith("b")) {
+        numericValue *= 1000000000;
+      } else if (inputValue.endsWith("t")) {
+        numericValue *= 1000000000000;
+      }
+
+      error("");
+      
+      setField(fieldName as keyof InputStoreState, numericValue);
+      
     } else {
-      throw new Error("Invalid number or shorthand representation!");
+      error(
+        "Invalid input format. Please enter a valid number."
+      );
     }
-  });
+  };
 
-export const InputSchema = z.object({
-  initialCashBalance: NumberOrShorthand,
-  monthlyIncome: NumberOrShorthand,
-  monthlyGrowthRate: z.number().min(0).max(100),
-  cogsPercentage: z.number().min(0).max(100),
-  payRoll: NumberOrShorthand,
-  nonPayRoll: NumberOrShorthand,
-  fundraisingAmount: NumberOrShorthand.optional(),
-  monthlyCompensation: NumberOrShorthand.optional(),
-  nonPayrollReduction: NumberOrShorthand.optional(),
-  nonPayrollReductionTimeline: z.number().min(0).max(12).optional(),
-  fundraisingTimeline: z.number().min(0,{message: "value can't be less than zero"}).max(12,{message:"value can't be more than 12"}).optional(),
-  newHiresTimeline: z.number().min(0,{message: "value can't be less than zero"}).max(12,{message:"value can't be more than 12"}).optional(),
-});
-
-// Define a type for the input data based on the Zod schema
-export type InputData = z.infer<typeof InputSchema>;
+  return {
+    handleInputChange,
+    errorMessage
+  };
+};

@@ -6,9 +6,15 @@ import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
 import ExpenseInputCard from "./inputCards/ExpenseInputCard";
 import IncomeInputCard from "./inputCards/IncomeInputCard";
 import EstimationInputCard from "./inputCards/EstimationInputCard";
+import BurnRateInput from "./inputCards/MonthlyIncome";
+import MonthlyExpenditure from "./inputCards/MonthlyExpenditure";
+import MonthlyIncome from "./inputCards/MonthlyIncome";
 
 const UserInput = () => {
+  
   const [isClicked, setIsClicked] = useState(false);
+  const [monthlyDates, setMonthlyDates] = useState(['', '', '']);
+
   const {
     initialCashBalance,
     monthlyIncome,
@@ -53,8 +59,10 @@ const UserInput = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-3">
           <CashBalanceInputCard />
           <ExpenseInputCard />
-          <IncomeInputCard />
-          <EstimationInputCard />
+          <MonthlyIncome monthlyDates={monthlyDates} setMonthlyDates={setMonthlyDates} />
+      <MonthlyExpenditure monthlyDates={monthlyDates} setMonthlyDates={setMonthlyDates} />
+          {/* <IncomeInputCard /> */}
+          {/* <EstimationInputCard /> */}
         </div>
       )}
     </>

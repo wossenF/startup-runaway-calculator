@@ -5,8 +5,12 @@ import useInputStore from '@/store/store';
 
 function IncomeInputCard() {
 
-    const setField = useInputStore((state) => state.setField);
-
+    // const setField = useInputStore((state) => state.setField);
+    const onChange = useInputStore((state) => state.onChange);
+const handleOnChange = (e: any) => {
+    onChange("monthlyIncome", e.target.value)
+}
+    
    
 
     return (
@@ -21,9 +25,10 @@ function IncomeInputCard() {
                     type="number"
                     name="name"
                     placeholder="$0.00"
-                    onChange={(e) => {
-                        setField("monthlyIncome", parseFloat(e.target.value) || 0);
-                    }}
+                    onChange={handleOnChange}
+                    value={useInputStore((state) => state.monthlyIncome)
+                        
+                    }
                 />
             </form>
 
@@ -33,12 +38,13 @@ function IncomeInputCard() {
                     percentage increase in monthly revenue
                 </p>
                 <Input
+                disabled
+
                     type="number"
                     name="name"
                     placeholder="%"
-                    onChange={(e) => {
-                        setField("monthlyGrowthRate", parseFloat(e.target.value) || 0);
-                    }}
+                    onChange={handleOnChange}
+                    value={useInputStore((state) => state.initialCashBalance)}
                 />
             </form>
         </div>
