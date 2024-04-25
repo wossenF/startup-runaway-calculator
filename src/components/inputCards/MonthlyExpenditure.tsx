@@ -35,11 +35,9 @@ function MonthlyExpenditure({ monthlyDates, setMonthlyDates }: { monthlyDates: a
     <div className='bg-secondary/50 rounded-lg p-7 grid gap-2'>
       <Label className="font-medium  text-xl">Monthly Expenditure</Label>
       <div className="income  gap-4 flex rounded-lg ">
-        <form className="monthly-income grid w-full gap-2 pt-5">
+        <form className="monthly-income grid w-full gap-2 ">
           <Label className="">Months</Label>
-          <p className="text-gray-500 text-sm">
-            Month
-          </p>
+         
           {[1, 2, 3].map((month) => (
             <React.Fragment key={month}>
               <Input
@@ -55,15 +53,13 @@ function MonthlyExpenditure({ monthlyDates, setMonthlyDates }: { monthlyDates: a
         </form>
 
        
-        <form className="growth-rate w-full grid gap-2 pt-5">
+        <form className="growth-rate w-full grid gap-2">
           <Label>monthly expenditure</Label>
-          <p className="text-gray-500 text-sm">
-             at this month
-          </p>
+          
           <Input
             name="name"
             value={firstMonthBalance || ""}
-            placeholder="Current Balance"
+            placeholder="this month expenses"
             onChange={(e) => {
               setField("firstMonthBalance", parseFloat(e.target.value) || 0);
             //   calculateBurnRate();
@@ -73,7 +69,7 @@ function MonthlyExpenditure({ monthlyDates, setMonthlyDates }: { monthlyDates: a
           <Input
             name="name"
             value={secondMonthBalance || ""}
-            placeholder="Current Balance"
+            placeholder="this month expenses"
             onChange={(e) => {
               setField("secondMonthBalance", parseFloat(e.target.value) || 0);
             //   calculateBurnRate();
@@ -83,7 +79,7 @@ function MonthlyExpenditure({ monthlyDates, setMonthlyDates }: { monthlyDates: a
           <Input
             name="name"
             value={thirdMonthBalance || ""}
-            placeholder="Current Balance"
+            placeholder="this month expenses"
             onChange={(e) => {
               setField("thirdMonthBalance", parseFloat(e.target.value) || 0);
             //   calculateBurnRate();

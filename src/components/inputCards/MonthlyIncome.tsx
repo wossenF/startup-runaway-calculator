@@ -32,13 +32,10 @@ import { Input } from '../ui/input';
   };
   return (
     <div className='bg-secondary/50 rounded-lg p-7 grid gap-2'>
-      <Label className="font-medium  text-xl">Monthly Income</Label>
+      <Label className="font-medium  text-xl pb-5 ">Monthly Income</Label>
       <div className="income  gap-4 flex rounded-lg ">
-        <form className="monthly-income grid w-full gap-2 pt-5">
+        <form className="monthly-income grid w-full gap-2">
           <Label className="">Months</Label>
-          <p className="text-gray-500 text-sm">
-            Month
-          </p>
           {[1, 2, 3].map((month) => (
             <React.Fragment key={month}>
               <Input
@@ -54,11 +51,8 @@ import { Input } from '../ui/input';
         </form>
 
        
-        <form className="growth-rate w-full grid gap-2 pt-5">
-          <Label>Current Balance</Label>
-          <p className="text-gray-500 text-sm">
-            Balance at this month
-          </p>
+        <form className="growth-rate w-full grid gap-2 ">
+          <Label>monthly Balance</Label>
           <Input
             type="number"
             name="name"

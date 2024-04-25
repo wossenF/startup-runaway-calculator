@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 export interface InputStoreState {
-  firstMonthBalance: number;
-  secondMonthBalance: number;
-  thirdMonthBalance: number;
+  firstMonthBalance: string;
+  secondMonthBalance: string;
+  thirdMonthBalance: string;
   initialCashBalance: string;
   currentCashBalance: string;
   monthlyIncome: number;
@@ -37,9 +37,9 @@ type InputStore = InputStoreState & {
 
 // Create store
 const useInputStore = create<InputStore>((set) => ({
-  firstMonthBalance: 0,
-  secondMonthBalance: 0,
-  thirdMonthBalance: 0,
+  firstMonthBalance: "",
+  secondMonthBalance: "",
+  thirdMonthBalance: "",
   initialCashBalance: "",
   currentCashBalance: "",
   monthlyIncome: 0,
