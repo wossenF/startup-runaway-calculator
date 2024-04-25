@@ -30,7 +30,7 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
           type: 'bar',
           data: {
             labels: labels,
-            datasets: datasets.map((dataset, index) => ({
+            datasets: datasets.map((dataset, index ) => ({
               ...dataset,
               backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
               borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,

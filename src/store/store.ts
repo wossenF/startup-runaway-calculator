@@ -1,27 +1,25 @@
 import { create } from "zustand";
 
 export interface InputStoreState {
+  growthRate:number;
+  burnRate:number;
+  expenseRate:number
   firstMonthBalance: any;
   secondMonthBalance: any;
   thirdMonthBalance: any;
-  firstMonthexpense: string;
-  secondMonthexpense: string;
-  thirdMonthexpense: string;
-  initialCashBalance: string;
+  firstMonthexpense: any;
+  secondMonthexpense: any;
+  thirdMonthexpense: any;
+  initialCashBalance: any;
   currentCashBalance: string;
-  monthlyIncome: number;
-  monthlyGrowthRate: number;
-  cogsPercentage: number;
-  payRoll: number;
-  nonPayRoll: number;
-  fundraisingAmount: number;
-  monthlyCompensation: number;
-  nonPayrollReduction: number;
-  nonPayrollReductionTimeline: number;
-  fundraisingTimeline: number;
-  newHiresTimeline: number;
   error: string;
   validationErrors: Partial<Record<keyof InputStoreState, string>>;
+  // Add fields for storing calculation results
+  runway: number;
+  monthsRemaining: number | string;
+  totalBurnRate: number;
+  IncomegrowthRateDecimal: number;
+  expensesgrowthRateDecimal: number;
 }
 
 // Define setField function signature
@@ -40,6 +38,9 @@ type InputStore = InputStoreState & {
 
 // Create store
 const useInputStore = create<InputStore>((set) => ({
+  growthRate:0,
+  burnRate:0,
+  expenseRate:0,
   firstMonthBalance: "",
   secondMonthBalance: "",
   thirdMonthBalance: "",
@@ -48,20 +49,16 @@ const useInputStore = create<InputStore>((set) => ({
   thirdMonthexpense: "",
   initialCashBalance: "",
   currentCashBalance: "",
-  monthlyIncome: 0,
-  monthlyGrowthRate: 1,
-  cogsPercentage: 1,
-  payRoll: 0,
-  nonPayRoll: 0,
-  fundraisingAmount: 0,
-  monthlyCompensation: 0,
-  nonPayrollReduction: 0,
-  nonPayrollReductionTimeline: 0,
-  fundraisingTimeline: 0,
-  newHiresTimeline: 0,
   validationErrors: "",
+  
   error: "",
   prevousValidValue: {},
+  // Initialize calculation result fields
+  runway: 0,
+  monthsRemaining: "",
+  totalBurnRate: 0,
+  IncomegrowthRateDecimal: 0,
+  expensesgrowthRateDecimal: 0,
 
   // Define setField function
   setField: (field, value) => {
@@ -118,6 +115,7 @@ const useInputStore = create<InputStore>((set) => ({
   },
 
   setError: (error) => set((state) => ({ error })),
+
   updateCostValue: () =>
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
 }));

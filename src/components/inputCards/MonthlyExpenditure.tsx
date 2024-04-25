@@ -11,27 +11,48 @@ function MonthlyExpenditure({
   monthlyDates: any[];
   setMonthlyDates: any;
 }) {
-  const [inputValue, setInputValue] = useState("");
-  const error = useInputStore((state) => state.error);
   // const setField = useInputStore((state) => state.setField);
   const firstMonthexpense = useInputStore((state) => state.firstMonthexpense);
   const secondMonthexpense = useInputStore((state) => state.secondMonthexpense);
   const thirdMonthexpense = useInputStore((state) => state.thirdMonthexpense);
+  const [firstValue, setFirstValue] = useState("");
+  const [secondValue, setSecondValue] = useState("");
+  const [thirdValue, setThirdValue] = useState("");
+  
+  const firsterror = useInputStore((state) => state.error);
+  const seconderror = useInputStore((state) => state.error);
+  const thirderror = useInputStore((state) => state.error);
+
   const onChange = useInputStore((state) => state.onChange);
 
-  const handleFirstInputChange = (e: any) => {
-    const value = e.target.value;
-    onChange("initialCashBalance", value);
-    setInputValue(value);
+  const handleFirstExpenseChange = (e: any) => {
+    const firstExpenseValue = e.target.value;
+    onChange("firstMonthexpense", firstExpenseValue);
+    
+    setFirstValue(firstExpenseValue);
+  };
 
-    setMonthlyDates([value, null, null]);
+  const handleSecondExpenseChange = (e: any) => {
+    const secondExpenseValue = e.target.value;
+    onChange("secondMonthexpense", secondExpenseValue);
+    setSecondValue(secondExpenseValue);
+  };
+  const handleThirdExpenseChange = (e: any) => {
+    const thirdExpenseValue = e.target.value;
+    onChange("thirdMonthexpense", thirdExpenseValue);
+    setThirdValue(thirdExpenseValue);
+  };
+  const handleInputChange = (e: any) => {
+    const monthvalue = e.target.value;
+
+    setMonthlyDates([monthvalue, null, null]);
 
     if (isNaN(Date.parse(e.target.value))) {
       console.error("Invalid date format. Please enter a valid date.");
       return;
     }
 
-    const firstMonthDate = new Date(value);
+    const firstMonthDate = new Date(monthvalue);
     for (let index = 1; index < 3; index++) {
       const nextMonth = addMonths(firstMonthDate, index);
       setMonthlyDates((prevDates: any[]) => [
@@ -56,7 +77,7 @@ function MonthlyExpenditure({
                 name={`monthlyExpenditure${month}`}
                 placeholder={month === 1 ? "Enter Date" : ""}
                 value={monthlyDates[month - 1] || ""}
-                onChange={handleFirstInputChange}
+                onChange={handleInputChange}
               />
             </React.Fragment>
           ))}
@@ -67,30 +88,27 @@ function MonthlyExpenditure({
           <p className="text-gray-500 text-sm">expense expense of each month</p>
           <Input
             name="name"
-            value={firstMonthexpense || ""}
             placeholder="this month expenses"
-            onChange={handleFirstInputChange}
+            onChange={handleFirstExpenseChange}
+            value={firstValue || firstMonthexpense}
           />
+          {firsterror && <p className="text-red-500 text-sm">{firsterror}</p>}
 
           <Input
             name="name"
-            value={secondMonthexpense || ""}
             placeholder="this month expenses"
-            // onChange={(e) => {
-            //   setField("secondMonthexpense", parseFloat(e.target.value) || 0);
-            //   //   calculateBurnRate();
-            // }}
+           onChange={handleSecondExpenseChange}
+            value={secondValue || secondMonthexpense}
           />
+          {seconderror && <p className="text-red-500 text-sm">{seconderror}</p>}
 
           <Input
             name="name"
-            value={thirdMonthexpense || ""}
             placeholder="this month expenses"
-            // onChange={(e) => {
-            //   setField("thirdMonthexpense", parseFloat(e.target.value) || 0);
-            //   //   calculateBurnRate();
-            // }}
+            onChange={handleThirdExpenseChange}
+            value={thirdValue || thirdMonthexpense}
           />
+          {thirderror && <p className="text-red-500 text-sm">{thirderror}</p>}
         </form>
       </div>
     </div>

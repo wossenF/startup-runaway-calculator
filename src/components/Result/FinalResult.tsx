@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import BarChart from "./BarChart";
 import useInputStore, { InputStoreState } from "../../store/store";
 import TableResult from "./TableResult";
-
-import {
-  calculateRunway,
-  calculateProjectedRevenue,
-} from "../../utils/calculations";
+import { calculateRunway } from "../../utils/calculations";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { Input } from "../ui/input";
+
 const FinalResult = () => {
   const handleDownloadClick = () => {
     const input = document.getElementById("pdf-content");
@@ -41,103 +38,81 @@ const FinalResult = () => {
 
   const {
     initialCashBalance,
-    monthlyIncome,
-    monthlyGrowthRate,
-    cogsPercentage,
-    payRoll,
-    nonPayRoll,
-    fundraisingAmount,
-    monthlyCompensation,
-    nonPayrollReduction,
-    nonPayrollReductionTimeline,
-    fundraisingTimeline,
-    newHiresTimeline,
+    firstMonthBalance,
+    secondMonthBalance,
+    thirdMonthBalance,
+    firstMonthexpense,
+    secondMonthexpense,
+    thirdMonthexpense,
     validationErrors,
     setField,
+    currentCashBalance,
+    runway,
   } = useInputStore();
 
-  const [runway, setRunway] = useState<number>(0);
-  const [projectedRevenue, setProjectedRevenue] = useState<
-    { month: number; revenue: string }[]
-  >([]);
-
+  const [runaway, setRunway] = useState<any>(0);
+  const [isClicked, setIsClicked] = useState(false);
   useEffect(() => {
     const userInput: InputStoreState = {
+      growthRate: 0,
+      burnRate: 0,
+      expenseRate: 0,
       initialCashBalance,
-      monthlyIncome,
-      monthlyGrowthRate,
-      cogsPercentage,
-      payRoll,
-      nonPayRoll,
-      fundraisingAmount,
-      monthlyCompensation,
-      nonPayrollReduction,
-      nonPayrollReductionTimeline,
-      fundraisingTimeline,
-      newHiresTimeline,
+      firstMonthBalance,
+      secondMonthBalance,
+      thirdMonthBalance,
+      firstMonthexpense,
+      secondMonthexpense,
+      thirdMonthexpense,
       validationErrors,
-      currentCashBalance: 0,
+      currentCashBalance: "",
+      error: "",
+      runway: 0,
+      monthsRemaining: "",
+      totalBurnRate: 0,
+      IncomegrowthRateDecimal: 0,
+      expensesgrowthRateDecimal: 0,
     };
 
     const calculatedRunway = calculateRunway(userInput);
-
-    const calculatedProjectedRevenue = calculateProjectedRevenue(userInput, 6);
-
     setRunway(calculatedRunway.runway);
 
-    setProjectedRevenue(calculatedProjectedRevenue);
   }, [
     initialCashBalance,
-    monthlyIncome,
-    monthlyGrowthRate,
-    cogsPercentage,
-    payRoll,
-    nonPayRoll,
-    fundraisingAmount,
-    monthlyCompensation,
-    nonPayrollReduction,
-    nonPayrollReductionTimeline,
-    fundraisingTimeline,
-    newHiresTimeline,
+    firstMonthBalance,
+    secondMonthBalance,
+    thirdMonthBalance,
+    firstMonthexpense,
+    secondMonthexpense,
+    thirdMonthexpense,
     validationErrors,
   ]);
 
-  const totalBurnRate =
-    cogsPercentage * monthlyIncome -
-    payRoll -
-    nonPayRoll +
-    monthlyCompensation * newHiresTimeline +
-    nonPayrollReduction * nonPayrollReductionTimeline;
+  const initialCostValue = useInputStore((state) => state.initialCashBalance);
+  
+
+  const handleClick = () => {
+    setIsClicked((prevState) => !prevState);
+  };
 
   const chartData = {
-    labels: projectedRevenue.map((data) => `Month ${data.month}`),
+    labels: ["1", "2", "3", "4", "5", "6"],
     datasets: [
       {
-        label: "Projected Monthly Revenue",
-        data: projectedRevenue.map((data) => Number(data.revenue)),
+        label: "Monthly Balance",
+        data: [firstMonthBalance, secondMonthBalance, thirdMonthBalance],
         backgroundColor: "rgba(19, 33, 60, 1)",
         borderColor: "rgba(19, 33, 60, 1)",
       },
       {
         label: "Current Cash Balance",
-        data: projectedRevenue.map((data, index) => {
-          const cashBalance = initialCashBalance - totalBurnRate * index;
-          return cashBalance.toFixed(2);
-        }),
-        type: "bar",
-        fill: false,
+        data: currentCashBalance.split(",").map((item) => parseFloat(item)),
         backgroundColor: "rgba(250, 180, 70, 1)",
         borderColor: "rgba(250, 180, 70, 1)",
       },
     ],
   };
-  const [isClicked, setIsClicked] = useState(false);
 
-  const handleClick = () => {
-    setIsClicked((prevState) => !prevState);
-  };
-  const initialCostValue = useInputStore((state) => state.initialCashBalance);
-  console.log(">>>> updated initial cost", initialCostValue);
   return (
     <>
       <div id="pdf-content">
@@ -165,7 +140,7 @@ const FinalResult = () => {
             {isClicked ? "Chart" : "Table"}
           </button>
         </div>
-        <p className="mb-5">Estimated Runway: {runway || "infinity"} months</p>
+        <p className="mb-5">Estimated Runway: {runway || ""} </p>
         {isClicked ? (
           <TableResult />
         ) : (

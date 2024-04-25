@@ -1,169 +1,74 @@
-import { InputStoreState } from "../store/store";
+import useInputStore, { InputStoreState } from "../store/store";
 
+// Updated calculateRunway function
 export function calculateRunway(userInput: InputStoreState): {
   runway: number;
-  monthsRemaining: number | string;
-} {
-  const {
-    cogsPercentage,
-    fundraisingAmount,
-    monthlyCompensation,
-    nonPayrollReduction,
-    nonPayrollReductionTimeline,
-    fundraisingTimeline,
-    newHiresTimeline,
-  } = userInput;
-
-  if (
-    cogsPercentage !== undefined &&
-    fundraisingAmount !== undefined &&
-    monthlyCompensation !== undefined &&
-    nonPayrollReduction !== undefined &&
-    nonPayrollReductionTimeline !== undefined &&
-    fundraisingTimeline !== undefined &&
-    newHiresTimeline !== undefined
-  ) {
-    return calculateRunwayFull(userInput);
-  } else {
-    return calculateRunwaySimplified(userInput);
-  }
-}
-
-export function calculateProjectedRevenue(
-  userInput: InputStoreState,
-  months: number
-): { month: number; revenue: string }[] {
-  const {
-    cogsPercentage,
-    fundraisingAmount,
-    monthlyCompensation,
-    nonPayrollReduction,
-    nonPayrollReductionTimeline,
-    fundraisingTimeline,
-    newHiresTimeline,
-  } = userInput;
-
-  if (
-    cogsPercentage !== undefined &&
-    fundraisingAmount !== undefined &&
-    monthlyCompensation !== undefined &&
-    nonPayrollReduction !== undefined &&
-    nonPayrollReductionTimeline !== undefined &&
-    fundraisingTimeline !== undefined &&
-    newHiresTimeline !== undefined
-  ) {
-    return calculateProjectedRevenueFull(userInput, months);
-  } else {
-    return calculateProjectedRevenueSimplified(userInput, months);
-  }
-}
-function calculateRunwayFull(userInput: InputStoreState): {
-  runway: number;
-  monthsRemaining: number | string;
-  totalBurnRate: number;
-} 
-{
-  const {
-    initialCashBalance,
-    payRoll,
-    nonPayRoll,
-    monthlyIncome,
-    cogsPercentage,
-    fundraisingAmount,
-    monthlyCompensation,
-    nonPayrollReduction,
-    nonPayrollReductionTimeline,
-    fundraisingTimeline,
-    newHiresTimeline,
-  } = userInput;
-  const totalBurnRate =payRoll + nonPayRoll-  monthlyIncome;
-  if (totalBurnRate <= 0) {
-    return { runway: Infinity, monthsRemaining: "∞", totalBurnRate: 0 };
-  }
-
-  const runwayMonths = Math.ceil(
-    (initialCashBalance + fundraisingAmount) /
-      (totalBurnRate -
-        nonPayrollReduction -
-        monthlyIncome -
-        monthlyIncome * fundraisingTimeline)
-  );
-  const monthsRemaining = Math.ceil(runwayMonths);
-
-  return { runway: runwayMonths, monthsRemaining, totalBurnRate };
-}
-// Existing calculateProjectedRevenue function
-function calculateProjectedRevenueFull(
-  userInput: InputStoreState,
-  months: number
-): {
-  month: number;
-  revenue: string;
-}[] {
-  const {
-    initialCashBalance,
-    monthlyIncome,
-    monthlyGrowthRate,
-    payRoll,
-    nonPayRoll,
-    
-  } = userInput;
-  const growthRateDecimal = monthlyGrowthRate / 100;
-  const totalBurnRate =
-  monthlyIncome- payRoll - nonPayRoll
   
-  const projectedRevenue: { month: number; revenue: string }[] = [];
-  let currentRevenue = monthlyIncome;
-  let currentCashBalance = initialCashBalance;
-
-  for (let month = 1; month <= 6; month++) {
-    
-    currentCashBalance -= totalBurnRate;
-    const growthAmount = monthlyIncome + monthlyIncome * growthRateDecimal;
-    currentRevenue += growthAmount;
-    projectedRevenue.push({ month, revenue: currentRevenue.toFixed(2) });
-  }
-
-  return projectedRevenue;
-}
-
-function calculateRunwaySimplified(userInput: InputStoreState): {
-  runway: number;
-  monthsRemaining: number | string;
 } {
-  const { initialCashBalance, payRoll, nonPayRoll, monthlyIncome } = userInput;
-  const totalBurnRate = payRoll + nonPayRoll;
-
-  if (totalBurnRate <= 0) {
-    return { runway: Infinity, monthsRemaining: "∞" };
-  }
-
-  const runwayMonths = Math.ceil(initialCashBalance / totalBurnRate);
-  const monthsRemaining = Math.ceil(runwayMonths);
-
-  return { runway: runwayMonths, monthsRemaining };
-}
-
-function calculateProjectedRevenueSimplified(
-  userInput: InputStoreState,
-  months: number
-): { month: number; revenue: string }[] {
   const {
     initialCashBalance,
-    monthlyIncome,
-    monthlyGrowthRate,
-    payRoll,
-    nonPayRoll,
+    firstMonthBalance,
+    secondMonthBalance,
+    thirdMonthBalance,
+    firstMonthexpense,
+    secondMonthexpense,
+    thirdMonthexpense,
   } = userInput;
-  const growthRateDecimal = monthlyGrowthRate / 100;
-  const totalBurnRate = monthlyIncome - (payRoll + nonPayRoll);
-  const projectedRevenue: { month: number; revenue: string }[] = [];
-  let currentRevenue = monthlyIncome;
 
-  for (let month = 1; month <= months; month++) {
-    currentRevenue += currentRevenue * growthRateDecimal;
-    projectedRevenue.push({ month, revenue: currentRevenue.toFixed(2) });
+  // Calculate the accumulated profit for each month
+  const firstMonthProfit = firstMonthBalance - firstMonthexpense;
+  const secondMonthProfit = secondMonthBalance - secondMonthexpense;
+  const thirdMonthProfit = thirdMonthBalance - thirdMonthexpense;
+
+  // calculate sum profit
+  const firstProfit = firstMonthProfit;
+  const secondProfit = firstProfit + secondMonthProfit;
+  const thirdProfit = secondProfit + thirdMonthProfit;
+
+  // Calculate the third month accumulated profit
+  const thirdMonthAccumulatedProfit = firstProfit + secondProfit + thirdProfit;
+
+  // Calculate the burn rate based on the formula
+  const burnRate =
+    (((thirdMonthAccumulatedProfit / firstProfit) ** 0.5 - 1) / 3) *
+    initialCashBalance;
+
+  // Calculate the runway months
+  const runwayMonths = Math.ceil(initialCashBalance / burnRate);
+  console.log(runwayMonths);
+
+  // Calculate the months remaining
+  const currentDate = new Date();
+  const futureDate = new Date(
+    currentDate.setMonth(currentDate.getMonth() + runwayMonths)
+  );
+  const currentDateTimestamp = currentDate.getTime();
+  const futureDateTimestamp = futureDate.getTime();
+  const remainingMilliseconds = futureDateTimestamp - currentDateTimestamp;
+  const millisecondsInAMonth = 1000 * 60 * 60 * 24 * 30.44; // average number of milliseconds in a month
+  const monthsRemaining = Math.floor(
+    remainingMilliseconds / millisecondsInAMonth
+  );
+
+  const IncomegrowthRateDecimal = thirdMonthBalance / firstMonthBalance;
+  const expensesgrowthRateDecimal = thirdMonthexpense / firstMonthexpense;
+
+  // Calculate and store the current cash balance for 6 months
+  const currentCashBalanceData = [];
+  for (let i = 0; i < 6; i++) {
+    const currentMonth = i + 1;
+    const currentMonthBalance = initialCashBalance - burnRate * currentMonth;
+    currentCashBalanceData.push(currentMonthBalance);
   }
 
-  return projectedRevenue;
+  // Update the store with the calculation results
+  useInputStore.setState({
+    runway: runwayMonths,
+    monthsRemaining,
+    totalBurnRate: burnRate,
+    IncomegrowthRateDecimal,
+    expensesgrowthRateDecimal,
+    currentCashBalance: currentCashBalanceData.toString(),
+  });
+  return { runway: runwayMonths };
 }

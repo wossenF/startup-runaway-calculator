@@ -1,15 +1,42 @@
-import useInputStore from '@/store/store';
-import React, { useState } from 'react'
-import { addMonths } from 'date-fns';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
+import useInputStore from "@/store/store";
+import React, { useState } from "react";
+import { addMonths } from "date-fns";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 
-  function MonthlyIncome({ monthlyDates, setMonthlyDates }: { monthlyDates: any[], setMonthlyDates: any }) {
-
-  const setField = useInputStore((state) => state.setField);
+function MonthlyIncome({
+  monthlyDates,
+  setMonthlyDates,
+}: {
+  monthlyDates: any[];
+  setMonthlyDates: any;
+}) {
+  // const setField = useInputStore((state) => state.setField);
   const firstMonthBalance = useInputStore((state) => state.firstMonthBalance);
   const secondMonthBalance = useInputStore((state) => state.secondMonthBalance);
   const thirdMonthBalance = useInputStore((state) => state.thirdMonthBalance);
+  const [firstValue, setFirstValue] = useState("");
+  const [secondValue, setSecondValue] = useState("");
+  const [thirdValue, setThirdValue] = useState("");
+
+  const onChange = useInputStore((state) => state.onChange);
+
+  const handleFirstIncomeChange = (e: any) => {
+    const firstIncomeValue = e.target.value;
+    onChange("firstMonthBalance", firstIncomeValue);
+    setFirstValue(firstIncomeValue);
+  };
+
+  const handleSecondIncomeChange = (e: any) => {
+    const secondBalanceValue = e.target.value;
+    onChange("secondMonthBalance", secondBalanceValue);
+    setSecondValue(secondBalanceValue);
+  };
+  const handleThirdIncomeChange = (e: any) => {
+    const thirdBalanceValue = e.target.value;
+    onChange("thirdMonthBalance", thirdBalanceValue);
+    setThirdValue(thirdBalanceValue);
+  };
 
   const handleFirstInputChange = (e: any) => {
     const value = e.target.value;
@@ -17,7 +44,7 @@ import { Input } from '../ui/input';
     setMonthlyDates([value, null, null]);
 
     if (isNaN(Date.parse(e.target.value))) {
-      console.error('Invalid date format. Please enter a valid date.');
+      console.error("Invalid date format. Please enter a valid date.");
       return;
     }
 
@@ -26,12 +53,12 @@ import { Input } from '../ui/input';
       const nextMonth = addMonths(firstMonthDate, index);
       setMonthlyDates((prevDates: any[]) => [
         ...prevDates.slice(0, index),
-        nextMonth.toISOString().split('T')[0],
+        nextMonth.toISOString().split("T")[0],
       ]);
     }
   };
   return (
-    <div className='bg-secondary/50 rounded-lg p-7 grid gap-2'>
+    <div className="bg-secondary/50 rounded-lg p-7 grid gap-2">
       <Label className="font-medium  text-xl pb-5 ">Monthly Income</Label>
       <div className="income  gap-4 flex rounded-lg ">
         <form className="monthly-income grid w-full gap-2">
@@ -39,7 +66,7 @@ import { Input } from '../ui/input';
           {[1, 2, 3].map((month) => (
             <React.Fragment key={month}>
               <Input
-                className='w-full'
+                className="w-full"
                 type="date"
                 name={`monthlyIncome${month}`}
                 placeholder={month === 1 ? "Enter Date" : ""}
@@ -50,45 +77,35 @@ import { Input } from '../ui/input';
           ))}
         </form>
 
-       
         <form className="growth-rate w-full grid gap-2 ">
           <Label>monthly Balance</Label>
           <Input
-            type="number"
             name="name"
-            value={firstMonthBalance || ""}
             placeholder="Current Balance"
-            onChange={(e) => {
-              setField("firstMonthBalance", parseFloat(e.target.value) || 0);
-              // calculateBurnRate();
-            }}
+            onChange={handleFirstIncomeChange}
+            value={firstValue || firstMonthBalance}
+          />
+          {/* {firsterror && <p className="text-red-500 text-sm">{firsterror}</p>} */}
+
+          <Input
+            name="name"
+            // value={secondMonthBalance || ""}
+            placeholder="Current Balance"
+            onChange={handleSecondIncomeChange}
+            value={secondValue || secondMonthBalance}
           />
 
           <Input
-            type="number"
             name="name"
-            value={secondMonthBalance || ""}
+            // value={thirdMonthBalance || ""}
             placeholder="Current Balance"
-            onChange={(e) => {
-              setField("secondMonthBalance", parseFloat(e.target.value) || 0);
-              // calculateBurnRate();
-            }}
-          />
-
-          <Input
-            type="number"
-            name="name"
-            value={thirdMonthBalance || ""}
-            placeholder="Current Balance"
-            onChange={(e) => {
-              setField("thirdMonthBalance", parseFloat(e.target.value) || 0);
-              // calculateBurnRate();
-            }}
+            onChange={handleThirdIncomeChange}
+            value={thirdValue || thirdMonthBalance}
           />
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default MonthlyIncome
+export default MonthlyIncome;
