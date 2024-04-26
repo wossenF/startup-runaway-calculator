@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import Chart, { ChartData, ChartOptions } from 'chart.js/auto';
+import React, { useEffect, useRef } from "react";
+import Chart, { ChartData, ChartOptions } from "chart.js/auto";
 
 interface BarChartProps {
   datasets: {
@@ -19,7 +19,7 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
 
   useEffect(() => {
     if (chartRef.current) {
-      const ctx = chartRef.current.getContext('2d');
+      const ctx = chartRef.current.getContext("2d");
       if (ctx) {
         // Destroy the previous chart instance if it exists
         if (chartInstance.current) {
@@ -27,24 +27,25 @@ const BarChart: React.FC<BarChartProps> = ({ datasets, labels }) => {
         }
         // Create a new chart instance
         chartInstance.current = new Chart(ctx, {
-          type: 'bar', 
+          type: "bar",
           data: {
-            
             labels: labels,
             datasets: datasets.map((dataset, index) => ({
               ...dataset,
-              backgroundColor: dataset.backgroundColor || `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
+              backgroundColor:
+                dataset.backgroundColor ||
+                `rgba(54, 162, 235, ${(index + 1) * 0.2})`,
               borderColor: dataset.borderColor || `rgba(54, 162, 235, 1)`,
-              type: dataset.type || 'bar',
+              type: dataset.type || "bar",
             })),
-          } as ChartData<'bar'>,
+          } as ChartData<"bar">,
           options: {
             scales: {
               y: {
                 beginAtZero: true,
               },
             },
-          } as ChartOptions<'bar'>,
+          } as ChartOptions<"bar">,
         });
       }
     }

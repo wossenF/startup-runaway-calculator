@@ -48,14 +48,14 @@ const FinalResult = () => {
     setField,
     currentCashBalance,
     runway,
-    eachmonthsIncome
+    eachmonthsIncome,
   } = useInputStore();
 
   // const [run, setRunway] = useState<any>(0);
   const [isClicked, setIsClicked] = useState(false);
   useEffect(() => {
     const userInput: InputStoreState = {
-      eachmonthsIncome: '',
+      eachmonthsIncome: "",
       growthRate: 0,
       burnRate: 0,
       expenseRate: 0,
@@ -74,10 +74,10 @@ const FinalResult = () => {
       totalBurnRate: 0,
       IncomegrowthRateDecimal: 0,
       expensesgrowthRateDecimal: 0,
-      
+      eachmonthsExpense: ""
     };
 
-    const calculatedRunway = calculateRunway(userInput);
+    // const calculatedRunway = calculateRunway(userInput);
     // setRunway(calculatedRunway.runway);
   }, [
     initialCashBalance,
@@ -88,7 +88,6 @@ const FinalResult = () => {
     secondMonthexpense,
     thirdMonthexpense,
     validationErrors,
-
   ]);
 
   const initialCostValue = useInputStore((state) => state.initialCashBalance);
@@ -143,9 +142,7 @@ const FinalResult = () => {
             {isClicked ? "Chart" : "Table"}
           </button>
         </div>
-        <p className="mb-5">
-          Estimated Runway: {runway}
-        </p>
+        <p className="mb-5">Estimated Runway: {runway}</p>
         {isClicked ? (
           <TableResult />
         ) : (

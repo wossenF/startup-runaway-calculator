@@ -63,9 +63,19 @@ let eachmonthsData =[];
   
   for (let i = 0; i < 6; i++) {
     const currentMonth = i;
-    const currentMonthBalance =
+    if (burnRate < 0) {
+      const currentMonthBalance =
+      initialCashBalance + burnRate * currentMonth;
+    currentCashBalanceData.push(currentMonthBalance);
+
+    }
+    else{
+      const currentMonthBalance =
       initialCashBalance - burnRate * currentMonth;
     currentCashBalanceData.push(currentMonthBalance);
+
+    }
+    
     eachmonthsIncome = eachmonthsIncome + eachmonthsIncome * IncomegrowthRateDecimal;
     eachmonthsData.push(eachmonthsIncome);
     eachmonthsExpense = eachmonthsExpense + eachmonthsExpense * expensesgrowthRateDecimal;
