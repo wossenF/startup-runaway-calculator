@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 export interface InputStoreState {
-  growthRate:number;
-  burnRate:number;
-  expenseRate:number
+  growthRate: number;
+  burnRate: number;
+  expenseRate: number;
   firstMonthBalance: any;
   secondMonthBalance: any;
   thirdMonthBalance: any;
@@ -13,6 +13,12 @@ export interface InputStoreState {
   initialCashBalance: any;
   currentCashBalance: string;
   error: string;
+  eachmonthsIncome: string;
+  eachmonthsExpense: string;
+
+
+  // eachmonthsData: any,
+
   validationErrors: Partial<Record<keyof InputStoreState, string>>;
   // Add fields for storing calculation results
   runway: number;
@@ -38,9 +44,6 @@ type InputStore = InputStoreState & {
 
 // Create store
 const useInputStore = create<InputStore>((set) => ({
-  growthRate:0,
-  burnRate:0,
-  expenseRate:0,
   firstMonthBalance: "",
   secondMonthBalance: "",
   thirdMonthBalance: "",
@@ -50,7 +53,13 @@ const useInputStore = create<InputStore>((set) => ({
   initialCashBalance: "",
   currentCashBalance: "",
   validationErrors: "",
-  
+  eachmonthsIncome: '',
+  eachmonthsExpense: "",
+
+  // eachmonthsData: "",
+  growthRate: 0,
+  burnRate: 0,
+  expenseRate: 0,
   error: "",
   prevousValidValue: {},
   // Initialize calculation result fields

@@ -48,12 +48,14 @@ const FinalResult = () => {
     setField,
     currentCashBalance,
     runway,
+    eachmonthsIncome
   } = useInputStore();
 
-  const [runaway, setRunway] = useState<any>(0);
+  // const [run, setRunway] = useState<any>(0);
   const [isClicked, setIsClicked] = useState(false);
   useEffect(() => {
     const userInput: InputStoreState = {
+      eachmonthsIncome: '',
       growthRate: 0,
       burnRate: 0,
       expenseRate: 0,
@@ -72,11 +74,11 @@ const FinalResult = () => {
       totalBurnRate: 0,
       IncomegrowthRateDecimal: 0,
       expensesgrowthRateDecimal: 0,
+      
     };
 
     const calculatedRunway = calculateRunway(userInput);
-    setRunway(calculatedRunway.runway);
-
+    // setRunway(calculatedRunway.runway);
   }, [
     initialCashBalance,
     firstMonthBalance,
@@ -86,10 +88,10 @@ const FinalResult = () => {
     secondMonthexpense,
     thirdMonthexpense,
     validationErrors,
+
   ]);
 
   const initialCostValue = useInputStore((state) => state.initialCashBalance);
-  
 
   const handleClick = () => {
     setIsClicked((prevState) => !prevState);
@@ -100,9 +102,10 @@ const FinalResult = () => {
     datasets: [
       {
         label: "Monthly Balance",
-        data: [firstMonthBalance, secondMonthBalance, thirdMonthBalance],
+        data: eachmonthsIncome.split(",").map((item) => parseFloat(item)),
         backgroundColor: "rgba(19, 33, 60, 1)",
         borderColor: "rgba(19, 33, 60, 1)",
+        type: "line",
       },
       {
         label: "Current Cash Balance",
@@ -140,7 +143,9 @@ const FinalResult = () => {
             {isClicked ? "Chart" : "Table"}
           </button>
         </div>
-        <p className="mb-5">Estimated Runway: {runway || ""} </p>
+        <p className="mb-5">
+          Estimated Runway: {runway}
+        </p>
         {isClicked ? (
           <TableResult />
         ) : (
