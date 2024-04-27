@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 export interface InputStoreState {
   growthRate: number;
-  burnRate: number;
+  // burnRate: number;
   expenseRate: number;
   firstMonthBalance: any;
   secondMonthBalance: any;

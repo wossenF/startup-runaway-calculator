@@ -17,26 +17,23 @@ export function calculateRunway(userInput: InputStoreState): void {
   const secondMonthProfit = secondMonthBalance - secondMonthexpense;
   const thirdMonthProfit = thirdMonthBalance - thirdMonthexpense;
 
-
-
-
   // Calculate the burn rate based on the formula
-  let burnRate =(firstMonthProfit + secondMonthProfit + thirdMonthProfit)/3;
+  let burnRate = (firstMonthProfit + secondMonthProfit + thirdMonthProfit) / 3;
   // console.log(burnRate)
-  let runwayMonths=0;
-  if(burnRate<0){
+  let runwayMonths = 0;
+  if (burnRate < 0) {
     // Calculate the runway months
-    burnRate=(-1)*(burnRate)
-    runwayMonths = Math.ceil(initialCashBalance/burnRate);
-  }
+    burnRate = -1 * burnRate;
+    runwayMonths = Math.ceil(initialCashBalance / burnRate);
 
-  else{
-    runwayMonths=0;
+  } else {
+    burnRate=-1*burnRate
+    runwayMonths = 0;
   }
-// console.log(runwayMonths)
+  // console.log(runwayMonths)
   // Calculate the runway months
   // const runwayMonths = Math.ceil(initialCashBalance / burnRate);
-  
+
   // Calculate the months remaining
   const currentDate = new Date();
   const futureDate = new Date(
@@ -50,32 +47,24 @@ export function calculateRunway(userInput: InputStoreState): void {
     remainingMilliseconds / millisecondsInAMonth
   );
 
-  const IncomegrowthRateDecimal = (thirdMonthBalance / firstMonthBalance)**(1/3)-1;
-  const expensesgrowthRateDecimal = thirdMonthexpense / firstMonthexpense;
+  const IncomegrowthRateDecimal =
+    (thirdMonthBalance / firstMonthBalance) ** (1 / 3) - 1;
+    const expensesgrowthRateDecimal = (thirdMonthexpense / firstMonthexpense) ** (1 / 3) - 1;
 
   // Calculate and store the current cash balance for 6 months
-let eachmonthsData =[];
+ const eachmonthsData = [];
   const currentCashBalanceData = [];
-  let eachmonthsExpenseData =[];
+  const eachmonthsExpenseData = [];
   // let eachmonthsIncome: number = 0;
   let eachmonthsIncome = firstMonthBalance;
-  let eachmonthsExpense=firstMonthexpense;
-  
+  let eachmonthsExpense = firstMonthexpense;
+
   for (let i = 0; i < 6; i++) {
     const currentMonth = i;
-    if (burnRate < 0) {
-      const currentMonthBalance =
-      initialCashBalance + burnRate * currentMonth;
+
+    const currentMonthBalance = initialCashBalance - burnRate * currentMonth;
     currentCashBalanceData.push(currentMonthBalance);
 
-    }
-    else{
-      const currentMonthBalance =
-      initialCashBalance - burnRate * currentMonth;
-    currentCashBalanceData.push(currentMonthBalance);
-
-    }
-    
     eachmonthsIncome = eachmonthsIncome + eachmonthsIncome * IncomegrowthRateDecimal;
     eachmonthsData.push(eachmonthsIncome);
     eachmonthsExpense = eachmonthsExpense + eachmonthsExpense * expensesgrowthRateDecimal;
@@ -91,7 +80,6 @@ let eachmonthsData =[];
     expensesgrowthRateDecimal,
     eachmonthsIncome: eachmonthsData.toString(),
     currentCashBalance: currentCashBalanceData.toString(),
-    eachmonthsExpense:  eachmonthsExpenseData.toString(),
+    eachmonthsExpense: eachmonthsExpenseData.toString(),
   });
 }
-
