@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import MyComponent from "./Result/ChartReport";
 import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
-import GrowthRateCard from "./inputCards/GrowthRateCard";
+import AboutTheCalculator from "./inputCards/GrowthRateCard";
 import MonthlyExpenditure from "./inputCards/MonthlyExpenditure";
 import MonthlyIncome from "./inputCards/MonthlyIncome";
 
@@ -15,7 +15,7 @@ const UserInput = () => {
         <MyComponent />
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-3">
-          <GrowthRateCard />
+          <AboutTheCalculator />
           <CashBalanceInputCard />
           <MonthlyIncome
             monthlyDates={monthlyDates}
