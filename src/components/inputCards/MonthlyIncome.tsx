@@ -62,12 +62,12 @@ function MonthlyIncome({
     <div className="bg-secondary/50 rounded-lg p-7 grid gap-2">
       <Label className="font-medium  text-xl ">Monthly Income</Label>
       <div className="income  gap-4 flex rounded-lg ">
-        <form className="monthly-income grid w-full gap-2">
+        <form className="monthly-income grid w-full gap-2 relative">
           <Label className="">Months</Label>
           {[1, 2, 3].map((month) => (
             <React.Fragment key={month}>
               <Input
-                className="w-full"
+                className="income w-full"
                 type="date"
                 name={`monthlyIncome${month}`}
                 placeholder={month === 1 ? "Enter Date" : ""}
