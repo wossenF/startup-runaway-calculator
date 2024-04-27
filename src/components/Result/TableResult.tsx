@@ -19,53 +19,50 @@ export default function TableResult() {
     secondMonthexpense,
     thirdMonthexpense,
     validationErrors,
-    setField,
     currentCashBalance,
-    runway,
     eachmonthsIncome,
     eachmonthsExpense,
   } = useInputStore();
 
-  const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([]);
+  const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([
+    {
+      currentCashBalance: 0,
+      monthlyIncome: 0,
+      monthlyExpense: 0,
+      monthlyProfit: 0,
+    },
+    {
+      currentCashBalance: 0,
+      monthlyIncome: 0,
+      monthlyExpense: 0,
+      monthlyProfit: 0,
+    },
+    {
+      currentCashBalance: 0,
+      monthlyIncome: 0,
+      monthlyExpense: 0,
+      monthlyProfit: 0,
+    },
+  ]);
 
   useEffect(() => {
-    const userInput: InputStoreState = {
-      eachmonthsIncome: eachmonthsIncome,
-      growthRate: 0,
-      burnRate: 0,
-      expenseRate: 0,
-      initialCashBalance,
-      firstMonthBalance,
-      secondMonthBalance,
-      thirdMonthBalance,
-      firstMonthexpense,
-      secondMonthexpense,
-      thirdMonthexpense,
-      validationErrors,
-      currentCashBalance: "",
-      error: "",
-      runway: 0,
-      monthsRemaining: "",
-      totalBurnRate: 0,
-      IncomegrowthRateDecimal: 0,
-      expensesgrowthRateDecimal: 0,
-      eachmonthsExpense: eachmonthsExpense,
-    };
+    if (eachmonthsIncome && eachmonthsExpense && currentCashBalance) {
+      const monthlyIncome = eachmonthsIncome.split(",").map((item) => parseFloat(item));
+      const currentCash = currentCashBalance.split(",").map((item) => parseFloat(item));
+      const monthlyExpense = eachmonthsExpense.split(",").map((item) => parseFloat(item));
+      const monthlyProfit = monthlyIncome.map((income, index) => income - monthlyExpense[index]);
+      const totalProfit = monthlyData.reduce((acc, curr) => acc + curr.monthlyProfit, 0);
+      useInputStore.setState({ totalProfit });
 
-    const monthlyIncome = eachmonthsIncome.split(",").map((item) => parseFloat(item));
-    const currentCash = currentCashBalance.split(",").map((item) => parseFloat(item));
-    const monthlyExpense = eachmonthsExpense.split(",").map((item) => parseFloat(item));
-    const monthlyProfit = monthlyIncome.map((income, index) => income - monthlyExpense[index]);
+      const newMonthlyData: MonthlyData[] = monthlyIncome.map((income, index) => ({
+        currentCashBalance: currentCash[index],
+        monthlyIncome: income,
+        monthlyExpense: monthlyExpense[index],
+        monthlyProfit: monthlyProfit[index],
+      }));
 
-    const newMonthlyData: MonthlyData[] = monthlyData.map((result, index) => ({
-      ...result,
-      currentCashBalance: currentCash[index],
-      monthlyIncome: monthlyIncome[index],
-      monthlyExpense: monthlyExpense[index],
-      monthlyProfit: monthlyProfit[index],
-    }));
-
-    setMonthlyData(newMonthlyData);
+      setMonthlyData(newMonthlyData);
+    }
   }, [
     initialCashBalance,
     firstMonthBalance,
@@ -77,6 +74,7 @@ export default function TableResult() {
     validationErrors,
     eachmonthsIncome,
     eachmonthsExpense,
+    currentCashBalance,
   ]);
 
   return (
@@ -95,9 +93,9 @@ export default function TableResult() {
         {monthlyData.map((result, index) => (
           <TableRow key={index + 1}>
             <TableCell>M-0{index + 1}</TableCell>
-            <TableCell>${result.currentCashBalance}</TableCell>
-            <TableCell>${result.monthlyIncome}</TableCell>
-            <TableCell>${result.monthlyExpense}</TableCell>
+            <TableCell>${result.currentCashBalance.toFixed(2)}</TableCell>
+            <TableCell>${result.monthlyIncome.toFixed(2)}</TableCell>
+            <TableCell>${result.monthlyExpense.toFixed(2)}</TableCell>
             <TableCell className="text-right">
               ${result.monthlyProfit.toFixed(2)}
             </TableCell>

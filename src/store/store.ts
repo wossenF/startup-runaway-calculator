@@ -12,6 +12,7 @@ export interface InputStoreState {
   thirdMonthexpense: any;
   initialCashBalance: any;
   currentCashBalance: string;
+  totalProfit:number;
   error: string;
   eachmonthsIncome: string;
   eachmonthsExpense: string;
@@ -53,12 +54,13 @@ const useInputStore = create<InputStore>((set) => ({
   initialCashBalance: "",
   currentCashBalance: "",
   validationErrors: "",
+  totalProfit:0,
   eachmonthsIncome: '',
   eachmonthsExpense: "",
 
   // eachmonthsData: "",
   growthRate: 0,
-  burnRate: 0,
+  // burnRate: 0,
   expenseRate: 0,
   error: "",
   prevousValidValue: {},
@@ -124,7 +126,7 @@ const useInputStore = create<InputStore>((set) => ({
   },
 
   setError: (error) => set((state) => ({ error })),
-
+  
   updateCostValue: () =>
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
 }));

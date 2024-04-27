@@ -47,7 +47,8 @@ const FinalResult = () => {
       totalBurnRate: 0,
       IncomegrowthRateDecimal: 0,
       expensesgrowthRateDecimal: 0,
-      eachmonthsExpense: ""
+      eachmonthsExpense: "",
+      totalProfit: 0,
     };
 
     const calculatedRunway = calculateRunway(userInput);
@@ -117,7 +118,7 @@ const FinalResult = () => {
           </button>
         </div>
         <p className="mb-5">
-          Estimated Runway: {runway===0? "infinity": runway} Month
+          Estimated Runway: {runway===0? "infinity": runway}
         </p>
         {isClicked ? (
           <TableResult />
