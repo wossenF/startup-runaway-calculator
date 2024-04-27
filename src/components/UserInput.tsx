@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import MyComponent from "./Result/ChartReport";
 import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
-import AboutTheCalculator from "./inputCards/GrowthRateCard";
+import AboutTheCalculator from "./inputCards/AboutCalculator";
 import MonthlyExpenditure from "./inputCards/MonthlyExpenditure";
 import MonthlyIncome from "./inputCards/MonthlyIncome";
 
