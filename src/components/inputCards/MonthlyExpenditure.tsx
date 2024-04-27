@@ -83,7 +83,7 @@ function MonthlyExpenditure({
         </form>
 
         <form className="growth-rate w-full grid gap-2">
-          <Label>monthly expenses</Label>
+          <Label>monthly expense</Label>
           <Input
             name="name"
             placeholder="expense"
