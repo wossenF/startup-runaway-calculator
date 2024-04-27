@@ -1,13 +1,25 @@
 import React from "react";
 import { Label } from "../ui/label";
-
+import { NotebookPen } from "lucide-react";
 
 function AboutTheCalculator() {
   return (
-    <div className="bg-secondary/50 rounded-lg p-7 grid gap-2">
-      <Label className="font-medium text-xl">things you have to know</Label>
-      <p>negative values representing decreasing or loss</p>
-      <p>it estimate best value not the exact </p>
+    <div className="bg-secondary/50 rounded-lg p-7 grid space-y-2">
+      <Label className="font-medium text-xl text-[#FAB449]">
+        Important Information
+      </Label>
+      <div className="flex items-center">
+        <NotebookPen className="text-muted-foreground text-sm mr-2" />
+        <p className="text-sm text-muted-foreground">
+          Negative values represent loss or decrease.
+        </p>
+      </div>
+      <div className="flex items-center">
+        <NotebookPen className="text-muted-foreground text-sm mr-2"/>
+        <p className="text-sm text-muted-foreground">
+          The result is a best estimate, not the real one.
+        </p>
+      </div>
     </div>
   );
 }
