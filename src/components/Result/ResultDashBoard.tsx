@@ -1,6 +1,6 @@
 import { CreditCard, DollarSign, LineChart } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import FinalResult from "./FinalResult";
+import FinalResult from "./ChartReport";
 import useInputStore from "@/store/store";
 import handleDownloadClick from "./PdfDownLoad";
 
@@ -14,7 +14,7 @@ export function ResultDashBoard() {
   } = useInputStore();
 
   return (
-    <main  id="pdf-content">
+    <main id="pdf-content">
       <div className="flex flex-1 flex-col gap-4 md:gap-8 md:py-8">
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           <Card>
@@ -46,17 +46,15 @@ export function ResultDashBoard() {
                     %{(IncomegrowthRateDecimal * 100).toFixed(2)}
                   </p>
 
-                  <p className="text-xs text-muted-foreground">
-                    Income Growth Rate
-                  </p>
+                  <p className="text-xs text-muted-foreground">Income Rate</p>
                 </div>
 
                 <div>
-                  <p className="text-2xl font-bold">%{(expensesgrowthRateDecimal*100).toFixed(2)}</p>
-
-                  <p className="text-xs text-muted-foreground">
-                    Expense Growth Rate
+                  <p className="text-2xl font-bold">
+                    %{(expensesgrowthRateDecimal * 100).toFixed(2)}
                   </p>
+
+                  <p className="text-xs text-muted-foreground">Expense Rate</p>
                 </div>
               </div>
             </CardContent>
@@ -69,7 +67,9 @@ export function ResultDashBoard() {
               <CreditCard className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">${totalProfit.toFixed(2)}</div>
+              <div className="text-2xl font-bold">
+                ${totalProfit.toFixed(2)}
+              </div>
               <p className="text-xs text-muted-foreground">
                 6 month total profit
               </p>

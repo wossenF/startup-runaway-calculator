@@ -22,6 +22,7 @@ export default function TableResult() {
     currentCashBalance,
     eachmonthsIncome,
     eachmonthsExpense,
+    setTotalProfit,
   } = useInputStore();
 
   const [monthlyData, setMonthlyData] = useState<MonthlyData[]>([
@@ -51,8 +52,8 @@ export default function TableResult() {
       const currentCash = currentCashBalance.split(",").map((item) => parseFloat(item));
       const monthlyExpense = eachmonthsExpense.split(",").map((item) => parseFloat(item));
       const monthlyProfit = monthlyIncome.map((income, index) => income - monthlyExpense[index]);
-      const totalProfit = monthlyData.reduce((acc, curr) => acc + curr.monthlyProfit, 0);
-      useInputStore.setState({ totalProfit });
+      const totalProfit = monthlyProfit.reduce((acc, curr) => acc + curr, 0);
+      setTotalProfit(totalProfit);
 
       const newMonthlyData: MonthlyData[] = monthlyIncome.map((income, index) => ({
         currentCashBalance: currentCash[index],
@@ -75,6 +76,7 @@ export default function TableResult() {
     eachmonthsIncome,
     eachmonthsExpense,
     currentCashBalance,
+    setTotalProfit,
   ]);
 
   return (
@@ -108,10 +110,7 @@ export default function TableResult() {
         <TableRow>
           <TableCell colSpan={4}>Total Profit</TableCell>
           <TableCell className="text-right">
-            $
-            {monthlyData
-              .reduce((acc, curr) => acc + parseFloat(curr.monthlyProfit.toString()), 0)
-              .toFixed(2)}
+            ${useInputStore((state) => state.totalProfit).toFixed(2)}
           </TableCell>
         </TableRow>
       </TableFooter>

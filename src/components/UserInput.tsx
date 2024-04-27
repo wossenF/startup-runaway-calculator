@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import MyComponent from "./Result/FinalResult";
+import MyComponent from "./Result/ChartReport";
 import CashBalanceInputCard from "./inputCards/CashBalanceInputCard";
 import GrowthRateCard from "./inputCards/GrowthRateCard";
 import MonthlyExpenditure from "./inputCards/MonthlyExpenditure";

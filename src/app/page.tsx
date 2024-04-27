@@ -4,15 +4,12 @@ import UserInput from "../components/UserInput";
 import useInputStore from "@/store/store";
 import { ResultDashBoard } from "@/components/Result/ResultDashBoard";
 import { useInputValidation } from "@/validation/inputValidation";
-import { stat } from "fs";
 
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
-  const { initialCashBalance, monthlyIncome } = useInputStore();
+  const { initialCashBalance } = useInputStore();
   // const error = useInputValidation()
   const error = useInputStore((state) => state.error);
-
-  console.log(">>>>>>>>>>>> error <<<<<<", error)
 
   // Check if there's an error message
   const { errorMessage: cashBalanceError } =
@@ -49,14 +46,11 @@ export default function Home() {
       >
         {isClicked ? "Back to Calculator" : "Calculate Runaway"}
       </button>
-      {(!initialCashBalance || !monthlyIncome) &&
-        !cashBalanceError &&
-        !incomeError && (
-          // Show error only if there are no other errors
+      {/* {(!initialCashBalance && (
           <div className="text-red-500">
             Please insert a valid data before calculating
           </div>
-        )}
+        ))} */}
     </main>
   );
 }

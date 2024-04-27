@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BarChart from "./BarChart";
 import useInputStore, { InputStoreState } from "../../store/store";
-import TableResult from "./TableResult";
+import TableResult from "./TableReport";
 import { calculateRunway } from "../../utils/calculations";
 
 import { Input } from "../ui/input";
@@ -20,8 +20,8 @@ const FinalResult = () => {
     validationErrors,
     setField,
     currentCashBalance,
+    eachmonthsExpense,
     runway,
-    eachmonthsIncome
   } = useInputStore();
 
   // const [run, setRunway] = useState<any>(0);
@@ -30,7 +30,6 @@ const FinalResult = () => {
     const userInput: InputStoreState = {
       eachmonthsIncome: '',
       growthRate: 0,
-      // burnRate: 0,
       expenseRate: 0,
       initialCashBalance,
       firstMonthBalance,
@@ -75,11 +74,11 @@ const FinalResult = () => {
     labels: ["1", "2", "3", "4", "5", "6"],
     datasets: [
       {
-        label: "Monthly Balance",
-        data: eachmonthsIncome.split(",").map((item) => parseFloat(item)),
+        label: "Monthly Expense",
+        data: eachmonthsExpense.split(",").map((item) => parseFloat(item)),
         backgroundColor: "rgba(19, 33, 60, 1)",
         borderColor: "rgba(19, 33, 60, 1)",
-        type: "line",
+        type: "bar",
       },
       {
         label: "Current Cash Balance",
@@ -118,7 +117,7 @@ const FinalResult = () => {
           </button>
         </div>
         <p className="mb-5">
-          Estimated Runway: {runway===0? "infinity": runway}
+          Estimated Runway: {runway===0? "infinity": runway} Month
         </p>
         {isClicked ? (
           <TableResult />

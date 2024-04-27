@@ -11,7 +11,6 @@ function MonthlyIncome({
   monthlyDates: any[];
   setMonthlyDates: any;
 }) {
-  // const setField = useInputStore((state) => state.setField);
   const firstMonthBalance = useInputStore((state) => state.firstMonthBalance);
   const secondMonthBalance = useInputStore((state) => state.secondMonthBalance);
   const thirdMonthBalance = useInputStore((state) => state.thirdMonthBalance);
@@ -32,6 +31,7 @@ function MonthlyIncome({
     onChange("secondMonthBalance", secondBalanceValue);
     setSecondValue(secondBalanceValue);
   };
+
   const handleThirdIncomeChange = (e: any) => {
     const thirdBalanceValue = e.target.value;
     onChange("thirdMonthBalance", thirdBalanceValue);
@@ -57,9 +57,10 @@ function MonthlyIncome({
       ]);
     }
   };
+
   return (
     <div className="bg-secondary/50 rounded-lg p-7 grid gap-2">
-      <Label className="font-medium  text-xl pb-5 ">Monthly Income</Label>
+      <Label className="font-medium  text-xl ">Monthly Income</Label>
       <div className="income  gap-4 flex rounded-lg ">
         <form className="monthly-income grid w-full gap-2">
           <Label className="">Months</Label>
@@ -70,7 +71,7 @@ function MonthlyIncome({
                 type="date"
                 name={`monthlyIncome${month}`}
                 placeholder={month === 1 ? "Enter Date" : ""}
-                value={monthlyDates[month - 1] || ""} // Provide a default value of an empty string
+                value={monthlyDates[month - 1] || ""}
                 onChange={handleFirstInputChange}
               />
             </React.Fragment>
@@ -78,29 +79,29 @@ function MonthlyIncome({
         </form>
 
         <form className="growth-rate w-full grid gap-2 ">
-          <Label>monthly Balance</Label>
+          <Label>monthly Income</Label>
           <Input
             name="name"
-            placeholder="Current Balance"
+            placeholder="income"
             onChange={handleFirstIncomeChange}
             value={firstValue || firstMonthBalance}
+            disabled={!monthlyDates[0]} 
           />
-          {/* {firsterror && <p className="text-red-500 text-sm">{firsterror}</p>} */}
 
           <Input
             name="name"
-            // value={secondMonthBalance || ""}
-            placeholder="Current Balance"
+            placeholder="income"
             onChange={handleSecondIncomeChange}
             value={secondValue || secondMonthBalance}
+            disabled={!monthlyDates[1]} 
           />
 
           <Input
             name="name"
-            // value={thirdMonthBalance || ""}
-            placeholder="Current Balance"
+            placeholder="income"
             onChange={handleThirdIncomeChange}
             value={thirdValue || thirdMonthBalance}
+            disabled={!monthlyDates[2]} 
           />
         </form>
       </div>

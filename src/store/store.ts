@@ -12,11 +12,10 @@ export interface InputStoreState {
   thirdMonthexpense: any;
   initialCashBalance: any;
   currentCashBalance: string;
-  totalProfit:number;
+  totalProfit: number;
   error: string;
   eachmonthsIncome: string;
   eachmonthsExpense: string;
-
 
   // eachmonthsData: any,
 
@@ -35,12 +34,14 @@ type OnChange = (field: keyof InputStoreState, value: any) => void;
 
 type UpdateCostValue = (field: keyof InputStoreState, value: number) => void;
 type SetError = (value: string) => void;
+type SetTotalProfit = (value: number) => void;
 
 type InputStore = InputStoreState & {
   setField: SetField;
   updateCostValue: UpdateCostValue;
   setError: SetError;
   onChange: OnChange;
+  setTotalProfit: SetTotalProfit;
 };
 
 // Create store
@@ -54,7 +55,7 @@ const useInputStore = create<InputStore>((set) => ({
   initialCashBalance: "",
   currentCashBalance: "",
   validationErrors: "",
-  totalProfit:0,
+  totalProfit: 0,
   eachmonthsIncome: '',
   eachmonthsExpense: "",
 
@@ -126,9 +127,11 @@ const useInputStore = create<InputStore>((set) => ({
   },
 
   setError: (error) => set((state) => ({ error })),
-  
+
   updateCostValue: () =>
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
+
+  setTotalProfit: (value) => set((state) => ({ totalProfit: value })),
 }));
 
 export default useInputStore;
