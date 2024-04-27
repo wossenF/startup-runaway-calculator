@@ -5,7 +5,7 @@ export const useInputValidation = (fieldName?: string ) => {
   const setField = useInputStore((state) => state.setField);
   const [errorMessage, setErrorMessage] = useState("");
   const error = useInputStore((state)=> state.setError)
-  const {initialCashBalance, monthlyIncome, payRoll, nonPayRoll} = useInputStore((state) => state);
+  const {initialCashBalance} = useInputStore((state) => state);
   
   const handleInputChange = (value: any, e?: React.FormEvent<HTMLInputElement>) => {
     e?.preventDefault()
