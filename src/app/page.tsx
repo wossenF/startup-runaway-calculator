@@ -7,15 +7,19 @@ import { useInputValidation } from "@/validation/inputValidation";
 
 export default function Home() {
   const [isClicked, setIsClicked] = useState(false);
-  const { initialCashBalance } = useInputStore();
-  // const error = useInputValidation()
+
+  const initialCostValue = useInputStore((state) => state.initialCashBalance);
+  const firstMonthBalance = useInputStore((state) => state.firstMonthBalance);
+  const firstMonthexpense = useInputStore((state) => state.firstMonthexpense);
+
+  console.log(">>>>> initial state: ", initialCostValue);
+
   const error = useInputStore((state) => state.error);
 
   // Check if there's an error message
   const { errorMessage: cashBalanceError } =
     useInputValidation("initialCashBalance");
   const { errorMessage: incomeError } = useInputValidation("monthlyIncome");
-
   const handleClick = () => {
     // Only toggle if there are no errors
     if (!error) {
@@ -39,18 +43,19 @@ export default function Home() {
         isClicked ? <ResultDashBoard /> : <UserInput />
       }
       <button
-        disabled={!!cashBalanceError || !!incomeError || error !== ""} // Disable if there's an error
+        disabled={!initialCostValue || !firstMonthBalance || !firstMonthexpense} // Disable if there's an error
         // Disable if there's an error or no value inserted
-        className="bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5"
+        // className="bg-[#13213C] disabled:bg-gray-400 cursor-not-allowed rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5"
+        className={`bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5 ${
+          (!initialCostValue || !firstMonthBalance || !firstMonthexpense) ? "disabled:bg-gray-400 cursor-not-allowed" : ""
+        }`}
         onClick={handleClick}
       >
         {isClicked ? "Back to Calculator" : "Calculate Runaway"}
       </button>
-      {/* {(!initialCashBalance && (
-          <div className="text-red-500">
-            Please insert a valid data before calculating
-          </div>
-        ))} */}
+
+      {!initialCostValue || !firstMonthBalance || !firstMonthexpense && <p className="text-red-500 text-sm">{`Please fill the required field`}</p>}
+
     </main>
   );
 }

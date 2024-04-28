@@ -85,33 +85,39 @@ function MonthlyExpenditure({
         <form className="growth-rate w-full grid gap-2">
           <Label>monthly expense</Label>
           <Input
+            type="number"
             name="name"
             placeholder="expense"
             onChange={handleFirstExpenseChange}
             value={firstValue || firstMonthexpense}
             disabled={!monthlyDates[0]} // Disable if first date not filled
           />
-          {firsterror && <p className="text-red-500 text-sm">{firsterror}</p>}
 
           <Input
             name="name"
+            type="number"
+
             placeholder="expense"
             onChange={handleSecondExpenseChange}
             value={secondValue || secondMonthexpense}
-            disabled={!monthlyDates[1]} // Disable if second date not filled
+            disabled={!monthlyDates[0]} // Disable if second date not filled
           />
-          {seconderror && <p className="text-red-500 text-sm">{seconderror}</p>}
 
           <Input
             name="name"
+            type="number"
+
             placeholder="expense"
             onChange={handleThirdExpenseChange}
             value={thirdValue || thirdMonthexpense}
-            disabled={!monthlyDates[2]} // Disable if third date not filled
+            disabled={!monthlyDates[0]} // Disable if third date not filled
           />
-          {thirderror && <p className="text-red-500 text-sm">{thirderror}</p>}
         </form>
+
       </div>
+      {!monthlyDates[0] && <p className="text-red-500 text-sm">Please fill date</p>}
+      {monthlyDates[0] && !firstMonthexpense && <p className="text-red-500 flex justify-end text-sm">Please fill current month expense(Number)</p>}
+
     </div>
   );
 }

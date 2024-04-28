@@ -60,7 +60,7 @@ function MonthlyIncome({
 
   return (
     <div className="bg-secondary/50 rounded-lg p-7 grid gap-2">
-      <Label className="font-medium  text-xl ">Monthly Income</Label>
+      <Label className="font-medium  text-xl ">Monthly Income*</Label>
       <div className="income  gap-4 flex rounded-lg ">
         <form className="monthly-income grid w-full gap-2 relative">
           <Label className="">Months</Label>
@@ -79,13 +79,13 @@ function MonthlyIncome({
         </form>
 
         <form className="growth-rate w-full grid gap-2 ">
-          <Label>monthly Income</Label>
+          <Label>monthly Income*</Label>
           <Input
             name="name"
             placeholder="income"
             onChange={handleFirstIncomeChange}
             value={firstValue || firstMonthBalance}
-            disabled={!monthlyDates[0]} 
+            disabled={!monthlyDates[0]}
           />
 
           <Input
@@ -93,7 +93,7 @@ function MonthlyIncome({
             placeholder="income"
             onChange={handleSecondIncomeChange}
             value={secondValue || secondMonthBalance}
-            disabled={!monthlyDates[1]} 
+            disabled={!monthlyDates[1]}
           />
 
           <Input
@@ -101,10 +101,15 @@ function MonthlyIncome({
             placeholder="income"
             onChange={handleThirdIncomeChange}
             value={thirdValue || thirdMonthBalance}
-            disabled={!monthlyDates[2]} 
+            disabled={!monthlyDates[2]}
           />
         </form>
       </div>
+
+      {!monthlyDates[0] && <p className="text-red-500 text-sm">Please fill date</p>}
+      
+      {monthlyDates[0] && !firstMonthBalance && <p className="text-red-500 flex justify-end text-sm">Please fill current month income</p>}
+
     </div>
   );
 }

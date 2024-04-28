@@ -132,6 +132,7 @@ const useInputStore = create<InputStore>((set) => ({
     set((state) => ({ initialCashBalance: state.initialCashBalance })),
 
   setTotalProfit: (value) => set((state) => ({ totalProfit: value })),
+  
 }));
 
 export default useInputStore;
