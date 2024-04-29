@@ -22,6 +22,7 @@ export interface InputStoreState {
   totalBurnRate: number;
   IncomegrowthRateDecimal: number;
   expensesgrowthRateDecimal: number;
+  monthlyDates: string[];
 }
 
 // Define setField function signature
@@ -63,7 +64,8 @@ const useInputStore = create<InputStore>((set) => ({
   IncomegrowthRateDecimal: 0,
   expensesgrowthRateDecimal: 0,
   prevousValidValue: {},
-
+  monthlyDates: ["", "", ""],
+  
   // Define setField function
   setField: (field, value) => {
     console.log("Received value:", value);
@@ -119,11 +121,12 @@ const useInputStore = create<InputStore>((set) => ({
   },
 
   setError: (error) => set((state) => ({ error })),
-
+  setMonthlyDates: (dates: any) => set({ monthlyDates: dates }),
   updateCostValue: (field, value) =>
     set((state) => ({ [field]: value })),
 
   setTotalProfit: (value) => set((state) => ({ totalProfit: value })),
 }));
+
 
 export default useInputStore;
