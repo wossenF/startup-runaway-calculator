@@ -48,6 +48,7 @@ const FinalResult = () => {
       expensesgrowthRateDecimal: 0,
       eachmonthsExpense: "",
       totalProfit: 0,
+      eachmonthsProfit: ""
     };
 
     const calculatedRunway = calculateRunway(userInput);

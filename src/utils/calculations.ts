@@ -52,23 +52,25 @@ export function calculateRunway(userInput: InputStoreState): void {
     const expensesgrowthRateDecimal = (thirdMonthexpense / firstMonthexpense) ** (1 / 3) - 1;
 
   // Calculate and store the current cash balance for 6 months
- const eachmonthsData = [];
+ const eachmonthsIncomeData = [];
   const currentCashBalanceData = [];
   const eachmonthsExpenseData = [];
-  // let eachmonthsIncome: number = 0;
+  const eachMonthProfitDate=[]
   let eachmonthsIncome = firstMonthBalance;
   let eachmonthsExpense = firstMonthexpense;
 
   for (let i = 0; i < 6; i++) {
     const currentMonth = i;
-
     const currentMonthBalance = initialCashBalance - burnRate * currentMonth;
     currentCashBalanceData.push(currentMonthBalance);
-
+    
     eachmonthsIncome = eachmonthsIncome + eachmonthsIncome * IncomegrowthRateDecimal;
-    eachmonthsData.push(eachmonthsIncome);
+    eachmonthsIncomeData.push(eachmonthsIncome);
+
     eachmonthsExpense = eachmonthsExpense + eachmonthsExpense * expensesgrowthRateDecimal;
     eachmonthsExpenseData.push(eachmonthsExpense);
+
+    eachMonthProfitDate.push(eachmonthsIncome - eachmonthsExpense);
   }
 
   // Update the store with the calculation results
@@ -78,8 +80,9 @@ export function calculateRunway(userInput: InputStoreState): void {
     totalBurnRate: burnRate,
     IncomegrowthRateDecimal,
     expensesgrowthRateDecimal,
-    eachmonthsIncome: eachmonthsData.toString(),
+    eachmonthsIncome: eachmonthsIncomeData.toString(),
     currentCashBalance: currentCashBalanceData.toString(),
     eachmonthsExpense: eachmonthsExpenseData.toString(),
+    eachmonthsProfit: eachMonthProfitDate.toString(),
   });
 }

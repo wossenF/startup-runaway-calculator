@@ -18,10 +18,6 @@ function MonthlyExpenditure({
   const [secondValue, setSecondValue] = useState("");
   const [thirdValue, setThirdValue] = useState("");
 
-  const firsterror = useInputStore((state) => state.error);
-  const seconderror = useInputStore((state) => state.error);
-  const thirderror = useInputStore((state) => state.error);
-
   const onChange = useInputStore((state) => state.onChange);
 
   const handleFirstExpenseChange = (e: any) => {
@@ -96,28 +92,35 @@ function MonthlyExpenditure({
           <Input
             name="name"
             type="number"
-
             placeholder="expense"
             onChange={handleSecondExpenseChange}
             value={secondValue || secondMonthexpense}
-            disabled={!monthlyDates[0]} // Disable if second date not filled
+            disabled={!monthlyDates[1]} // Disable if second date not filled
           />
 
           <Input
             name="name"
             type="number"
-
             placeholder="expense"
             onChange={handleThirdExpenseChange}
             value={thirdValue || thirdMonthexpense}
-            disabled={!monthlyDates[0]} // Disable if third date not filled
+            disabled={!monthlyDates[2]} // Disable if third date not filled
           />
         </form>
-
       </div>
-      {!monthlyDates[0] && <p className="text-red-500 text-sm">Please fill date</p>}
-      {monthlyDates[0] && !firstMonthexpense && <p className="text-red-500 flex justify-end text-sm">Please fill current month expense(Number)</p>}
-
+      {!monthlyDates[0] && (
+        <p className="text-red-500 text-sm">Please fill date</p>
+      )}
+      {monthlyDates[0] &&
+        !firstMonthexpense &&
+        monthlyDates[1] &&
+        !secondMonthexpense &&
+        monthlyDates[2] &&
+        !thirdMonthexpense && (
+          <p className="text-red-500 flex justify-end text-sm">
+            Please fill current month expense(Number)
+          </p>
+        )}
     </div>
   );
 }

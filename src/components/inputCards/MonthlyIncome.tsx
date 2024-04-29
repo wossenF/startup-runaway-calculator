@@ -40,9 +40,7 @@ function MonthlyIncome({
 
   const handleFirstInputChange = (e: any) => {
     const value = e.target.value;
-
     setMonthlyDates([value, null, null]);
-
     if (isNaN(Date.parse(e.target.value))) {
       console.error("Invalid date format. Please enter a valid date.");
       return;
@@ -81,6 +79,7 @@ function MonthlyIncome({
         <form className="growth-rate w-full grid gap-2 ">
           <Label>monthly Income*</Label>
           <Input
+            type="number"
             name="name"
             placeholder="income"
             onChange={handleFirstIncomeChange}
@@ -89,6 +88,7 @@ function MonthlyIncome({
           />
 
           <Input
+            type="number"
             name="name"
             placeholder="income"
             onChange={handleSecondIncomeChange}
@@ -98,6 +98,7 @@ function MonthlyIncome({
 
           <Input
             name="name"
+            type="number"
             placeholder="income"
             onChange={handleThirdIncomeChange}
             value={thirdValue || thirdMonthBalance}
@@ -106,10 +107,20 @@ function MonthlyIncome({
         </form>
       </div>
 
-      {!monthlyDates[0] && <p className="text-red-500 text-sm">Please fill date</p>}
-      
-      {monthlyDates[0] && !firstMonthBalance && <p className="text-red-500 flex justify-end text-sm">Please fill current month income</p>}
+      {!monthlyDates[0] && (
+        <p className="text-red-500 text-sm">Please fill date</p>
+      )}
 
+      {monthlyDates[0] &&
+        !firstValue &&
+        monthlyDates[1] &&
+        !secondValue &&
+        monthlyDates[2] &&
+        !thirdValue && (
+          <p className="text-red-500 flex justify-end text-sm">
+            Please fill current month income
+          </p>
+        )}
     </div>
   );
 }

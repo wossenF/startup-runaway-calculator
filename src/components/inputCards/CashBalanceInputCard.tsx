@@ -4,18 +4,16 @@ import { Input } from "../ui/input";
 import useInputStore from "@/store/store";
 
 function CashBalanceInputCard() {
-
   const [inputValue, setInputValue] = useState("");
 
   const error = useInputStore((state) => state.error);
 
   const initialCostValue = useInputStore((state) => state.initialCashBalance);
 
-
   const onChange = useInputStore((state) => state.onChange);
 
   useEffect(() => {
-    setInputValue(initialCostValue || '');
+    setInputValue(initialCostValue || "");
   }, [initialCostValue]);
 
   const handleInputChange = (e: any) => {
@@ -44,7 +42,12 @@ function CashBalanceInputCard() {
         value={inputValue}
       />
 
-      {!initialCostValue && <p className="text-red-500 text-sm">{`Please fill with number`}{error}</p>}
+      {!initialCostValue && (
+        <p className="text-red-500 text-sm">
+          {`Please fill with number`}
+          {error}
+        </p>
+      )}
     </form>
   );
 }

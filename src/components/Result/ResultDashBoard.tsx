@@ -7,12 +7,14 @@ import handleDownloadClick from "./PdfDownLoad";
 export function ResultDashBoard() {
   const {
     totalBurnRate,
-    totalProfit,
+    eachmonthsProfit,
     initialCashBalance,
     IncomegrowthRateDecimal,
     expensesgrowthRateDecimal,
   } = useInputStore();
 
+  const monthlyProfit = eachmonthsProfit.split(",").map((item) => parseFloat(item));
+  const totalProfit = monthlyProfit.reduce((acc, curr) => acc + curr, 0);
   return (
     <main id="pdf-content">
       <div className="flex flex-1 flex-col gap-4 md:gap-8 md:py-8">
@@ -29,7 +31,7 @@ export function ResultDashBoard() {
                 ${totalBurnRate.toFixed(2)}
               </div>
               <p className="text-xs text-muted-foreground">
-                {(totalBurnRate / initialCashBalance).toFixed(2)}% loss each
+                {(totalBurnRate / parseFloat(initialCashBalance)).toFixed(2)}% loss each
                 month
               </p>
             </CardContent>

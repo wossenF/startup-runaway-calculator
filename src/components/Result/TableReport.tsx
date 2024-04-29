@@ -61,9 +61,9 @@ export default function TableResult() {
         monthlyExpense: monthlyExpense[index],
         monthlyProfit: monthlyProfit[index],
       }));
-
       setMonthlyData(newMonthlyData);
     }
+    
   }, [
     initialCashBalance,
     firstMonthBalance,

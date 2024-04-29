@@ -2,25 +2,21 @@ import { create } from "zustand";
 
 export interface InputStoreState {
   growthRate: number;
-  // burnRate: number;
   expenseRate: number;
-  firstMonthBalance: any;
-  secondMonthBalance: any;
-  thirdMonthBalance: any;
-  firstMonthexpense: any;
-  secondMonthexpense: any;
-  thirdMonthexpense: any;
-  initialCashBalance: any;
+  firstMonthBalance: string;
+  secondMonthBalance: string;
+  thirdMonthBalance: string;
+  firstMonthexpense: string;
+  secondMonthexpense: string;
+  thirdMonthexpense: string;
+  initialCashBalance: string;
   currentCashBalance: string;
   totalProfit: number;
   error: string;
   eachmonthsIncome: string;
   eachmonthsExpense: string;
-
-  // eachmonthsData: any,
-
+  eachmonthsProfit: string;
   validationErrors: Partial<Record<keyof InputStoreState, string>>;
-  // Add fields for storing calculation results
   runway: number;
   monthsRemaining: number | string;
   totalBurnRate: number;
@@ -31,7 +27,6 @@ export interface InputStoreState {
 // Define setField function signature
 type SetField = (field: keyof InputStoreState, value: string | number) => void;
 type OnChange = (field: keyof InputStoreState, value: any) => void;
-
 type UpdateCostValue = (field: keyof InputStoreState, value: number) => void;
 type SetError = (value: string) => void;
 type SetTotalProfit = (value: number) => void;
@@ -54,23 +49,20 @@ const useInputStore = create<InputStore>((set) => ({
   thirdMonthexpense: "",
   initialCashBalance: "",
   currentCashBalance: "",
-  validationErrors: "",
-  totalProfit: 0,
-  eachmonthsIncome: '',
+  validationErrors: {},
+  eachmonthsProfit: "",
+  eachmonthsIncome: "",
   eachmonthsExpense: "",
-
-  // eachmonthsData: "",
-  growthRate: 0,
-  // burnRate: 0,
-  expenseRate: 0,
-  error: "",
-  prevousValidValue: {},
-  // Initialize calculation result fields
-  runway: 0,
   monthsRemaining: "",
+  error: "",
+  totalProfit: 0,
+  growthRate: 0,
+  expenseRate: 0,
+  runway: 0,
   totalBurnRate: 0,
   IncomegrowthRateDecimal: 0,
   expensesgrowthRateDecimal: 0,
+  prevousValidValue: {},
 
   // Define setField function
   setField: (field, value) => {
@@ -128,11 +120,10 @@ const useInputStore = create<InputStore>((set) => ({
 
   setError: (error) => set((state) => ({ error })),
 
-  updateCostValue: () =>
-    set((state) => ({ initialCashBalance: state.initialCashBalance })),
+  updateCostValue: (field, value) =>
+    set((state) => ({ [field]: value })),
 
   setTotalProfit: (value) => set((state) => ({ totalProfit: value })),
-  
 }));
 
 export default useInputStore;

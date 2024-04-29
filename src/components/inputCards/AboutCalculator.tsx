@@ -15,7 +15,7 @@ function AboutTheCalculator() {
         </p>
       </div>
       <div className="flex items-center">
-        <NotebookPen className="text-muted-foreground text-sm mr-2"/>
+        <NotebookPen className="text-muted-foreground text-sm mr-2" />
         <p className="text-sm text-muted-foreground">
           The result is a best estimate, not the real one.
         </p>
