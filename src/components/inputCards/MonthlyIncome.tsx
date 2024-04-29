@@ -112,11 +112,11 @@ function MonthlyIncome({
       )}
 
       {monthlyDates[0] &&
-        !firstValue &&
+        !firstMonthBalance &&
         monthlyDates[1] &&
-        !secondValue &&
+        !secondMonthBalance &&
         monthlyDates[2] &&
-        !thirdValue && (
+        !thirdMonthBalance && (
           <p className="text-red-500 flex justify-end text-sm">
             Please fill current month income
           </p>

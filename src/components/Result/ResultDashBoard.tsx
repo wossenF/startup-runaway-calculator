@@ -13,7 +13,9 @@ export function ResultDashBoard() {
     expensesgrowthRateDecimal,
   } = useInputStore();
 
-  const monthlyProfit = eachmonthsProfit.split(",").map((item) => parseFloat(item));
+  const monthlyProfit = eachmonthsProfit
+    .split(",")
+    .map((item) => parseFloat(item));
   const totalProfit = monthlyProfit.reduce((acc, curr) => acc + curr, 0);
   return (
     <main id="pdf-content">
@@ -31,8 +33,8 @@ export function ResultDashBoard() {
                 ${totalBurnRate.toFixed(2)}
               </div>
               <p className="text-xs text-muted-foreground">
-                {(totalBurnRate / parseFloat(initialCashBalance)).toFixed(2)}% loss each
-                month
+                {(totalBurnRate / parseFloat(initialCashBalance)).toFixed(2)}%
+                loss each month
               </p>
             </CardContent>
           </Card>
@@ -78,17 +80,16 @@ export function ResultDashBoard() {
             </CardContent>
           </Card>
         </div>
-        <div className="grid grid-cols">
-          <Card
-            className="col-span-3 xl:col-span-3"
-            x-chunk="dashboard-01-chunk-4"
-          >
-            <CardContent>
-              <FinalResult />
-            </CardContent>
-          </Card>
-        </div>
+        <Card
+          className=" overflow-x-auto col-span-3 xl:col-span-3 grid-cols grid"
+          x-chunk="dashboard-01-chunk-4"
+        >
+          <CardContent>
+            <FinalResult/>
+          </CardContent>
+        </Card>
       </div>
+
       <button
         className="bg-[#13213C] rounded-sm text-primary-foreground hover:bg-primary/90 p-2 mr-2 float-right"
         onClick={handleDownloadClick}

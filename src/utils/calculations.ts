@@ -1,6 +1,5 @@
 import useInputStore, { InputStoreState } from "../store/store";
 
-// Updated calculateRunway function
 export function calculateRunway(userInput: InputStoreState): void {
   const {
     initialCashBalance,
@@ -12,77 +11,71 @@ export function calculateRunway(userInput: InputStoreState): void {
     thirdMonthexpense,
   } = userInput;
 
-  // Calculate the accumulated profit for each month
-  const firstMonthProfit = firstMonthBalance - firstMonthexpense;
-  const secondMonthProfit = secondMonthBalance - secondMonthexpense;
-  const thirdMonthProfit = thirdMonthBalance - thirdMonthexpense;
+  const calculateProfit = (balance: string, expense: string) =>
+    parseFloat(balance) - parseFloat(expense);
+  const calculateGrowthRate = (current: string, initial: string) =>
+    (parseFloat(current) / parseFloat(initial)) ** (1 / 3) - 1;
 
-  // Calculate the burn rate based on the formula
-  let burnRate = (firstMonthProfit + secondMonthProfit + thirdMonthProfit) / 3;
-  // console.log(burnRate)
-  let runwayMonths = 0;
-  if (burnRate < 0) {
-    // Calculate the runway months
-    burnRate = -1 * burnRate;
-    runwayMonths = Math.ceil(initialCashBalance / burnRate);
+  const profitFirstMonth = calculateProfit(
+    firstMonthBalance,
+    firstMonthexpense
+  );
+  const profitSecondMonth = calculateProfit(
+    secondMonthBalance,
+    secondMonthexpense
+  );
+  const profitThirdMonth = calculateProfit(
+    thirdMonthBalance,
+    thirdMonthexpense
+  );
 
-  } else {
-    burnRate=-1*burnRate
-    runwayMonths = 0;
-  }
-  // console.log(runwayMonths)
-  // Calculate the runway months
-  // const runwayMonths = Math.ceil(initialCashBalance / burnRate);
+  let burnRate = (profitFirstMonth + profitSecondMonth + profitThirdMonth) / 3;
+  let runwayMonths =
+    burnRate < 0 ? Math.ceil(parseFloat(initialCashBalance) / -burnRate) : 0;
 
-  // Calculate the months remaining
   const currentDate = new Date();
   const futureDate = new Date(
     currentDate.setMonth(currentDate.getMonth() + runwayMonths)
   );
-  const currentDateTimestamp = currentDate.getTime();
-  const futureDateTimestamp = futureDate.getTime();
-  const remainingMilliseconds = futureDateTimestamp - currentDateTimestamp;
-  const millisecondsInAMonth = 1000 * 60 * 60 * 24 * 30.44; // average number of milliseconds in a month
   const monthsRemaining = Math.floor(
-    remainingMilliseconds / millisecondsInAMonth
+    (futureDate.getTime() - currentDate.getTime()) /
+      (1000 * 60 * 60 * 24 * 30.44)
   );
 
-  const IncomegrowthRateDecimal =
-    (thirdMonthBalance / firstMonthBalance) ** (1 / 3) - 1;
-    const expensesgrowthRateDecimal = (thirdMonthexpense / firstMonthexpense) ** (1 / 3) - 1;
+  const IncomegrowthRateDecimal = calculateGrowthRate(
+    thirdMonthBalance,
+    firstMonthBalance
+  );
+  const expensesgrowthRateDecimal = calculateGrowthRate(
+    thirdMonthexpense,
+    firstMonthexpense
+  );
 
-  // Calculate and store the current cash balance for 6 months
- const eachmonthsIncomeData = [];
-  const currentCashBalanceData = [];
-  const eachmonthsExpenseData = [];
-  const eachMonthProfitDate=[]
-  let eachmonthsIncome = firstMonthBalance;
-  let eachmonthsExpense = firstMonthexpense;
+  const eachmonthsIncomeData = [],
+    currentCashBalanceData = [],
+    eachmonthsExpenseData = [],
+    eachMonthProfitDate = [];
+  let eachmonthsIncome = parseFloat(firstMonthBalance),
+    eachmonthsExpense = parseFloat(firstMonthexpense);
 
   for (let i = 0; i < 6; i++) {
-    const currentMonth = i;
-    const currentMonthBalance = initialCashBalance - burnRate * currentMonth;
-    currentCashBalanceData.push(currentMonthBalance);
-    
-    eachmonthsIncome = eachmonthsIncome + eachmonthsIncome * IncomegrowthRateDecimal;
+    currentCashBalanceData.push(parseFloat(initialCashBalance) - burnRate * i);
+    eachmonthsIncome = eachmonthsIncome * (1 + IncomegrowthRateDecimal);
     eachmonthsIncomeData.push(eachmonthsIncome);
-
-    eachmonthsExpense = eachmonthsExpense + eachmonthsExpense * expensesgrowthRateDecimal;
+    eachmonthsExpense = eachmonthsExpense * (1 + expensesgrowthRateDecimal);
     eachmonthsExpenseData.push(eachmonthsExpense);
-
     eachMonthProfitDate.push(eachmonthsIncome - eachmonthsExpense);
   }
 
-  // Update the store with the calculation results
   useInputStore.setState({
     runway: runwayMonths,
     monthsRemaining,
     totalBurnRate: burnRate,
     IncomegrowthRateDecimal,
     expensesgrowthRateDecimal,
-    eachmonthsIncome: eachmonthsIncomeData.toString(),
-    currentCashBalance: currentCashBalanceData.toString(),
-    eachmonthsExpense: eachmonthsExpenseData.toString(),
-    eachmonthsProfit: eachMonthProfitDate.toString(),
+    eachmonthsIncome: eachmonthsIncomeData.join(),
+    currentCashBalance: currentCashBalanceData.join(),
+    eachmonthsExpense: eachmonthsExpenseData.join(),
+    eachmonthsProfit: eachMonthProfitDate.join(),
   });
 }

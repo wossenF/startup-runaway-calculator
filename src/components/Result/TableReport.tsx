@@ -80,7 +80,7 @@ export default function TableResult() {
   ]);
 
   return (
-    <Table className="my-3">
+    <Table className="my-3 ">
       <TableHeader>
         <TableRow>
           <TableHead>Month</TableHead>
