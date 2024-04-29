@@ -11,6 +11,11 @@ export default function Home() {
   const initialCostValue = useInputStore((state) => state.initialCashBalance);
   const firstMonthBalance = useInputStore((state) => state.firstMonthBalance);
   const firstMonthexpense = useInputStore((state) => state.firstMonthexpense);
+  const secondMonthexpense = useInputStore((state) => state.secondMonthexpense);
+  const thirdMonthexpense = useInputStore((state) => state.thirdMonthexpense);
+  const secondMonthBalance = useInputStore((state) => state.secondMonthBalance);
+  const thirdMonthBalance = useInputStore((state) => state.thirdMonthBalance);
+  
 
   console.log(">>>>> initial state: ", initialCostValue);
 
@@ -42,7 +47,9 @@ export default function Home() {
         isClicked ? <ResultDashBoard /> : <UserInput />
       }
       <button
-        disabled={!initialCostValue || !firstMonthBalance || !firstMonthexpense} // Disable if there's an error
+        disabled={!initialCostValue || !firstMonthBalance || !firstMonthexpense || !secondMonthexpense || 
+          !thirdMonthexpense || !secondMonthBalance || !thirdMonthBalance || !secondMonthBalance || !thirdMonthBalance
+        } // Disable if there's an error
         // Disable if there's an error or no value inserted
         // className="bg-[#13213C] disabled:bg-gray-400 cursor-not-allowed rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5"
         className={`bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5 ${

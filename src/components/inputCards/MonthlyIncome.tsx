@@ -1,6 +1,6 @@
 import useInputStore from "@/store/store";
-import React, { useState } from "react";
-import { addMonths } from "date-fns";
+import React, { useState, useEffect } from "react";
+import { addMonths, startOfMonth, endOfMonth } from "date-fns";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
@@ -14,52 +14,71 @@ function MonthlyIncome({
   const firstMonthBalance = useInputStore((state) => state.firstMonthBalance);
   const secondMonthBalance = useInputStore((state) => state.secondMonthBalance);
   const thirdMonthBalance = useInputStore((state) => state.thirdMonthBalance);
+  const onChange = useInputStore((state) => state.onChange);
+
   const [firstValue, setFirstValue] = useState("");
   const [secondValue, setSecondValue] = useState("");
   const [thirdValue, setThirdValue] = useState("");
 
-  const onChange = useInputStore((state) => state.onChange);
+  const [firstValueError, setFirstValueError] = useState(false);
+  const [secondValueError, setSecondValueError] = useState(false);
+  const [thirdValueError, setThirdValueError] = useState(false);
 
-  const handleFirstIncomeChange = (e: any) => {
-    const firstIncomeValue = e.target.value;
+  useEffect(() => {
+    // Initialize monthly dates with current month and the previous two months
+    const currentDate = new Date();
+    const currentMonth = startOfMonth(currentDate);
+    const previousMonth = startOfMonth(addMonths(currentMonth, +1));
+    const twoMonthsAgo = startOfMonth(addMonths(currentMonth, 2));
+
+    setMonthlyDates([currentMonth.toISOString().split("T")[0], previousMonth.toISOString().split("T")[0], twoMonthsAgo.toISOString().split("T")[0]]);
+
+    // Set initial values for income inputs
+    setFirstValue(firstMonthBalance);
+    setSecondValue(secondMonthBalance);
+    setThirdValue(thirdMonthBalance);
+  }, []);
+
+  const handleFirstIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const firstIncomeValue = e.currentTarget.value;
     onChange("firstMonthBalance", firstIncomeValue);
     setFirstValue(firstIncomeValue);
+    setFirstValueError(firstIncomeValue.trim() === "");
   };
 
-  const handleSecondIncomeChange = (e: any) => {
-    const secondBalanceValue = e.target.value;
+  const handleSecondIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const secondBalanceValue = e.currentTarget.value;
     onChange("secondMonthBalance", secondBalanceValue);
     setSecondValue(secondBalanceValue);
+    setSecondValueError(secondBalanceValue.trim() === "");
   };
 
-  const handleThirdIncomeChange = (e: any) => {
-    const thirdBalanceValue = e.target.value;
+  const handleThirdIncomeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const thirdBalanceValue = e.currentTarget.value;
     onChange("thirdMonthBalance", thirdBalanceValue);
     setThirdValue(thirdBalanceValue);
+    setThirdValueError(thirdBalanceValue.trim() === "");
   };
 
-  const handleFirstInputChange = (e: any) => {
-    const value = e.target.value;
-    setMonthlyDates([value, null, null]);
-    if (isNaN(Date.parse(e.target.value))) {
-      console.error("Invalid date format. Please enter a valid date.");
-      return;
-    }
+  const handleFirstInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
 
+    // Update monthly dates based on the selected first month
     const firstMonthDate = new Date(value);
-    for (let index = 1; index < 3; index++) {
-      const nextMonth = addMonths(firstMonthDate, index);
-      setMonthlyDates((prevDates: any[]) => [
-        ...prevDates.slice(0, index),
-        nextMonth.toISOString().split("T")[0],
-      ]);
-    }
+    const secondMonth = endOfMonth(addMonths(firstMonthDate, 1));
+    const thirdMonth = endOfMonth(addMonths(firstMonthDate, 2));
+
+    setMonthlyDates([
+      firstMonthDate.toISOString().split("T")[0],
+      secondMonth.toISOString().split("T")[0],
+      thirdMonth.toISOString().split("T")[0],
+    ]);
   };
 
   return (
     <div className="bg-secondary/50 rounded-lg p-7 grid gap-2">
-      <Label className="font-medium  text-xl ">Monthly Income*</Label>
-      <div className="income  gap-4 flex rounded-lg ">
+      <Label className="font-medium text-xl">Monthly Income*</Label>
+      <div className="income gap-4 flex rounded-lg">
         <form className="monthly-income grid w-full gap-2 relative">
           <Label className="">Months</Label>
           {[1, 2, 3].map((month) => (
@@ -76,49 +95,44 @@ function MonthlyIncome({
           ))}
         </form>
 
-        <form className="growth-rate w-full grid gap-2 ">
-          <Label>monthly Income*</Label>
-          <Input
-            type="number"
-            name="name"
-            placeholder="income"
-            onChange={handleFirstIncomeChange}
-            value={firstValue || firstMonthBalance}
-            disabled={!monthlyDates[0]}
-          />
+        <form className="growth-rate w-full grid gap-2">
+          <Label>Monthly Income*</Label>
+          <div>
+            <Input
+              type="number"
+              placeholder="Income"
+              onChange={handleFirstIncomeChange}
+              value={firstValue}
+              disabled={!monthlyDates[0]}
+            />
+            {firstValueError && <p className="text-red-500 text-sm">insert value for this month income.</p>}
+          </div>
 
-          <Input
-            type="number"
-            name="name"
-            placeholder="income"
-            onChange={handleSecondIncomeChange}
-            value={secondValue || secondMonthBalance}
-            disabled={!monthlyDates[1]}
-          />
+          <div>
+            <Input
+              type="number"
+              placeholder="Income"
+              onChange={handleSecondIncomeChange}
+              value={secondValue}
+              disabled={!monthlyDates[1]}
+            />
+            {secondValueError && <p className="text-red-500 text-sm">insert value for this month income.</p>}
+          </div>
 
-          <Input
-            name="name"
-            type="number"
-            placeholder="income"
-            onChange={handleThirdIncomeChange}
-            value={thirdValue || thirdMonthBalance}
-            disabled={!monthlyDates[2]}
-          />
+          <div>
+            <Input
+              type="number"
+              placeholder="Income"
+              onChange={handleThirdIncomeChange}
+              value={thirdValue}
+              disabled={!monthlyDates[2]}
+            />
+            {thirdValueError && <p className="text-red-500 text-sm">insert value for this month income.</p>}
+          </div>
         </form>
       </div>
 
-      {!monthlyDates[0] && (
-        <p className="text-red-500 text-sm">Please fill date</p>
-      )}
-
-      {monthlyDates[0] &&
-        !firstMonthBalance &&
-        !secondMonthBalance &&
-        !thirdMonthBalance && (
-          <p className="text-red-500 flex justify-end text-sm">
-            Please fill current month income
-          </p>
-        )}
+      {!monthlyDates[0] && <p className="text-red-500 text-sm">Please fill in the date for the first month.</p>}
     </div>
   );
 }

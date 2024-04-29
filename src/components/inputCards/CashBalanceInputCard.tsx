@@ -5,23 +5,28 @@ import useInputStore from "@/store/store";
 
 function CashBalanceInputCard() {
   const [inputValue, setInputValue] = useState("");
+  const [hasError, setHasError] = useState(false); // State for error flag
 
   const error = useInputStore((state) => state.error);
 
-  const initialCostValue = useInputStore((state) => state.initialCashBalance);
+  const initialCashBalance = useInputStore((state) => state.initialCashBalance);
 
   const onChange = useInputStore((state) => state.onChange);
 
   useEffect(() => {
-    setInputValue(initialCostValue || "");
-  }, [initialCostValue]);
+    setInputValue(initialCashBalance || "");
+  }, [initialCashBalance]);
 
   const handleInputChange = (e: any) => {
     const value = e.target.value;
     setInputValue(value);
     onChange("initialCashBalance", value);
+
+    // Check if input is empty and set error flag
+    setHasError(value === "");
+
+    // Clear the global state if the input value becomes empty (optional)
     if (value === "") {
-      // Clear the global state if the input value becomes empty
       onChange("initialCashBalance", null);
     }
   };
@@ -42,10 +47,13 @@ function CashBalanceInputCard() {
         value={inputValue}
       />
 
-      {!initialCostValue && (
-        <p className="text-red-500 text-sm">
-          {`Please fill with number`}
-          {error}
+      {hasError && (
+        <p className="text-red-500 text-sm">Please fill in the cash balance.</p>
+      )}
+
+      {!initialCashBalance && (
+        <p className="text-gray-500 text-sm">
+          Please fill with a number. {error}
         </p>
       )}
     </form>

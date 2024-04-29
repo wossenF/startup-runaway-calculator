@@ -42,13 +42,13 @@ type InputStore = InputStoreState & {
 
 // Create store
 const useInputStore = create<InputStore>((set) => ({
-  firstMonthBalance: "",
-  secondMonthBalance: "",
-  thirdMonthBalance: "",
-  firstMonthexpense: "",
-  secondMonthexpense: "",
-  thirdMonthexpense: "",
-  initialCashBalance: "",
+  firstMonthBalance: "1000",
+  secondMonthBalance: "2000",
+  thirdMonthBalance: "300",
+  firstMonthexpense: "4500",
+  secondMonthexpense: "3000",
+  thirdMonthexpense: "3990",
+  initialCashBalance: "100000", // Add initial value here
   currentCashBalance: "",
   validationErrors: {},
   eachmonthsProfit: "",
@@ -64,7 +64,7 @@ const useInputStore = create<InputStore>((set) => ({
   IncomegrowthRateDecimal: 0,
   expensesgrowthRateDecimal: 0,
   prevousValidValue: {},
-  monthlyDates: ["", "", ""],
+  monthlyDates: ["01", "01", "2024"],
   
   // Define setField function
   setField: (field, value) => {
@@ -127,6 +127,5 @@ const useInputStore = create<InputStore>((set) => ({
 
   setTotalProfit: (value) => set((state) => ({ totalProfit: value })),
 }));
-
 
 export default useInputStore;
