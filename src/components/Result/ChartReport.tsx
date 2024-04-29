@@ -48,7 +48,8 @@ const FinalResult = () => {
       expensesgrowthRateDecimal: 0,
       eachmonthsExpense: "",
       totalProfit: 0,
-      eachmonthsProfit: ""
+      eachmonthsProfit: "",
+      monthlyDates: []
     };
 
     const calculatedRunway = calculateRunway(userInput);

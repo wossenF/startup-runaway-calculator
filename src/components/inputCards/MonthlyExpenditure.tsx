@@ -118,7 +118,7 @@ function MonthlyExpenditure({
         monthlyDates[2] &&
         !thirdMonthexpense && (
           <p className="text-red-500 flex justify-end text-sm">
-            Please fill current month expense(Number)
+            Please fill current month expense
           </p>
         )}
     </div>
