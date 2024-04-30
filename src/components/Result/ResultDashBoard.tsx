@@ -33,7 +33,7 @@ export function ResultDashBoard() {
                 ${totalBurnRate.toFixed(2)}
               </div>
               <p className="text-xs text-muted-foreground">
-                {(totalBurnRate / parseFloat(initialCashBalance)).toFixed(2)}%
+                {(totalBurnRate / initialCashBalance).toFixed(2)}%
                 loss each month
               </p>
             </CardContent>
