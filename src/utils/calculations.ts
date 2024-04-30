@@ -31,7 +31,7 @@ export function calculateRunway(userInput: InputStoreState): void {
 
   let burnRate = (profitFirstMonth + profitSecondMonth + profitThirdMonth) / 3;
   let runwayMonths =
-    burnRate < 0 ? Math.ceil(parseFloat(initialCashBalance) / -burnRate) : 0;
+    burnRate < 0 ? Math.ceil((initialCashBalance) / -burnRate) : 0;
 
   const currentDate = new Date();
   const futureDate = new Date(
@@ -59,7 +59,7 @@ export function calculateRunway(userInput: InputStoreState): void {
     eachmonthsExpense = parseFloat(firstMonthexpense);
 
   for (let i = 0; i < 6; i++) {
-    currentCashBalanceData.push(parseFloat(initialCashBalance) - burnRate * i);
+    currentCashBalanceData.push((initialCashBalance) - burnRate * i);
     eachmonthsIncome = eachmonthsIncome * (1 + IncomegrowthRateDecimal);
     eachmonthsIncomeData.push(eachmonthsIncome);
     eachmonthsExpense = eachmonthsExpense * (1 + expensesgrowthRateDecimal);

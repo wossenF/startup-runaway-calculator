@@ -9,7 +9,7 @@ export interface InputStoreState {
   firstMonthexpense: string;
   secondMonthexpense: string;
   thirdMonthexpense: string;
-  initialCashBalance: string;
+  initialCashBalance: number;
   currentCashBalance: string;
   totalProfit: number;
   error: string;
@@ -48,7 +48,7 @@ const useInputStore = create<InputStore>((set) => ({
   firstMonthexpense: "4500",
   secondMonthexpense: "3000",
   thirdMonthexpense: "3990",
-  initialCashBalance: "100000", // Add initial value here
+  initialCashBalance: 100000, // Add initial value here
   currentCashBalance: "",
   validationErrors: {},
   eachmonthsProfit: "",
@@ -90,25 +90,11 @@ const useInputStore = create<InputStore>((set) => ({
   },
 
   onChange: (fieldName, value) => {
-    const numericRegex = /^\d+(\.\d+)?(k|m|b|t)?$/i;
-    const inputValue = value?.trim().toLowerCase();
-
-    if (numericRegex.test(inputValue)) {
-      let numericValue = parseFloat(inputValue);
-
-      if (inputValue.endsWith("k")) {
-        numericValue *= 1000;
-      } else if (inputValue.endsWith("m")) {
-        numericValue *= 1000000;
-      } else if (inputValue.endsWith("b")) {
-        numericValue *= 1000000000;
-      } else if (inputValue.endsWith("t")) {
-        numericValue *= 1000000000000;
-      }
-
+    const inputValue = value;
+    if (!isNaN(inputValue)) { // Added this line to check if inputValue is a number
       set((state) => ({
         ...state,
-        [fieldName]: numericValue,
+        [fieldName]: inputValue,
         validationErrors: { ...state.validationErrors, [fieldName]: undefined },
         error: "", // Clear any previous error
       }));

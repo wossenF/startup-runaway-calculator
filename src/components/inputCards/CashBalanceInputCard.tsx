@@ -7,27 +7,35 @@ function CashBalanceInputCard() {
   const [inputValue, setInputValue] = useState("");
   const [hasError, setHasError] = useState(false); // State for error flag
 
-  const error = useInputStore((state) => state.error);
-
-  const initialCashBalance = useInputStore((state) => state.initialCashBalance);
+  const initialCashBalance = useInputStore(
+    (state: any) => state.initialCashBalance
+  );
 
   const onChange = useInputStore((state) => state.onChange);
 
   useEffect(() => {
-    setInputValue(initialCashBalance || "");
+    setInputValue(initialCashBalance ? formatNumber(initialCashBalance) : "");
   }, [initialCashBalance]);
 
-  const handleInputChange = (e: any) => {
+  const formatNumber = (value: any) => {
+    if (isNaN(value)) return ""; // Return empty string if value is NaN
+    return value.toLocaleString("en-US");
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setInputValue(value);
-    onChange("initialCashBalance", value);
+    const numericValue = parseFloat(value.replace(/,/g, ""));
 
-    // Check if input is empty and set error flag
-    setHasError(value === "");
-
-    // Clear the global state if the input value becomes empty (optional)
-    if (value === "") {
-      onChange("initialCashBalance", null);
+    // Check if the input value is a valid number
+    if (isNaN(numericValue)) {
+      setInputValue(value);
+      setHasError(true);
+      onChange("initialCashBalance", null); // Clear the global state if the input is not a valid number
+    } else {
+      const formattedValue = formatNumber(numericValue);
+      setInputValue(formattedValue);
+      onChange("initialCashBalance", numericValue);
+      setHasError(value === "");
     }
   };
 
@@ -40,21 +48,19 @@ function CashBalanceInputCard() {
       </p>
 
       <Input
-        type="number"
+        type="text"
         name="initialCashBalance"
-        placeholder="$1000,000"
+        placeholder="$1,000,000"
         onChange={handleInputChange}
         value={inputValue}
       />
-
+{/* 
       {hasError && (
         <p className="text-red-500 text-sm">Please fill in the cash balance.</p>
-      )}
+      )} */}
 
       {!initialCashBalance && (
-        <p className="text-gray-500 text-sm">
-          Please fill with a number. {error}
-        </p>
+        <p className="text-red-500 text-sm">Please fill in valid data</p>
       )}
     </form>
   );
