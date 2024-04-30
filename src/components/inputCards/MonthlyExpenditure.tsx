@@ -138,13 +138,8 @@ function MonthlyExpenditure({
         </form>
       </div>
 
-      {!monthlyDates[0] && <p className="text-red-500 text-sm">Please fill in the date for the first month.</p>}
+      {!monthlyDates[0] && !monthlyDates[1] && !monthlyDates[2] &&  <p className="text-red-500 text-sm">Please fill in the date for the first month.</p>}
 
-      {(monthlyDates[0] && !firstValue) ||
-       (monthlyDates[1] && !secondValue) ||
-       (monthlyDates[2] && !thirdValue) && (
-        <p className="text-red-500 flex justify-end text-sm">Please fill in the expenses for each month.</p>
-      )}
     </div>
   );
 }

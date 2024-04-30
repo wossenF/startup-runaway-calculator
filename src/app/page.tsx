@@ -53,7 +53,8 @@ export default function Home() {
         // Disable if there's an error or no value inserted
         // className="bg-[#13213C] disabled:bg-gray-400 cursor-not-allowed rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5"
         className={`bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5 ${
-          !initialCostValue || !firstMonthBalance || !firstMonthexpense
+          !initialCostValue || !firstMonthBalance || !firstMonthexpense || !secondMonthexpense || 
+          !thirdMonthexpense || !secondMonthBalance || !thirdMonthBalance || !secondMonthBalance || !thirdMonthBalance
             ? "disabled:bg-gray-400 cursor-not-allowed"
             : ""
         }`}
