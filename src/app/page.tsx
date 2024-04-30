@@ -15,7 +15,6 @@ export default function Home() {
   const thirdMonthexpense = useInputStore((state) => state.thirdMonthexpense);
   const secondMonthBalance = useInputStore((state) => state.secondMonthBalance);
   const thirdMonthBalance = useInputStore((state) => state.thirdMonthBalance);
-  
 
   console.log(">>>>> initial state: ", initialCostValue);
 
@@ -35,7 +34,7 @@ export default function Home() {
   return (
     <main className="w-3/4 m-12">
       <h1 className="font-extrabold text-4xl">
-        Startup Runaway <span className="text-[#FAB446]">Calculator</span>
+        Startup Runway <span className="text-[#FAB446]">Calculator</span>
       </h1>
       <p className="pb-7 max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl p-3 pl-0">
         Empower your startup journey with financial clarity. Our calculator
@@ -47,14 +46,29 @@ export default function Home() {
         isClicked ? <ResultDashBoard /> : <UserInput />
       }
       <button
-        disabled={!initialCostValue || !firstMonthBalance || !firstMonthexpense || !secondMonthexpense || 
-          !thirdMonthexpense || !secondMonthBalance || !thirdMonthBalance || !secondMonthBalance || !thirdMonthBalance
+        disabled={
+          !initialCostValue ||
+          !firstMonthBalance ||
+          !firstMonthexpense ||
+          !secondMonthexpense ||
+          !thirdMonthexpense ||
+          !secondMonthBalance ||
+          !thirdMonthBalance ||
+          !secondMonthBalance ||
+          !thirdMonthBalance
         } // Disable if there's an error
         // Disable if there's an error or no value inserted
         // className="bg-[#13213C] disabled:bg-gray-400 cursor-not-allowed rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5"
         className={`bg-[#13213C] rounded-md text-primary-foreground hover:bg-primary/90 p-3 my-5 ${
-          !initialCostValue || !firstMonthBalance || !firstMonthexpense || !secondMonthexpense || 
-          !thirdMonthexpense || !secondMonthBalance || !thirdMonthBalance || !secondMonthBalance || !thirdMonthBalance
+          !initialCostValue ||
+          !firstMonthBalance ||
+          !firstMonthexpense ||
+          !secondMonthexpense ||
+          !thirdMonthexpense ||
+          !secondMonthBalance ||
+          !thirdMonthBalance ||
+          !secondMonthBalance ||
+          !thirdMonthBalance
             ? "disabled:bg-gray-400 cursor-not-allowed"
             : ""
         }`}
